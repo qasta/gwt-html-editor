@@ -30,7 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class EditorTest implements EntryPoint {
 	
 	public void onModuleLoad() {
-		buildSamplePage();
+		//buildSamplePage();
 	}
 	
 	public void buildSamplePage() {
