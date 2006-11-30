@@ -42,7 +42,7 @@ public class EditorToolbarButton extends Image {
 	public static final String BUTTON_REPLACE = "Replace";
 	public static final String BUTTON_SOMETHING2 = "Something2";
 	public static final String BUTTON_BOLD = "Bold";
-	public static final String BUTTON_DELETE = "Delete";
+	public static final String BUTTON_DELETE = "ClearFormat";
 	public static final String BUTTON_ITALIC = "Italic";
 	public static final String BUTTON_UNDERLINE = "Underline";
 	public static final String BUTTON_STRIKETHROUGH = "StrikeThrough";
@@ -96,6 +96,8 @@ public class EditorToolbarButton extends Image {
 	
 	public EditorToolbarButton(String buttonId) {
 		super("spacer.gif");
+		
+		this.setTitle(buttonId);
 		
 		this.buttonId = buttonId;
 		

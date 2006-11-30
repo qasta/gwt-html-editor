@@ -36,7 +36,7 @@ public class EditorWYSIWYG extends Composite {
 		this.editor = _editor;
 		
 		vp = new VerticalPanel();
-		
+
 		frame = new NamedFrame(_id + "_wysiwyg_Frame");
 		frame.setUrl("about:blank");
 		frame.setStyleName("Editor-IFrame");
@@ -66,7 +66,7 @@ public class EditorWYSIWYG extends Composite {
 	        oDoc = oDoc.document;
 	    }
 	    oDoc.designMode = 'On';
-		oDoc.write("<html><body style='border:none; margin:0px; padding: 5px; font-family: sans-serif; font-size: 12px;'>lala</body></html>");
+		oDoc.write("<html><body style='border:none; margin:0px; padding: 5px; font-family: sans-serif; font-size: 12px;'><p>&nbsp;</p></body></html>");
 		oDoc.close();
 	}-*/;
 	
