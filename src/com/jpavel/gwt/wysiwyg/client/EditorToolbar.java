@@ -17,11 +17,17 @@
 package com.jpavel.gwt.wysiwyg.client;
 
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.PopupListener;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -71,57 +77,133 @@ public class EditorToolbar extends Composite {
 		EditorToolbarButton ol = new SimpleCommandButton(EditorToolbarButton.BUTTON_OL, "InsertOrderedList");
 		EditorToolbarButton ul = new SimpleCommandButton(EditorToolbarButton.BUTTON_UL, "InsertUnorderedList");
 
-		EditorToolbarButton link = new SimpleCommandButton(EditorToolbarButton.BUTTON_LINK, "CreateLink", "Enter Link URL");
-//		EditorToolbarButton link = new EditorToolbarButton(EditorToolbarButton.BUTTON_LINK);
-//		link.addClickListener(new ClickListener() {
-//			public void onClick(Widget sender) {
-//				
-//				final EditorPromptPanelWidget widget = new EditorPromptPanelWidget();
-//				
-//				VerticalPanel vp = new VerticalPanel();
-//				final TextBox tb = new TextBox();
-//				
-//				HorizontalPanel hz = new HorizontalPanel();
-//				hz.add(new Label("Link URL: "));
-//				hz.add(tb);
-//				vp.add(hz);
-//				Button b = new Button("Create Link");
-//				vp.add(b);
-//				b.addClickListener(new ClickListener() {
-//					public void onClick(Widget sender) {
-//						widget.getPrompt().complete(tb.getText());
-//					}
-//				});
-//				widget.setWidget(vp);
-//				
-//				EditorPromptPanel prompt = new EditorPromptPanel("Create Link", widget);
-//				
-//				prompt.addPopupListener(new PopupListener() {
-//					public void onPopupClosed(final PopupPanel sender, boolean autoClosed) {
-////						EditorUtils.execCommand(editor.getEditorWYSIWYG().getFrame(), "CreateLink", true, null);
-//						EditorUtils.alert(((EditorPromptPanel) sender).getValue());
-//						new Timer() {
-//							public void run() {
-//								editor.execCommand("CreateLink", false, ((EditorPromptPanel) sender).getValue());
-//							}
-//						}.schedule(1);
-//					}
-//				});
-//				
-//				prompt.show();
-//				
-//				tb.setFocus(true);
-//			}
-//		});
+		EditorToolbarButton link = new EditorToolbarButton(EditorToolbarButton.BUTTON_LINK);
+		link.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				
+				final EditorPromptPanelWidget widget = new EditorPromptPanelWidget();
+				
+				VerticalPanel container = new VerticalPanel();
+				final TextBox urlTextBox = new TextBox();
+				
+				HorizontalPanel hz = new HorizontalPanel();
+				hz.add(new Label("Link URL: "));
+				hz.add(urlTextBox);
+				container.add(hz);
+				
+				HorizontalPanel hzButtons = new HorizontalPanel();
+				Button b = new Button("Create Link");
+				b.addClickListener(new ClickListener() {
+					public void onClick(Widget sender) {
+						widget.getPrompt().complete(urlTextBox.getText());
+					}
+				});
+				
+				Button c = new Button("Cancel");
+				c.addClickListener(new ClickListener() {
+					public void onClick(Widget sender) {
+						widget.getPrompt().complete(null);
+					}
+				});
+				
+				hzButtons.add(b);
+				hzButtons.add(c);
+				
+				container.add(hzButtons);
+				
+				widget.setWidget(container);
+				
+				new AdvancedPromptPannel("CreateLink", "Create Link", widget);
+				
+				urlTextBox.setFocus(true);
+			}
+		});
 		
 		EditorToolbarButton unlink = new SimpleCommandButton(EditorToolbarButton.BUTTON_UNLINK, "UnLink"); 
-		EditorToolbarButton image = new SimpleCommandButton(EditorToolbarButton.BUTTON_IMAGE, "InsertImage", "Enter Image URL"); 
+		EditorToolbarButton image = new EditorToolbarButton(EditorToolbarButton.BUTTON_IMAGE);
+		image.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				final EditorPromptPanelWidget widget = new EditorPromptPanelWidget();
+				
+				VerticalPanel container = new VerticalPanel();
+				final TextBox urlTextBox = new TextBox();
+				
+				HorizontalPanel hz = new HorizontalPanel();
+				hz.add(new Label("Image URL: "));
+				hz.add(urlTextBox);
+				container.add(hz);
+				
+				HorizontalPanel hzButtons = new HorizontalPanel();
+				Button b = new Button("Insert Image");
+				b.addClickListener(new ClickListener() {
+					public void onClick(Widget sender) {
+						widget.getPrompt().complete(urlTextBox.getText());
+					}
+				});
+				
+				Button c = new Button("Cancel");
+				c.addClickListener(new ClickListener() {
+					public void onClick(Widget sender) {
+						widget.getPrompt().complete(null);
+					}
+				});
+				
+				hzButtons.add(b);
+				hzButtons.add(c);
+				
+				container.add(hzButtons);
+				
+				widget.setWidget(container);
+				
+				new AdvancedPromptPannel("InsertImage", "Insert Image", widget);
+				
+				urlTextBox.setFocus(true);
+			}
+		});
 		
-		
-		EditorToolbarButton foreColor = new SimpleCommandButton(EditorToolbarButton.BUTTON_TEXTCOLOR, "ForeColor", "Enter text color (hex: RRGGBB) for the current selection"); 
+		EditorToolbarButton foreColor = new EditorToolbarButton(EditorToolbarButton.BUTTON_TEXTCOLOR); 
+		foreColor.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				final EditorPromptPanelWidget widget = new EditorPromptPanelWidget();
+				
+				VerticalPanel container = new VerticalPanel();
+				final TextBox urlTextBox = new TextBox();
+				
+				HorizontalPanel hz = new HorizontalPanel();
+				hz.add(new Label("Text color RGB #"));
+				hz.add(urlTextBox);
+				container.add(hz);
+				
+				HorizontalPanel hzButtons = new HorizontalPanel();
+				Button b = new Button("Set Color");
+				b.addClickListener(new ClickListener() {
+					public void onClick(Widget sender) {
+						widget.getPrompt().complete(urlTextBox.getText());
+					}
+				});
+				
+				Button c = new Button("Cancel");
+				c.addClickListener(new ClickListener() {
+					public void onClick(Widget sender) {
+						widget.getPrompt().complete(null);
+					}
+				});
+				
+				hzButtons.add(b);
+				hzButtons.add(c);
+				
+				container.add(hzButtons);
+				
+				widget.setWidget(container);
+				
+				new AdvancedPromptPannel("ForeColor", "Text Color", widget);
+				
+				urlTextBox.setFocus(true);
+			}
+		});
 		
 		EditorToolbarSelect styles = new EditorToolbarSelect();
-		styles.addItem("", "");
+		styles.addItem("Style", "");
 		String[][] formats = EditorUtils.getSupportedFormats();
 		for (int i = 0; i < formats.length; i++) {
 			styles.addItem(formats[i][0], formats[i][1]);
@@ -137,7 +219,7 @@ public class EditorToolbar extends Composite {
 		});
 
 		EditorToolbarSelect fontSizes = new EditorToolbarSelect();
-		fontSizes.addItem("", "");
+		fontSizes.addItem("Size", "");
 		for (int i = 1; i < 8; i++) {
 			fontSizes.addItem("Size " + i, "" + i);
 		}
@@ -226,7 +308,19 @@ public class EditorToolbar extends Composite {
 			this(buttonId, command, false, null);
 		}
 
-		public SimpleCommandButton(String buttonId, final String command, final String question) {
+		public SimpleCommandButton(String buttonId, final String command, final boolean ui, String value) {
+			super(buttonId);
+			
+			this.addClickListener(new ClickListener() {
+				public void onClick(Widget sender) {
+					editor.execCommand(command, ui, null);
+				}
+			});
+		}
+	}
+	
+	private class SimplePromptPannel extends EditorToolbarButton {
+		public SimplePromptPannel(String buttonId, final String command, final String question) {
 			super(buttonId);
 			
 			this.addClickListener(new ClickListener() {
@@ -238,15 +332,25 @@ public class EditorToolbar extends Composite {
 				}
 			});
 		}
-
-		public SimpleCommandButton(String buttonId, final String command, final boolean ui, String value) {
-			super(buttonId);
+	}
+	
+	private class AdvancedPromptPannel extends EditorPromptPanel {
+		public AdvancedPromptPannel(final String command, String title, EditorPromptPanelWidget widget) {
+			super(title, widget);
 			
-			this.addClickListener(new ClickListener() {
-				public void onClick(Widget sender) {
-					editor.execCommand(command, ui, null);
+			this.addPopupListener(new PopupListener() {
+				public void onPopupClosed(final PopupPanel sender, boolean autoClosed) {
+					String value = ((EditorPromptPanel) sender).getValue();
+					EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame());
+					EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame());
+					if (value != null) {
+						editor.execCommand(command, false, value);
+					}
 				}
 			});
+			
+			EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame());
+			super.show(editor);
 		}
 	}
 	

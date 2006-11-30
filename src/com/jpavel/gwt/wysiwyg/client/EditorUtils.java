@@ -72,6 +72,16 @@ public class EditorUtils {
 		}
 	}-*/;
 	
+	public static native void _execCommand(NamedFrame frame, String command, boolean ui, String value)/*-{
+//		$wnd.alert(.apply);
+//		@com.jpavel.gwt.wysiwyg.client.EditorUtils::execCommand(Lcom/google/gwt/user/client/ui/NamedFrame;Ljava/lang/String;ZLjava/lang/String;).apply(this);
+ 
+	    var exec = function(frame1, command1, ui1, value1) {
+	    	@com.jpavel.gwt.wysiwyg.client.EditorUtils::_execCommand(Lcom/google/gwt/user/client/ui/NamedFrame;Ljava/lang/String;ZLjava/lang/String;)(frame1, command1, ui1, value1);
+	    };
+	    exec.apply(frame, new Array(frame, command, ui, value));
+	}-*/;
+
 	public static native void execCommand(NamedFrame frame, String command, boolean ui, String value)/*-{
 		var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
 		var oIframe = $wnd.document.getElementsByName(frameName)[0];
@@ -79,9 +89,21 @@ public class EditorUtils {
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
-	    oDoc.execCommand(command, ui, value);
+    	oDoc.execCommand(command, ui, value);
+	}-*/;
+
+	
+	public static native void doFocus(NamedFrame frame)/*-{
+		var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
+		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+		oIframe.focus();
 	}-*/;
 	
+	public static native void doBlur(NamedFrame frame)/*-{
+		var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
+		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+		oIframe.blur();
+	}-*/;
 	
 	public static native String prompt(String question)/*-{
 		return $wnd.prompt(question, "");
@@ -100,17 +122,61 @@ public class EditorUtils {
 		var agt=navigator.userAgent.toLowerCase();
 		return (agt.indexOf('gecko') != -1);
 	}-*/;
+	
+	public static native void saveSelection(NamedFrame frame) /*-{
+		// Save the selection, works around a problem with IE where the 
+        // selection in the iframe gets lost. We only save if the current 
+        // selection in the document
+
+		if (!@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()()) {
+			return;
+		}
+
+        var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
+		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
+	    if (oDoc.document) {
+	        oDoc = oDoc.document;
+	    }
+         
+        var currange = oDoc.selection.createRange();
+        oDoc._previous_range = currange;
+	}-*/;
+	
+	public static native void restoreSelection(NamedFrame frame) /*-{
+		// re-selects the previous selection in IE. We only restore if the
+        // current selection is not in the document.
+        
+		if (!@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()()) {
+			return;
+		}
+
+        var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
+		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
+	    if (oDoc.document) {
+	        oDoc = oDoc.document;
+	    }
+
+		if (oDoc._previous_range) {
+            try {
+                oDoc._previous_range.select();
+                oDoc.designMode = 'On';
+                oDoc.focus();
+            } catch (e) {
+                alert("Error placing back selection");
+            };
+            
+            oDoc._previous_range = null;
+        };
+	}-*/;
 
 	
 	public static String[][] getSupportedFormats() {
 		if (isIE()) {
 			return new String[][]{{"Normal", "Normal"}, {"Heading 1", "Heading 1"}, {"Heading 2", "Heading 2"}, {"Heading 3", "Heading 3"}, {"Heading 4", "Heading 4"}, {"Heading 5", "Heading 5"}, {"Heading 6", "Heading 6"}};		
-		}
-		
-		if (isGecko()) {
+		} else {
 			return new String[][]{{"Normal", "P"}, {"Heading 1", "H1"}, {"Heading 2", "H2"}, {"Heading 3", "H3"}, {"Heading 4", "H4"}, {"Heading 5", "H5"}, {"Heading 6", "H6"}};		
 		}
-		
-		return new String[][]{{"Normal", "P"}};
 	}
 }
