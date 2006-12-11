@@ -31,7 +31,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class EditorTest implements EntryPoint {
 	
 	public void onModuleLoad() {
-		buildSamplePage();
+		//buildSamplePage();
 	}
 	
 	public void buildSamplePage() {
@@ -51,6 +51,17 @@ public class EditorTest implements EntryPoint {
 		});
 		editor.setWidth("100%");
 		editor.setHeight("300px");
+
+		editor.addLoadListener(new LoadListener() {
+			public void onLoad(Widget sender) {
+				editor.setHTML("<h1>Lala</h1>");
+			}
+			
+			public void onError(Widget sender) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		editor.load();
 		

@@ -56,10 +56,10 @@ public class Editor extends Composite implements SourcesLoadEvents {
 		// Firefox hack...
 		new Timer() {
 			public void run() {
-				wysiwyg.initFrame();
+				wysiwyg.initFrame(wysiwyg.getFrame().getElement());
 				notifyLoadListeners();
 			}
-		}.schedule(500);
+		}.schedule(10);
 	}
 
 	public void setWidth(String width) {
