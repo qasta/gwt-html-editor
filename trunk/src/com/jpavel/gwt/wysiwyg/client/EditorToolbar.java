@@ -43,6 +43,7 @@ public class EditorToolbar extends Composite {
 		
 		topContainer = new VerticalPanel();
 		topContainer.setStyleName("Editor-Toolbar");
+		topContainer.setWidth("100%");
 		
 		this.editor = _editor;
 		
@@ -319,7 +320,7 @@ public class EditorToolbar extends Composite {
 		}
 	}
 	
-	private class SimplePromptPannel extends EditorToolbarButton {
+	public class SimplePromptPannel extends EditorToolbarButton {
 		public SimplePromptPannel(String buttonId, final String command, final String question) {
 			super(buttonId);
 			
@@ -341,15 +342,15 @@ public class EditorToolbar extends Composite {
 			this.addPopupListener(new PopupListener() {
 				public void onPopupClosed(final PopupPanel sender, boolean autoClosed) {
 					String value = ((EditorPromptPanel) sender).getValue();
-					EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame());
-					EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame());
+					EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+					EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
 					if (value != null) {
 						editor.execCommand(command, false, value);
 					}
 				}
 			});
 			
-			EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame());
+			EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
 			super.show(editor);
 		}
 	}

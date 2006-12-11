@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.LoadListener;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -34,6 +35,10 @@ public class EditorTest implements EntryPoint {
 	}
 	
 	public void buildSamplePage() {
+		
+		TabPanel tabs = new TabPanel();
+		
+		
 		final Editor editor = new Editor();
 		editor.addLoadListener(new LoadListener() {
 			public void onLoad(Widget sender) {
@@ -55,8 +60,12 @@ public class EditorTest implements EntryPoint {
 				Window.alert(editor.getHTML());
 			}
 		});
+
+		tabs.add(new Button("Lala"), "First");
+		tabs.add(editor, "Editor");
 		
-		RootPanel.get().add(editor);
-		//RootPanel.get().add(button);
+		tabs.selectTab(0);
+		
+		RootPanel.get().add(tabs);
 	}
 }
