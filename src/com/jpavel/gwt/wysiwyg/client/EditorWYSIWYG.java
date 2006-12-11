@@ -16,17 +16,20 @@
 
 package com.jpavel.gwt.wysiwyg.client;
 
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.NamedFrame;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class EditorWYSIWYG extends Composite {
 	
 	private Editor editor;
 	
 	private VerticalPanel vp;
-	private NamedFrame frame;
+	private EditorIframe frame;
 	private TextArea textArea;
 	
 	private boolean showFrame = true;
@@ -38,11 +41,18 @@ public class EditorWYSIWYG extends Composite {
 		vp = new VerticalPanel();
 		vp.setWidth("100%");
 
-		frame = new NamedFrame(_id + "_wysiwyg_Frame");
+		frame = new EditorIframe(_id + "_wysiwyg_Frame");
 		frame.setUrl("about:blank");
 		frame.setStyleName("Editor-IFrame");
 		frame.setWidth("100%");
 		frame.setHeight(editor.getHeight());
+		
+		// this is done on purpose...
+		frame.addMouseOverListener(new EditorMouseOverListener() {
+			public void onMouseOver(Widget widget) {
+				enableDesignMode();
+			}
+		});
 		
 		textArea = new TextArea();
 		textArea.setWidth("100%");
@@ -56,37 +66,55 @@ public class EditorWYSIWYG extends Composite {
 		initWidget(vp);
 	}
 	
-	public native void initFrame()/*-{
-		var frameName = this.@com.jpavel.gwt.wysiwyg.client.EditorWYSIWYG::frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+	public native void initFrame(Element oIframe)/*-{
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
-	    oDoc.designMode = 'On';
 		oDoc.write("<html><body style='border:none; margin:0px; padding: 5px; font-family: sans-serif; font-size: 12px;'><p>&nbsp;</p></body></html>");
 		oDoc.close();
 	}-*/;
+
+
+	private boolean editModeOn = false; 
 	
-	public void setHTML(String _html) {
-		textArea.setText(_html);
-		_setHTML(_html);
+	public void enableDesignMode() {
+		if (!editModeOn) {
+			//String _html = getHTML();
+			_enableDesignMode(frame.getElement());
+			//setHTML(_html);
+			editModeOn = true;
+		}
 	}
 	
-	private native void _setHTML(String _html)/*-{
-		var frameName = this.@com.jpavel.gwt.wysiwyg.client.EditorWYSIWYG::frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+	private native void _enableDesignMode(Element oIframe)/*-{
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
-	    oDoc.body.innerHTML = _html;
 	    oDoc.designMode = 'On';
 	}-*/;
+
+	public void setHTML(String _html) {
+		textArea.setText(_html);
+		_setHTML(frame.getElement(), _html);
+	}
 	
-	public native String getHTML()/*-{
-		var frameName = this.@com.jpavel.gwt.wysiwyg.client.EditorWYSIWYG::frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+	private native void _setHTML(Element oIframe, String _html)/*-{
+	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
+	    if (oDoc.document) {
+	        oDoc = oDoc.document;
+	    }
+	    oDoc.body.innerHTML = "";
+	    oDoc.write(_html);
+	    oDoc.close();
+	}-*/;
+
+	public String getHTML() {
+		return _getHTML(frame.getElement());
+	}
+	
+	public native String _getHTML(Element oIframe)/*-{
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
@@ -94,7 +122,7 @@ public class EditorWYSIWYG extends Composite {
 	    return oDoc.body.innerHTML;
 	}-*/;
 
-	public NamedFrame getFrame() {
+	public EditorIframe getFrame() {
 		return frame;
 	}
 	
@@ -118,7 +146,7 @@ public class EditorWYSIWYG extends Composite {
 			textArea.setVisible(false);
 			frame.setVisible(true);
 
-			_setHTML(newHtml);
+			setHTML(newHtml);
 
 			this.showFrame = true;
 			

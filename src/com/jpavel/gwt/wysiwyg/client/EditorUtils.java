@@ -18,7 +18,15 @@ package com.jpavel.gwt.wysiwyg.client;
 
 import com.google.gwt.user.client.Element;
 
-
+/**
+ * just utilities
+ * 
+ * PS: This is how it worked before...
+ * 	var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
+ *	var oIframe = $wnd.document.getElementsByName(frameName)[0];
+ *
+ * @author pavel.jbanov
+ */
 public class EditorUtils {
 	public static native String getSelection() /*-{
 		var txt = '';
@@ -96,8 +104,6 @@ public class EditorUtils {
 	}-*/;
 	
 	public static native void doBlur(Element oIframe)/*-{
-//		var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-//		var oIframe = $wnd.document.getElementsByName(frameName)[0];
 		oIframe.blur();
 	}-*/;
 	
@@ -105,8 +111,8 @@ public class EditorUtils {
 		return $wnd.prompt(question, "");
 	}-*/;
 
-	public static native String alert(String question)/*-{
-		return $wnd.alert(question);
+	public static native void alert(String question)/*-{
+		$wnd.alert(question);
 	}-*/;
 	
 	public static native boolean isIE() /*-{
@@ -153,7 +159,6 @@ public class EditorUtils {
 		if (oDoc._previous_range) {
             try {
                 oDoc._previous_range.select();
-                oDoc.designMode = 'On';
                 oDoc.focus();
             } catch (e) {
                 alert("Error placing back selection");
