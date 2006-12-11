@@ -46,11 +46,11 @@ public class Editor extends Composite implements SourcesLoadEvents {
 	
 	public void load() {
 		EditorToolbar toolbar = getEditorToolbar();
-		toolbar.setWidth(this.getWidth());
+		toolbar.setWidth("100%");
 		container.add(toolbar);
 		
 		final EditorWYSIWYG wysiwyg = getEditorWYSIWYG();
-		wysiwyg.setWidth(this.getWidth());
+		wysiwyg.setWidth("100%");
 		container.add(wysiwyg);
 		
 		// Firefox hack...
@@ -59,7 +59,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
 				wysiwyg.initFrame();
 				notifyLoadListeners();
 			}
-		}.schedule(1);
+		}.schedule(500);
 	}
 
 	public void setWidth(String width) {
@@ -115,6 +115,6 @@ public class Editor extends Composite implements SourcesLoadEvents {
 	}
 	
 	public void execCommand(String command, boolean ui, String value) {
-		EditorUtils.execCommand(this.getEditorWYSIWYG().getFrame(), command, ui, value);
+		EditorUtils.execCommand(this.getEditorWYSIWYG().getFrame().getElement(), command, ui, value);
 	}
 }

@@ -36,6 +36,7 @@ public class EditorWYSIWYG extends Composite {
 		this.editor = _editor;
 		
 		vp = new VerticalPanel();
+		vp.setWidth("100%");
 
 		frame = new NamedFrame(_id + "_wysiwyg_Frame");
 		frame.setUrl("about:blank");
@@ -44,6 +45,7 @@ public class EditorWYSIWYG extends Composite {
 		frame.setHeight(editor.getHeight());
 		
 		textArea = new TextArea();
+		textArea.setWidth("100%");
 		
 		frame.setVisible(true);
 		textArea.setVisible(false);
@@ -52,10 +54,6 @@ public class EditorWYSIWYG extends Composite {
 		vp.add(textArea);
 		
 		initWidget(vp);
-	}
-	
-	public void setWidth(String width) {
-		vp.setWidth(width);
 	}
 	
 	public native void initFrame()/*-{

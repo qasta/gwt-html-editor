@@ -16,7 +16,7 @@
 
 package com.jpavel.gwt.wysiwyg.client;
 
-import com.google.gwt.user.client.ui.NamedFrame;
+import com.google.gwt.user.client.Element;
 
 
 public class EditorUtils {
@@ -72,19 +72,17 @@ public class EditorUtils {
 		}
 	}-*/;
 	
-	public static native void _execCommand(NamedFrame frame, String command, boolean ui, String value)/*-{
-//		$wnd.alert(.apply);
-//		@com.jpavel.gwt.wysiwyg.client.EditorUtils::execCommand(Lcom/google/gwt/user/client/ui/NamedFrame;Ljava/lang/String;ZLjava/lang/String;).apply(this);
- 
-	    var exec = function(frame1, command1, ui1, value1) {
-	    	@com.jpavel.gwt.wysiwyg.client.EditorUtils::_execCommand(Lcom/google/gwt/user/client/ui/NamedFrame;Ljava/lang/String;ZLjava/lang/String;)(frame1, command1, ui1, value1);
-	    };
-	    exec.apply(frame, new Array(frame, command, ui, value));
-	}-*/;
+//	public static native void _execCommand(Element oIframe, String command, boolean ui, String value)/*-{
+////		$wnd.alert(.apply);
+////		@com.jpavel.gwt.wysiwyg.client.EditorUtils::execCommand(Lcom.google.gwt.user.client.Element;Ljava/lang/String;ZLjava/lang/String;).apply(this);
+// 
+//	    var exec = function(frame1, command1, ui1, value1) {
+//	    	@com.jpavel.gwt.wysiwyg.client.EditorUtils::_execCommand(Lcom.google.gwt.user.client.Element;Ljava/lang/String;ZLjava/lang/String;)(frame1, command1, ui1, value1);
+//	    };
+//	    exec.apply(frame, new Array(frame, command, ui, value));
+//	}-*/;
 
-	public static native void execCommand(NamedFrame frame, String command, boolean ui, String value)/*-{
-		var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+	public static native void execCommand(Element oIframe, String command, boolean ui, String value)/*-{
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
@@ -93,15 +91,13 @@ public class EditorUtils {
 	}-*/;
 
 	
-	public static native void doFocus(NamedFrame frame)/*-{
-		var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+	public static native void doFocus(Element oIframe)/*-{
 		oIframe.focus();
 	}-*/;
 	
-	public static native void doBlur(NamedFrame frame)/*-{
-		var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-		var oIframe = $wnd.document.getElementsByName(frameName)[0];
+	public static native void doBlur(Element oIframe)/*-{
+//		var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
+//		var oIframe = $wnd.document.getElementsByName(frameName)[0];
 		oIframe.blur();
 	}-*/;
 	
@@ -113,17 +109,17 @@ public class EditorUtils {
 		return $wnd.alert(question);
 	}-*/;
 	
-	private static native boolean isIE() /*-{
+	public static native boolean isIE() /*-{
 		var agt=navigator.userAgent.toLowerCase();
 		return ((agt.indexOf("msie") != -1) && (agt.indexOf("opera") == -1));
 	}-*/;
 	
-	private static native boolean isGecko() /*-{
+	public static native boolean isGecko() /*-{
 		var agt=navigator.userAgent.toLowerCase();
 		return (agt.indexOf('gecko') != -1);
 	}-*/;
 	
-	public static native void saveSelection(NamedFrame frame) /*-{
+	public static native void saveSelection(Element oIframe) /*-{
 		// Save the selection, works around a problem with IE where the 
         // selection in the iframe gets lost. We only save if the current 
         // selection in the document
@@ -132,8 +128,6 @@ public class EditorUtils {
 			return;
 		}
 
-        var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-		var oIframe = $wnd.document.getElementsByName(frameName)[0];
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
@@ -143,7 +137,7 @@ public class EditorUtils {
         oDoc._previous_range = currange;
 	}-*/;
 	
-	public static native void restoreSelection(NamedFrame frame) /*-{
+	public static native void restoreSelection(Element oIframe) /*-{
 		// re-selects the previous selection in IE. We only restore if the
         // current selection is not in the document.
         
@@ -151,8 +145,6 @@ public class EditorUtils {
 			return;
 		}
 
-        var frameName = frame.@com.google.gwt.user.client.ui.NamedFrame::getName()();
-		var oIframe = $wnd.document.getElementsByName(frameName)[0];
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
