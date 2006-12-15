@@ -17,8 +17,6 @@
 package com.jpavel.gwt.wysiwyg.client;
 
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -145,7 +143,7 @@ public class EditorWYSIWYG extends Composite {
 			
 			textArea.setVisible(false);
 			frame.setVisible(true);
-
+			
 			setHTML(newHtml);
 
 			this.showFrame = true;
