@@ -5,8 +5,7 @@
 Installation steps:
   # Download the latest JAR file
   # add the downloaded JAR file to classpath of the GWT Compiler/Shell
-  # add: {{{<inherits name='com.jpavel.gwt.wysiwyg.Editor'/>}}} to your module descriptor
-    XML file
+  # add: <inherits name='com.jpavel.gwt.wysiwyg.Editor'/> to your module descriptor XML file
 
 = Sample Code =
 
