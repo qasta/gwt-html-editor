@@ -2,8 +2,8 @@
 
 = Known Issues =
 
-  # Doesn't work correctly in hosted-mode on Windows (GWT 1.2.22).
-  # (Reported) Doesn't work on Safari.
+  # Some issues in hosted-mode on Windows (GWT 1.2.22).
+  # Doesn't work on Safari.
   # Some text editing functions don't work in Opera.
 
 Notice any other bugs or annoyances let me know.
