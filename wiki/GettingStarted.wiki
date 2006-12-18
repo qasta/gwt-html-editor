@@ -1,0 +1,29 @@
+#summary GWT Rich Text Widget - Getting Started
+
+= Installation =
+
+Installation steps:
+  # Download the latest JAR file from
+[[Downloads][http://code.google.com/p/gwt-html-editor/downloads/list]]
+  # add the downloaded JAR file to classpath of the GWT Compiler/Shell
+  # add: <inherits name='com.jpavel.gwt.wysiwyg.Editor'/> to your module descriptor XML file
+
+= Sample Code =
+
+{{{
+Editor editor = new Editor();
+editor.setWidth("100%");
+editor.setHeight("300px");
+editor.load();
+
+editor.addLoadListener(new LoadListener() {
+   public void onLoad(Widget sender) {
+      editor.setHTML("<h1>Hello World!</h1>");
+   }
+
+   public void onError(Widget sender) {
+   }
+});
+}}}
+
+*Note*: at the moment editor.setHTML() can only be called from the LoadListener.
