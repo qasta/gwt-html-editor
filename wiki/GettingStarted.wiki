@@ -4,7 +4,7 @@
 
 Installation steps:
   # Download the latest JAR file from
-[[Downloads][http://code.google.com/p/gwt-html-editor/downloads/list]]
+[http://code.google.com/p/gwt-html-editor/downloads/list Downloads]
   # add the downloaded JAR file to classpath of the GWT Compiler/Shell
   # add: <inherits name='com.jpavel.gwt.wysiwyg.Editor'/> to your module descriptor XML file
 
