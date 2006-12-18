@@ -2,6 +2,6 @@
 
 = Known Issues =
 
-  # Doesn't work correctly in hosted-mode on Windows.
+  # Doesn't work correctly in hosted-mode on Windows (GWT 1.2.22).
 
 Notice any other bugs or annoyances let me know.
