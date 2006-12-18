@@ -1,4 +1,5 @@
 #summary GWT Rich Text Widget - Getting Started
+#labels Featured
 
 = Installation =
 
