@@ -2,4 +2,6 @@
 
 = Known Issues =
 
-  # Doen't work correctly in hosted-mode on Windows.
+  # Doesn't work correctly in hosted-mode on Windows.
+
+Notice any other bugs or annoyances let me know.
