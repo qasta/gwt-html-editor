@@ -32,3 +32,5 @@ Installation steps:
 }}}
 
 *Note*: at the moment editor.setHTML() can only be called from the LoadListener.
+
+[KnownIssues Known Issues]
