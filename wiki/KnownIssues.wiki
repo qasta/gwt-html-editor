@@ -1,4 +1,5 @@
 #summary Known Issues
+#labels Featured
 
 = Known Issues =
 
