@@ -17,20 +17,20 @@ Installation steps:
   editor.setWidth("100%");
   editor.setHeight("300px");
 
-  hzContainer.add(editor);
-
+  editor.setHTML("<h1>Hello World!</h1>");
   editor.load();
 
   editor.addLoadListener(new LoadListener() {
      public void onLoad(Widget sender) {
-        editor.setHTML("<h1>Hello World!</h1>");
+        // do something if you want...
      }
 
      public void onError(Widget sender) {
      }
   });
+
+  hzContainer.add(editor);
 }}}
 
-*Note*: at the moment editor.setHTML() can only be called from the LoadListener.
 
 [KnownIssues Known Issues]
