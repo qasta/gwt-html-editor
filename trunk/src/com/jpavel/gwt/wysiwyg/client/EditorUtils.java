@@ -100,7 +100,7 @@ public class EditorUtils {
 
 	
 	public static native void doFocus(Element oIframe)/*-{
-	    if (oIframe.contentWindow) {
+	    if (@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()() || @com.jpavel.gwt.wysiwyg.client.EditorUtils::isGecko()()) {
 	        oIframe.contentWindow.focus();
 	    } else {
 			oIframe.focus();
@@ -108,7 +108,11 @@ public class EditorUtils {
 	}-*/;
 	
 	public static native void doBlur(Element oIframe)/*-{
-		oIframe.blur();
+	    if (@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()() || @com.jpavel.gwt.wysiwyg.client.EditorUtils::isGecko()()) {
+	        oIframe.contentWindow.blur();
+	    } else {
+			oIframe.blur();
+		}
 	}-*/;
 	
 	public static native String prompt(String question)/*-{
@@ -120,13 +124,23 @@ public class EditorUtils {
 	}-*/;
 	
 	public static native boolean isIE() /*-{
-		var agt=navigator.userAgent.toLowerCase();
+		var agt = navigator.userAgent.toLowerCase();
 		return ((agt.indexOf("msie") != -1) && (agt.indexOf("opera") == -1));
 	}-*/;
 	
 	public static native boolean isGecko() /*-{
 		var agt=navigator.userAgent.toLowerCase();
 		return (agt.indexOf('gecko') != -1);
+	}-*/;
+	
+	public static native boolean isOpera() /*-{
+		var agt=navigator.userAgent.toLowerCase();
+		return (agt.indexOf("opera") != -1);
+	}-*/;
+	
+	public static native boolean isSafari() /*-{
+		var agt=navigator.vendor.toLowerCase();
+		return (agt.indexOf("Apple") != -1);
 	}-*/;
 	
 	public static native void saveSelection(Element oIframe) /*-{
@@ -174,10 +188,11 @@ public class EditorUtils {
 
 	
 	public static String[][] getSupportedFormats() {
-		if (isIE()) {
-			return new String[][]{{"Normal", "Normal"}, {"Heading 1", "Heading 1"}, {"Heading 2", "Heading 2"}, {"Heading 3", "Heading 3"}, {"Heading 4", "Heading 4"}, {"Heading 5", "Heading 5"}, {"Heading 6", "Heading 6"}};		
-		} else {
-			return new String[][]{{"Normal", "P"}, {"Heading 1", "H1"}, {"Heading 2", "H2"}, {"Heading 3", "H3"}, {"Heading 4", "H4"}, {"Heading 5", "H5"}, {"Heading 6", "H6"}};		
-		}
+		return new String[][]{{"Normal", "<P>"}, {"Heading 1", "<H1>"}, {"Heading 2", "<H2>"}, {"Heading 3", "<H3>"}, {"Heading 4", "<H4>"}, {"Heading 5", "<H5>"}, {"Heading 6", "<H6>"}, {"Preformatted", "<PRE>"}, {"Address", "<ADDRESS>"}};		
+//		if (isIE()) {
+//			return new String[][]{{"Normal", "Normal"}, {"Heading 1", "Heading 1"}, {"Heading 2", "Heading 2"}, {"Heading 3", "Heading 3"}, {"Heading 4", "Heading 4"}, {"Heading 5", "Heading 5"}, {"Heading 6", "Heading 6"}};		
+//		} else {
+//			return new String[][]{{"Normal", "P"}, {"Heading 1", "H1"}, {"Heading 2", "H2"}, {"Heading 3", "H3"}, {"Heading 4", "H4"}, {"Heading 5", "H5"}, {"Heading 6", "H6"}};		
+//		}
 	}
 }

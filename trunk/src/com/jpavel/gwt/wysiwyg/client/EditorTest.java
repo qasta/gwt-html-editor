@@ -17,12 +17,8 @@
 package com.jpavel.gwt.wysiwyg.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.LoadListener;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -48,17 +44,8 @@ public class EditorTest implements EntryPoint {
 		});
 		editor.setWidth("100%");
 		editor.setHeight("300px");
-
-		editor.addLoadListener(new LoadListener() {
-			public void onLoad(Widget sender) {
-				editor.setHTML("<h1>Lala</h1>");
-			}
-			
-			public void onError(Widget sender) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		
+		editor.setHTML("<h1>Lala</h1>");
 		
 		editor.load();
 		
