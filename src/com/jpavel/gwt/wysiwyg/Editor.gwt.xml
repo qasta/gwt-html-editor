@@ -1,6 +1,5 @@
 <module>
 	<inherits name='com.google.gwt.user.User'/>
-	<!-- <entry-point class='com.jpavel.gwt.wysiwyg.client.EditorTest'/>  -->
 	<stylesheet src="editor.css"/>
 	<source path="client"/>
 	<public path="public"/>

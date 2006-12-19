@@ -21,10 +21,12 @@ import java.util.List;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LoadListener;
 import com.google.gwt.user.client.ui.SourcesLoadEvents;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class Editor extends Composite implements SourcesLoadEvents {
 	
@@ -33,6 +35,9 @@ public class Editor extends Composite implements SourcesLoadEvents {
 
 	private VerticalPanel container;
 	
+	// internal status
+	private boolean loaded = false;
+	
 	// listeners
 	private List loadListeners = new ArrayList();
 	
@@ -40,6 +45,20 @@ public class Editor extends Composite implements SourcesLoadEvents {
 		container = new VerticalPanel();
 		
 		container.setStyleName("Editor");
+		
+		this.addLoadListener(new LoadListener() {
+			public void onLoad(Widget sender) {
+				loaded = true;
+				if (tmpHTMLStorage != null) {
+					setHTML(tmpHTMLStorage);
+				}
+				tmpHTMLStorage = null;
+			}
+			
+			public void onError(Widget sender) {
+				Window.alert("Unable to load Rich Text Editor Widget!");
+			}
+		});
 		
 		initWidget(container);
 	}
@@ -110,8 +129,14 @@ public class Editor extends Composite implements SourcesLoadEvents {
 		return getEditorWYSIWYG().getHTML();
 	}
 	
+	private String tmpHTMLStorage = null;
+	
 	public void setHTML(String _html){
-		getEditorWYSIWYG().setHTML(_html);
+		if (loaded) {
+			getEditorWYSIWYG().setHTML(_html);
+		} else {
+			tmpHTMLStorage = _html;
+		}
 	}
 	
 	public void execCommand(String command, boolean ui, String value) {
