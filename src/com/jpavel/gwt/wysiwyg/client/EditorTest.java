@@ -36,9 +36,6 @@ public class EditorTest implements EntryPoint {
 	
 	public void buildSamplePage() {
 		
-		TabPanel tabs = new TabPanel();
-		
-		
 		final Editor editor = new Editor();
 		editor.addLoadListener(new LoadListener() {
 			public void onLoad(Widget sender) {
@@ -65,18 +62,6 @@ public class EditorTest implements EntryPoint {
 		
 		editor.load();
 		
-		Button button = new Button("Get HTML");
-		button.addClickListener(new ClickListener() {
-			public void onClick(Widget sender) {
-				Window.alert(editor.getHTML());
-			}
-		});
-
-		tabs.add(new Button("Lala"), "First");
-		tabs.add(editor, "Editor");
-		
-		tabs.selectTab(0);
-		
-		RootPanel.get().add(tabs);
+		RootPanel.get().add(editor);
 	}
 }

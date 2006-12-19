@@ -315,6 +315,7 @@ public class EditorToolbar extends Composite {
 			this.addClickListener(new ClickListener() {
 				public void onClick(Widget sender) {
 					editor.execCommand(command, ui, null);
+					EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
 				}
 			});
 		}
@@ -329,6 +330,7 @@ public class EditorToolbar extends Composite {
 					String value = EditorUtils.prompt(question);
 					if (value != null) {
 						editor.execCommand(command, false, value);
+						EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
 					}
 				}
 			});
@@ -346,6 +348,7 @@ public class EditorToolbar extends Composite {
 					EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
 					if (value != null) {
 						editor.execCommand(command, false, value);
+						EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
 					}
 				}
 			});
