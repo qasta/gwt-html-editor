@@ -100,7 +100,11 @@ public class EditorUtils {
 
 	
 	public static native void doFocus(Element oIframe)/*-{
-		oIframe.focus();
+	    if (oIframe.contentWindow) {
+	        oIframe.contentWindow.focus();
+	    } else {
+			oIframe.focus();
+		}
 	}-*/;
 	
 	public static native void doBlur(Element oIframe)/*-{
