@@ -97,14 +97,34 @@ public class EditorToolbar extends Composite {
 		EditorToolbarButton foreColor = new EditorToolbarButton(EditorToolbarButton.BUTTON_TEXTCOLOR); 
 		foreColor.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
-				new SimpleOneFieldPromptPannel("ForeColor", "Set Text Color", "Text color RGB #: ", "Set Color");
+				EditorColorPicker picker = new EditorColorPicker("Select Text Color");
+				picker.addSelectListener(new EditorColorSelectListener() {
+					public void colorSelected(String rgb) {
+						EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+						editor.execCommand("ForeColor", false, rgb);
+						EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+					}
+				});
+				EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+				picker.show();
+				picker.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
 			}
 		});
 
 		EditorToolbarButton bgColor = new EditorToolbarButton(EditorToolbarButton.BUTTON_TEXTBACKGROUNDCOLOR); 
 		bgColor.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
-				new SimpleOneFieldPromptPannel(EditorUtils.isIE()? "backcolor" : "hilitecolor", "Set Text Background Color", "Text back RGB #: ", "Set Color");
+				EditorColorPicker picker = new EditorColorPicker("Set Text Background Color");
+				picker.addSelectListener(new EditorColorSelectListener() {
+					public void colorSelected(String rgb) {
+						EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+						editor.execCommand(EditorUtils.isIE()? "backcolor" : "hilitecolor", false, rgb);
+						EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+					}
+				});
+				EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+				picker.show();
+				picker.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
 			}
 		});
 
