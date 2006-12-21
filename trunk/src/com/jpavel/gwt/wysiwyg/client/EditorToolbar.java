@@ -39,6 +39,8 @@ public class EditorToolbar extends Composite {
 	private FlowPanel fullToolbar;
 	private FlowPanel shortToolbar;
 	private VerticalPanel topContainer;
+	private EditorColorPicker fgPicker;
+	private EditorColorPicker bgPicker;
 	
 	public EditorToolbar(Editor _editor) {
 		
@@ -93,38 +95,39 @@ public class EditorToolbar extends Composite {
 				new SimpleOneFieldPromptPannel("InsertImage", "Insert Image", "Image URL: ", "Insert Image");
 			}
 		});
-		
-		EditorToolbarButton foreColor = new EditorToolbarButton(EditorToolbarButton.BUTTON_TEXTCOLOR); 
-		foreColor.addClickListener(new ClickListener() {
-			public void onClick(Widget sender) {
-				EditorColorPicker picker = new EditorColorPicker("Select Text Color");
-				picker.addSelectListener(new EditorColorSelectListener() {
-					public void colorSelected(String rgb) {
-						EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-						editor.execCommand("ForeColor", false, rgb);
-						EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-					}
-				});
-				EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-				picker.show();
-				picker.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
+
+		fgPicker = new EditorColorPicker("Select Text Color");
+		fgPicker.addSelectListener(new EditorColorSelectListener() {
+			public void colorSelected(String rgb) {
+				EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+				editor.execCommand("ForeColor", false, rgb);
+				EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
 			}
 		});
 
+		EditorToolbarButton foreColor = new EditorToolbarButton(EditorToolbarButton.BUTTON_TEXTCOLOR); 
+		foreColor.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+				fgPicker.show();
+				fgPicker.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
+			}
+		});
+
+		bgPicker = new EditorColorPicker("Select Background Color");
+		bgPicker.addSelectListener(new EditorColorSelectListener() {
+			public void colorSelected(String rgb) {
+				EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+				editor.execCommand(EditorUtils.isIE()? "backcolor" : "hilitecolor", false, rgb);
+				EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+			}
+		});
 		EditorToolbarButton bgColor = new EditorToolbarButton(EditorToolbarButton.BUTTON_TEXTBACKGROUNDCOLOR); 
 		bgColor.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
-				EditorColorPicker picker = new EditorColorPicker("Set Text Background Color");
-				picker.addSelectListener(new EditorColorSelectListener() {
-					public void colorSelected(String rgb) {
-						EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-						editor.execCommand(EditorUtils.isIE()? "backcolor" : "hilitecolor", false, rgb);
-						EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-					}
-				});
 				EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-				picker.show();
-				picker.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
+				bgPicker.show();
+				bgPicker.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
 			}
 		});
 
