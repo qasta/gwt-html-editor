@@ -85,7 +85,10 @@ public class EditorColorPicker extends DialogBox {
 		
 		for (int j = 0; j < 12; j++) {
 			for (int i = 0; i < 18; i++) {
-				grid.setWidget(j, i, new HTML("<div style='width:12px;height:12px;cursor:pointer;background-color:#" + colors[j*12 + i] + "'></div>"));
+				grid.setWidget(j, i, 
+						new HTML("<div style='width:12px;height:12px;" +
+								"cursor:pointer;background-color:#" + 
+								colors[j*12 + i] + "'></div>"));
 			}
 		}
 		
