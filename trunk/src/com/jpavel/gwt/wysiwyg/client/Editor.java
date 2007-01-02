@@ -130,7 +130,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
 	
 	public EditorWYSIWYG getEditorWYSIWYG() {
 		if (wysiwyg == null) {
-			wysiwyg = new EditorWYSIWYG(this, "" + (int)(Math.random() * 10000));
+			wysiwyg = new EditorWYSIWYG(this);
 		}
 		return wysiwyg;
 	}

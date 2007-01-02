@@ -22,11 +22,13 @@ import java.util.List;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.NamedFrame;
+import com.google.gwt.user.client.ui.Frame;
 
-public class EditorIframe extends NamedFrame {
-	public EditorIframe(String name) {
-		super(name);
+public class EditorIframe extends Frame {
+	public EditorIframe() {
+		this.setStyleName("Editor-IFrame");
+		//this.setUrl("about:blank");
+
 		sinkEvents(Event.MOUSEEVENTS); 
 	}
 	
