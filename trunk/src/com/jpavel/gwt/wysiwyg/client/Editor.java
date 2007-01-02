@@ -36,7 +36,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
 	private VerticalPanel container;
 	
 	// internal status
-	private boolean loaded = false;
+	private boolean initialized = false;
 	
 	// listeners
 	private List loadListeners = new ArrayList();
@@ -46,24 +46,50 @@ public class Editor extends Composite implements SourcesLoadEvents {
 		
 		container.setStyleName("Editor");
 		
-		this.addLoadListener(new LoadListener() {
+		addLoadListener(new LoadListener() {
 			public void onLoad(Widget sender) {
-				loaded = true;
+				initialized = true;
+				
 				if (tmpHTMLStorage != null) {
-					setHTML(tmpHTMLStorage);
+					getEditorWYSIWYG().setHTML(tmpHTMLStorage);
+					tmpHTMLStorage = null;
 				}
-				tmpHTMLStorage = null;
 			}
 			
 			public void onError(Widget sender) {
-				Window.alert("Unable to load Rich Text Editor Widget!");
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		
 		initWidget(container);
 	}
 	
-	public void load() {
+	protected void onLoad() {
+		super.onLoad();
+		
+		if (!initialized) {
+			load();
+		} else if (tmpHTMLStorage != null) {
+			getEditorWYSIWYG().setHTML(tmpHTMLStorage);
+			tmpHTMLStorage = null;
+		}
+	}
+	
+	private void load() {
+		if (EditorUtils.isGecko()) {
+			Window.alert("Gecko detected!");
+		}
+		if (EditorUtils.isIE()) {
+			Window.alert("IE detected!");
+		}
+		if (EditorUtils.isSafari()) {
+			Window.alert("Safari detected!");
+		}
+		if (EditorUtils.isOpera()) {
+			Window.alert("Opera detected!");
+		}
+		
 		EditorToolbar toolbar = getEditorToolbar();
 		toolbar.setWidth("100%");
 		container.add(toolbar);
@@ -132,7 +158,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
 	private String tmpHTMLStorage = null;
 	
 	public void setHTML(String _html){
-		if (loaded) {
+		if (isAttached()) {
 			getEditorWYSIWYG().setHTML(_html);
 		} else {
 			tmpHTMLStorage = _html;

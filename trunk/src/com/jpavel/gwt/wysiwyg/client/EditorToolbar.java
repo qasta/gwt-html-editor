@@ -243,8 +243,8 @@ public class EditorToolbar extends Composite {
 			
 			this.addClickListener(new ClickListener() {
 				public void onClick(Widget sender) {
-					EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-					editor.execCommand(command, ui, null);
+//					EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+					EditorUtils.execCommand(editor.getEditorWYSIWYG().getFrame().getElement(), command, ui, null);
 				}
 			});
 		}
