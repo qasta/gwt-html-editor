@@ -1,0 +1,8 @@
+<module>
+	<inherits name='com.google.gwt.user.User'/>
+	<inherits name='com.jpavel.gwt.wysiwyg.Editor'/>
+	
+	<entry-point class='com.jpavel.gwt.wysiwyg.test.client.Test'/>
+	
+	<source path="client"/>
+</module>
