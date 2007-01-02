@@ -1,4 +1,4 @@
-/*
+	/*
  * Copyright 2006 Pavel Jbanov.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -14,7 +14,6 @@
  * the License.
  */
 .Editor {
-	
 }
 
 .Editor-IFrame {
@@ -28,13 +27,11 @@
 	border-bottom: 1px solid #888;
 	background-color: #EFEFDE;
 	vertical-align: middle;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding: 0px 5px 0px 5px;
 }
 
 .Editor-Toolbar-Select {
 	font-size: 12px;
-	height: 16px;
 	margin: 4px;
 }
 
@@ -59,7 +56,7 @@
 	font-family: tahoma, arial, sans-serif;
 	background-color: #003063;
 	color: white;
-	padding: 3 5 5 10;
+	padding: 3px 5px 5px 10px;
 	margin: 0px;
 	font-weight: bold;
 	font-size: 14px;
@@ -88,8 +85,7 @@
 	height: 16px;
 	width: 1px;
 	border: 1px solid #D0D0D0;
-	margin-left: 3px;
-	margin-right: 3px;
+	margin: 0px 3px 0px 3px;
 }
 
 .Editor-Toolbar-Button-Source {

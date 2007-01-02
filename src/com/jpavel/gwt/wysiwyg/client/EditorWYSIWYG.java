@@ -32,18 +32,15 @@ public class EditorWYSIWYG extends Composite {
 	
 	private boolean showFrame = true;
 	
-	public EditorWYSIWYG(Editor _editor, String _id) {
+	public EditorWYSIWYG(Editor _editor) {
 		
 		this.editor = _editor;
 		
 		vp = new VerticalPanel();
 		vp.setWidth("100%");
 
-		frame = new EditorIframe(_id + "_wysiwyg_Frame");
-		frame.setUrl("about:blank");
-		frame.setStyleName("Editor-IFrame");
+		frame = new EditorIframe();
 		frame.setWidth("100%");
-		frame.setHeight(editor.getHeight());
 		
 		// this is done on purpose...
 		if (EditorUtils.isGecko()) {
