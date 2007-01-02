@@ -91,16 +91,28 @@ public class EditorUtils {
 //	}-*/;
 
 	public static native void execCommand(Element oIframe, String command, boolean ui, String value)/*-{
+        oIframe.contentWindow.focus();
+        oIframe.contentWindow.document.execCommand(command, ui, value);
+	}-*/;
+	
+	public static native void oldExecCommand(Element oIframe, String command, boolean ui, String value)/*-{
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
-    	oDoc.execCommand(command, ui, value);
+		oDoc.execCommand(command, ui, value);
 	}-*/;
 
 	
 	public static native void doFocus(Element oIframe)/*-{
-	    if (@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()() || @com.jpavel.gwt.wysiwyg.client.EditorUtils::isGecko()()) {
+        oIframe.contentWindow.focus();
+	}-*/;
+	
+	public static native void oldDoFocus(Element oIframe)/*-{
+	    if (@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()() || 
+	        @com.jpavel.gwt.wysiwyg.client.EditorUtils::isGecko()() || 
+	        @com.jpavel.gwt.wysiwyg.client.EditorUtils::isSafari()()) {
+	        
 	        oIframe.contentWindow.focus();
 	    } else {
 			oIframe.focus();
@@ -129,8 +141,15 @@ public class EditorUtils {
 	}-*/;
 	
 	public static native boolean isGecko() /*-{
-		var agt=navigator.userAgent.toLowerCase();
-		return (agt.indexOf('gecko') != -1);
+		if(navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
+			var versionindex=navigator.userAgent.indexOf("Firefox")+8
+			if (parseInt(navigator.userAgent.charAt(versionindex))>=1) {
+				return true;
+			}
+		}
+		//var agt=navigator.userAgent.toLowerCase();
+		//return (agt.indexOf('gecko') != -1);
+		return false;
 	}-*/;
 	
 	public static native boolean isOpera() /*-{
@@ -139,8 +158,11 @@ public class EditorUtils {
 	}-*/;
 	
 	public static native boolean isSafari() /*-{
-		var agt=navigator.vendor.toLowerCase();
-		return (agt.indexOf("Apple") != -1);
+		var agt = navigator.vendor;
+		if (agt) {
+			return (agt.indexOf("Apple") != -1);
+		} 
+		return false; 
 	}-*/;
 	
 	public static native void saveSelection(Element oIframe) /*-{

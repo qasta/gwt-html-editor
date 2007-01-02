@@ -71,6 +71,7 @@ public class EditorWYSIWYG extends Composite {
 	    }
 		oDoc.write("<html><body style='border:none; margin:0px; padding: 5px; font-family: sans-serif; font-size: 12px;'><p>&nbsp;</p></body></html>");
 		oDoc.close();
+		oIframe.contentWindow.focus();
 	}-*/;
 
 

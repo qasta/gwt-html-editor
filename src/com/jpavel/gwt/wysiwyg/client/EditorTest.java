@@ -47,8 +47,6 @@ public class EditorTest implements EntryPoint {
 		
 		editor.setHTML("<h1>Lala</h1>");
 		
-		editor.load();
-		
 		RootPanel.get().add(editor);
 	}
 }
