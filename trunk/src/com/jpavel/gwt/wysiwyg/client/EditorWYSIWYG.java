@@ -46,11 +46,13 @@ public class EditorWYSIWYG extends Composite {
 		frame.setHeight(editor.getHeight());
 		
 		// this is done on purpose...
-		frame.addMouseOverListener(new EditorMouseOverListener() {
-			public void onMouseOver(Widget widget) {
-				enableDesignMode();
-			}
-		});
+		if (EditorUtils.isGecko()) {
+			frame.addMouseOverListener(new EditorMouseOverListener() {
+				public void onMouseOver(Widget widget) {
+					enableDesignMode();
+				}
+			});
+		}
 		
 		textArea = new TextArea();
 		textArea.setWidth("100%");
@@ -88,6 +90,9 @@ public class EditorWYSIWYG extends Composite {
 	
 	private native void _enableDesignMode(Element oIframe)/*-{
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
+	    if (!oDoc) {
+	       $wnd.alert("bug _enableDesignMode");
+	    }
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
@@ -101,6 +106,11 @@ public class EditorWYSIWYG extends Composite {
 	
 	private native void _setHTML(Element oIframe, String _html)/*-{
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
+	    
+	    if (!oDoc) {
+	       $wnd.alert("bug _setHTML");
+	    }
+	    
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
@@ -115,12 +125,22 @@ public class EditorWYSIWYG extends Composite {
 	
 	public native String _getHTML(Element oIframe)/*-{
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
+	    if (!oDoc) {
+	       $wnd.alert("bug _getHTML");
+	    }
+	    
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
 	    return oDoc.body.innerHTML;
 	}-*/;
 
+	public void setHeight(String height) {
+		vp.setHeight(height);
+		frame.setHeight(height);
+		textArea.setHeight(height);
+	}
+	
 	public EditorIframe getFrame() {
 		return frame;
 	}

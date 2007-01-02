@@ -16,6 +16,8 @@
 
 package com.jpavel.gwt.wysiwyg.client;
 
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.Widget;
@@ -146,4 +148,14 @@ public class EditorToolbarButton extends Image {
 			// TODO Auto-generated method stub
 		}
 	}
+	
+    /**
+     * Overriden to block the browser's default behaviour.
+     */
+    public void onBrowserEvent(Event event) {
+        super.onBrowserEvent(event);
+        //This is required to prevent a Drag & Drop of the Image in the edit text.
+        DOM.eventPreventDefault(event);
+    }
+
 }

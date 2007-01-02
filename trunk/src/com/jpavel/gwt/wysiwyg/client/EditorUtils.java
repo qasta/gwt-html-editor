@@ -208,6 +208,9 @@ public class EditorUtils {
         };
 	}-*/;
 
+	public static native int parseInt(String s) /*-{
+		return parseInt(s);
+	}-*/;
 	
 	public static String[][] getSupportedFormats() {
 		return new String[][]{{"Normal", "<P>"}, {"Heading 1", "<H1>"}, {"Heading 2", "<H2>"}, {"Heading 3", "<H3>"}, {"Heading 4", "<H4>"}, {"Heading 5", "<H5>"}, {"Heading 6", "<H6>"}, {"Preformatted", "<PRE>"}, {"Address", "<ADDRESS>"}};		

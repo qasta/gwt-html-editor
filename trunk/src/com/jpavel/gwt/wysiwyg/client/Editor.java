@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LoadListener;
 import com.google.gwt.user.client.ui.SourcesLoadEvents;
@@ -45,6 +44,14 @@ public class Editor extends Composite implements SourcesLoadEvents {
 		container = new VerticalPanel();
 		
 		container.setStyleName("Editor");
+
+		EditorToolbar toolbar = getEditorToolbar();
+		toolbar.setWidth("100%");
+		container.add(toolbar);
+		
+		final EditorWYSIWYG wysiwyg = getEditorWYSIWYG();
+		wysiwyg.setWidth("100%");
+		container.add(wysiwyg);
 		
 		addLoadListener(new LoadListener() {
 			public void onLoad(Widget sender) {
@@ -65,6 +72,9 @@ public class Editor extends Composite implements SourcesLoadEvents {
 		initWidget(container);
 	}
 	
+	/**
+	 * do not override it!
+	 */
 	protected void onLoad() {
 		super.onLoad();
 		
@@ -77,34 +87,21 @@ public class Editor extends Composite implements SourcesLoadEvents {
 	}
 	
 	private void load() {
-		if (EditorUtils.isGecko()) {
-			Window.alert("Gecko detected!");
-		}
-		if (EditorUtils.isIE()) {
-			Window.alert("IE detected!");
-		}
-		if (EditorUtils.isSafari()) {
-			Window.alert("Safari detected!");
-		}
-		if (EditorUtils.isOpera()) {
-			Window.alert("Opera detected!");
-		}
+		wysiwyg.initFrame(wysiwyg.getFrame().getElement());
 		
-		EditorToolbar toolbar = getEditorToolbar();
-		toolbar.setWidth("100%");
-		container.add(toolbar);
-		
-		final EditorWYSIWYG wysiwyg = getEditorWYSIWYG();
-		wysiwyg.setWidth("100%");
-		container.add(wysiwyg);
-		
-		// Firefox hack...
 		new Timer() {
 			public void run() {
-				wysiwyg.initFrame(wysiwyg.getFrame().getElement());
-				notifyLoadListeners();
+				if (!EditorUtils.isGecko()) {
+					wysiwyg.enableDesignMode();
+				}
+				
+				new Timer() {
+					public void run() {
+						notifyLoadListeners();
+					}
+				}.schedule(50);
 			}
-		}.schedule(10);
+		}.schedule(50);
 	}
 
 	public void setWidth(String width) {
@@ -117,6 +114,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
 
 	public void setHeight(String height) {
 		container.setHeight(height);
+		wysiwyg.setHeight("" + (EditorUtils.parseInt(height) - toolbar.getOffsetHeight()) + "px");
 	}
 
 	public String getHeight() {
