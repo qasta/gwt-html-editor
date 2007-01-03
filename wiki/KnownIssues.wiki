@@ -3,7 +3,7 @@
 
 = Known Issues =
 
-  # Doesn't work on Safari.
+  # Doesn't work (fully) on Safari. [SafariSupport More details]
   # Some issues (special cases) in hosted-mode on Windows (GWT 1.2.22).
 
 Notice any other bugs or annoyances let me know.
