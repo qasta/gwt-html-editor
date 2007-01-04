@@ -2,15 +2,15 @@ package com.jpavel.gwt.ext.client;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.CellPanel;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.MouseListener;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 
 public class SplitPane extends Composite {
 
@@ -18,74 +18,101 @@ public class SplitPane extends Composite {
 	public static final int HORIZONTAL_SPLIT = 1;
 
 	private int splitOrientation;
+	private float leftRatio = 0;
+	private int leftWidth = -1;
 	
-	private SimplePanel mainContainer;
-	private VerticalPanel verticalPanel;
-	private HorizontalPanel horizontalPanel;
+	private Grid mainContainer;
 	private SimplePanel firstWidget;
 	private SimplePanel secondWidget;
 	private Divider divider;
 	
 	private int originalWidth;
 	private int originalHeight;
-
-	/**
-	 * 
-	 * 
-	 */
+	
 	public SplitPane() {
 		splitOrientation = VERTICAL_SPLIT;
+		leftRatio = 0.5f;
+		
+		init();
+	}
+
+	public SplitPane(int splitOrientation) {
+		this.splitOrientation = splitOrientation;
+		leftRatio = 0.5f;
+		
+		init();
+	}
+
+	public SplitPane(int splitOrientation, float leftRatio) {
+		this.splitOrientation = splitOrientation;
+		this.leftRatio = leftRatio;
 
 		init();
 	}
 
-	/**
-	 * 
-	 * @param split
-	 */
-	public SplitPane(int splitOrientation) {
+	public SplitPane(int splitOrientation, int leftWidth) {
 		this.splitOrientation = splitOrientation;
-
+		this.leftWidth = leftWidth;
+		
 		init();
 	}
 
 	private void init() {
-
-		mainContainer = new SimplePanel();
-		mainContainer.setStyleName("SplitPane");
-
-		Panel panel;
-
-		if (splitOrientation == VERTICAL_SPLIT) {
-			horizontalPanel = new HorizontalPanel();
-			horizontalPanel.setWidth("100%");
-			horizontalPanel.setHeight("100%");
-
-			mainContainer.setWidget(horizontalPanel);
-			panel = horizontalPanel;
-		} else {
-			verticalPanel = new VerticalPanel();
-			verticalPanel.setWidth("100%");
-			verticalPanel.setHeight("100%");
-			
-			mainContainer.setWidget(verticalPanel);
-			panel = verticalPanel;
-		}
-
+		
 		firstWidget = new SimplePanel();
 		DOM.setStyleAttribute(firstWidget.getElement(), "overflow", "hidden");
 		firstWidget.setWidth("100%");
 		firstWidget.setHeight("100%");
-		panel.add(firstWidget);
 
 		divider = new Divider(splitOrientation);
-		panel.add(divider);
 
 		secondWidget = new SimplePanel();
 		DOM.setStyleAttribute(secondWidget.getElement(), "overflow", "hidden");
 		secondWidget.setWidth("100%");
 		secondWidget.setHeight("100%");
-		panel.add(secondWidget);
+		
+		
+		if (splitOrientation == VERTICAL_SPLIT) {
+			mainContainer = new Grid(1, 3);
+			
+			mainContainer.setWidget(0, 0, firstWidget);
+			mainContainer.setWidget(0, 1, divider);
+			mainContainer.setWidget(0, 2, secondWidget);
+			
+			CellFormatter cellFormatter = mainContainer.getCellFormatter();
+
+			cellFormatter.setHorizontalAlignment(0, 0, HasAlignment.ALIGN_LEFT);
+			cellFormatter.setVerticalAlignment(0, 0, HasAlignment.ALIGN_TOP);
+
+			cellFormatter.setStyleName(0, 1, "SplitPaneDividerField");
+			cellFormatter.setHorizontalAlignment(0, 1, HasAlignment.ALIGN_CENTER);
+			cellFormatter.setVerticalAlignment(0, 1, HasAlignment.ALIGN_MIDDLE);
+			
+			cellFormatter.setHorizontalAlignment(0, 2, HasAlignment.ALIGN_LEFT);
+			cellFormatter.setVerticalAlignment(0, 2, HasAlignment.ALIGN_TOP);
+		} else {
+			mainContainer = new Grid(3, 1);
+			
+			mainContainer.setWidget(0, 0, firstWidget);
+			mainContainer.setWidget(1, 0, divider);
+			mainContainer.setWidget(2, 0, secondWidget);
+
+			CellFormatter cellFormatter = mainContainer.getCellFormatter();
+
+			cellFormatter.setHorizontalAlignment(0, 0, HasAlignment.ALIGN_LEFT);
+			cellFormatter.setVerticalAlignment(0, 0, HasAlignment.ALIGN_TOP);
+
+			cellFormatter.setStyleName(1, 0, "SplitPaneDividerField");
+			cellFormatter.setHorizontalAlignment(1, 0, HasAlignment.ALIGN_CENTER);
+			cellFormatter.setVerticalAlignment(1, 0, HasAlignment.ALIGN_MIDDLE);
+			
+			cellFormatter.setHorizontalAlignment(2, 0, HasAlignment.ALIGN_LEFT);
+			cellFormatter.setVerticalAlignment(2, 0, HasAlignment.ALIGN_TOP);
+		}
+		
+		mainContainer.setStyleName("SplitPane");
+		mainContainer.setCellPadding(0);
+		mainContainer.setCellSpacing(0);
 
 		initWidget(mainContainer);
 	}
@@ -104,17 +131,10 @@ public class SplitPane extends Composite {
 		public Divider(int splitOrientation) {
 			super("spacer.gif");
 
-			setStyleName("SplitPaneDivider");
 			if (splitOrientation == HORIZONTAL_SPLIT) {
-				DOM.setStyleAttribute(this.getElement(), "cursor", "n-resize");
-
-				setWidth("100%");
-				setHeight("5px");
+				setStyleName("SplitPaneDivider-Horizontal");
 			} else {
-				DOM.setStyleAttribute(this.getElement(), "cursor", "e-resize");
-
-				setWidth("5px");
-				setHeight("100%");
+				setStyleName("SplitPaneDivider-Vertical");
 			}
 
 			addMouseListener(this);
@@ -123,16 +143,29 @@ public class SplitPane extends Composite {
 		protected void onLoad() {
 			super.onLoad();
 
-			CellPanel cPanel = (CellPanel) mainContainer.getWidget();
-
+			CellFormatter cellFormatter = mainContainer.getCellFormatter();
 			if (splitOrientation == VERTICAL_SPLIT) {
-				cPanel.setCellWidth(firstWidget, (originalWidth - 5)/2 + "px");
-				cPanel.setCellWidth(divider, "5px");
-				cPanel.setCellWidth(secondWidget, (originalWidth - 5)/2 + "px");
+				if (leftWidth != -1) {
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "width", (int)leftWidth + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 1), "width", "5px");
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 2), "width", (int)(originalWidth - divider.getOffsetWidth() - leftWidth) + "px");
+				} else {
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "width", (int)((originalWidth - divider.getOffsetWidth())*leftRatio) + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 1), "width", "5px");
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 2), "width", (int)((originalWidth - divider.getOffsetWidth())*(1 - leftRatio)) + "px");
+				}
 			} else {
-				cPanel.setCellHeight(firstWidget, (originalHeight - 5)/2 + "px");
-				cPanel.setCellHeight(divider, "5px");
-				cPanel.setCellHeight(secondWidget, (originalHeight - 5)/2 + "px");
+				if (leftWidth != -1) {
+					Window.alert((int)(originalHeight - divider.getOffsetHeight() - leftWidth) + "px");
+					
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "height", (int)leftWidth + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(1, 0), "height", "5px");
+					DOM.setStyleAttribute(cellFormatter.getElement(2, 0), "height", (int)(originalHeight - divider.getOffsetHeight() - leftWidth) + "px");
+				} else {
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "height", (int)((originalHeight - divider.getOffsetHeight())*leftRatio) + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(1, 0), "height", "5px");
+					DOM.setStyleAttribute(cellFormatter.getElement(2, 0), "height", (int)((originalHeight - divider.getOffsetHeight())*(1 - leftRatio)) + "px");
+				}
 			}
 		}
 
@@ -158,34 +191,45 @@ public class SplitPane extends Composite {
 
 		public void onMouseMove(Widget sender, int x, int y) {
 			if (dragging) {
+				int absX = x + getAbsoluteLeft();
+				int absY = y + getAbsoluteTop();
+				
 				int newFirstWidth;
 				if (splitOrientation == VERTICAL_SPLIT) {
-					newFirstWidth = divider.getAbsoluteLeft() + x - 2 - mainContainer.getAbsoluteLeft();
+					newFirstWidth = absX - mainContainer.getAbsoluteLeft();
 
 					if (newFirstWidth >= originalWidth) {
 						newFirstWidth = originalWidth - 1;
 					}
 				} else {
-					newFirstWidth = divider.getAbsoluteTop() + y - 2 - mainContainer.getAbsoluteTop();
+					newFirstWidth = absY - mainContainer.getAbsoluteTop();
 
 					if (newFirstWidth >= originalHeight) {
 						newFirstWidth = originalHeight - 1;
 					}
 				}
 
-				if (newFirstWidth < 0) {
+				if (newFirstWidth <= 0) {
 					newFirstWidth = 0;
 				}
-
-				CellPanel cPanel = (CellPanel) mainContainer.getWidget();
+				
+				CellFormatter cellFormatter = mainContainer.getCellFormatter();
 
 				if (splitOrientation == VERTICAL_SPLIT) {
-					cPanel.setCellWidth(firstWidget, (newFirstWidth - 5) + "px");
-					cPanel.setCellWidth(secondWidget, (originalWidth - newFirstWidth) + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "width", normalizeMin((int)(newFirstWidth + divider.getOffsetWidth()/2)) + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 2), "width", normalizeMin((int)(originalWidth + divider.getOffsetWidth()/2 - newFirstWidth)) + "px");
 				} else {
-					cPanel.setCellHeight(firstWidget, (newFirstWidth - 5) + "px");
-					cPanel.setCellHeight(secondWidget, (originalHeight - newFirstWidth) + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "height", normalizeMin((int)(newFirstWidth - divider.getOffsetHeight()/2)) + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(2, 0), "height", normalizeMin((int)(originalHeight - divider.getOffsetHeight()/2 - newFirstWidth)) + "px");
 				}
+			}
+		}
+		
+		private int normalizeMin(int in) {
+			if (in <= 0) {
+				return 0;
+			} else {
+				return in;
 			}
 		}
 		
@@ -197,38 +241,25 @@ public class SplitPane extends Composite {
 	        //This is required to prevent a Drag & Drop of the Image in the edit text.
 	        DOM.eventPreventDefault(event);
 	    }
-
 	}
 
-	public void setLeftWidget(Widget widget) {
-		if (splitOrientation != VERTICAL_SPLIT) {
-			throw new RuntimeException("you're not using VERTICAL_SPLIT");
-		}
-
+	public void setFirstWidget(Widget widget) {
+		firstWidget.clear();
 		firstWidget.setWidget(widget);
 	}
-
-	public void setRightWidget(Widget widget) {
-		if (splitOrientation != VERTICAL_SPLIT) {
-			throw new RuntimeException("you're not using VERTICAL_SPLIT");
+	
+	public void setPadding(int padding) {
+		mainContainer.setCellPadding(padding);
+		CellFormatter cellFormatter = mainContainer.getCellFormatter();
+		if (splitOrientation == VERTICAL_SPLIT) {
+			DOM.setStyleAttribute(cellFormatter.getElement(0, 1), "padding", "0px");
+		} else {
+			DOM.setStyleAttribute(cellFormatter.getElement(1, 0), "padding", "0px");
 		}
-
-		secondWidget.setWidget(widget);
 	}
 
-	public void setTopWidget(Widget widget) {
-		if (splitOrientation != HORIZONTAL_SPLIT) {
-			throw new RuntimeException("you're not using HORIZONTAL_SPLIT");
-		}
-
-		firstWidget.setWidget(widget);
-	}
-
-	public void setBottomWidget(Widget widget) {
-		if (splitOrientation != HORIZONTAL_SPLIT) {
-			throw new RuntimeException("you're not using HORIZONTAL_SPLIT");
-		}
-
+	public void setSecondWidget(Widget widget) {
+		secondWidget.clear();
 		secondWidget.setWidget(widget);
 	}
 }
