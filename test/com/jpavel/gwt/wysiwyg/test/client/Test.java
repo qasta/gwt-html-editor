@@ -39,7 +39,8 @@ public class Test implements EntryPoint {
 		splitPane.setHeight("100%");
 		
 		TabPanel t = new TabPanel();
-		t.setWidth("600px");
+		t.setWidth("100%");
+		t.setHeight("100%");
 		
 		// tab 1
 		Editor editor1 = new Editor();
