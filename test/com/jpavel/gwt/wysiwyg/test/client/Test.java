@@ -20,9 +20,11 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.jpavel.gwt.ext.client.SplitPane;
 import com.jpavel.gwt.wysiwyg.client.Editor;
 
 public class Test implements EntryPoint {
@@ -32,8 +34,12 @@ public class Test implements EntryPoint {
 	}
 
 	public void onModuleLoad() {
+		SplitPane splitPane = new SplitPane(SplitPane.VERTICAL_SPLIT, 0.3f);
+		splitPane.setWidth("100%");
+		splitPane.setHeight("100%");
+		
 		TabPanel t = new TabPanel();
-		t.setWidth("100%");
+		t.setWidth("600px");
 		
 		// tab 1
 		Editor editor1 = new Editor();
@@ -71,6 +77,11 @@ public class Test implements EntryPoint {
 		
 		t.selectTab(0);
 		
-		getRootPanel().add(t);
+		splitPane.setFirstWidget(new HTML("Left Pane"));
+		splitPane.setSecondWidget(t);
+		
+		splitPane.setPadding(10);
+		
+		getRootPanel().add(splitPane);
 	}
 }

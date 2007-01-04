@@ -1,6 +1,7 @@
 <module>
 	<inherits name='com.google.gwt.user.User'/>
 	<inherits name='com.jpavel.gwt.wysiwyg.Editor'/>
+	<inherits name='com.jpavel.gwt.ext.UI'/>
 	
 	<entry-point class='com.jpavel.gwt.wysiwyg.test.client.Test'/>
 	
