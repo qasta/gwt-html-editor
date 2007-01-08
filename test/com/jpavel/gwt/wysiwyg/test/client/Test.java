@@ -40,7 +40,6 @@ public class Test implements EntryPoint {
 		
 		TabPanel t = new TabPanel();
 		t.setWidth("100%");
-		t.setHeight("100%");
 		
 		// tab 1
 		Editor editor1 = new Editor();
@@ -81,7 +80,7 @@ public class Test implements EntryPoint {
 		splitPane.setFirstWidget(new HTML("Left Pane"));
 		splitPane.setSecondWidget(t);
 		
-		splitPane.setPadding(10);
+		splitPane.setPadding(5);
 		
 		getRootPanel().add(splitPane);
 	}

@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
+import com.jpavel.gwt.wysiwyg.client.EditorUtils;
 
 public class SplitPane extends Composite {
 
@@ -191,36 +192,27 @@ public class SplitPane extends Composite {
 
 		public void onMouseMove(Widget sender, int x, int y) {
 			if (dragging) {
-				int absX = x + getAbsoluteLeft();
-				int absY = y + getAbsoluteTop();
-				
-				int newFirstWidth;
-				if (splitOrientation == VERTICAL_SPLIT) {
-					newFirstWidth = absX - mainContainer.getAbsoluteLeft();
-
-					if (newFirstWidth >= originalWidth) {
-						newFirstWidth = originalWidth - 1;
-					}
-				} else {
-					newFirstWidth = absY - mainContainer.getAbsoluteTop();
-
-					if (newFirstWidth >= originalHeight) {
-						newFirstWidth = originalHeight - 1;
-					}
-				}
-
-				if (newFirstWidth <= 0) {
-					newFirstWidth = 0;
-				}
-				
 				CellFormatter cellFormatter = mainContainer.getCellFormatter();
 
+				int newFirstWidth;
 				if (splitOrientation == VERTICAL_SPLIT) {
-					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "width", normalizeMin((int)(newFirstWidth + divider.getOffsetWidth()/2)) + "px");
-					DOM.setStyleAttribute(cellFormatter.getElement(0, 2), "width", normalizeMin((int)(originalWidth + divider.getOffsetWidth()/2 - newFirstWidth)) + "px");
+					newFirstWidth = EditorUtils.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "width")) + x;
+
+					if (newFirstWidth >= originalWidth) {
+						newFirstWidth = originalWidth;
+					}
+					
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "width", normalizeMin(newFirstWidth) + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 2), "width", normalizeMin(originalWidth - newFirstWidth - divider.getOffsetWidth()) + "px");
 				} else {
-					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "height", normalizeMin((int)(newFirstWidth - divider.getOffsetHeight()/2)) + "px");
-					DOM.setStyleAttribute(cellFormatter.getElement(2, 0), "height", normalizeMin((int)(originalHeight - divider.getOffsetHeight()/2 - newFirstWidth)) + "px");
+					newFirstWidth = EditorUtils.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "height")) + y;
+
+					if (newFirstWidth >= originalHeight) {
+						newFirstWidth = originalHeight;
+					}
+					
+					DOM.setStyleAttribute(cellFormatter.getElement(0, 0), "height", normalizeMin(newFirstWidth) + "px");
+					DOM.setStyleAttribute(cellFormatter.getElement(2, 0), "height", normalizeMin(originalHeight - newFirstWidth -  divider.getOffsetHeight()) + "px");
 				}
 			}
 		}
