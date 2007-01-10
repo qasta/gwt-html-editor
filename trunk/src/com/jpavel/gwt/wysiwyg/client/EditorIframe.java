@@ -25,28 +25,28 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Frame;
 
 public class EditorIframe extends Frame {
-	public EditorIframe() {
-		this.setStyleName("Editor-IFrame");
-		//this.setUrl("about:blank");
+  public EditorIframe() {
+    this.setStyleName("Editor-IFrame");
+    // this.setUrl("about:blank");
 
-		sinkEvents(Event.MOUSEEVENTS); 
-	}
-	
-	private List mouseOverListeners = new ArrayList();
-	
-	public void addMouseOverListener(EditorMouseOverListener listener) {
-		mouseOverListeners.add(listener);
-	}
-	
-	public void removeMouseOverListener(EditorMouseOverListener listener) {
-		mouseOverListeners.remove(listener);
-	}
-	
-	public void onBrowserEvent(Event event) {
-		if (DOM.eventGetType(event) == Event.ONMOUSEOVER){
-			for (Iterator i = mouseOverListeners.iterator(); i.hasNext(); ) {
-				((EditorMouseOverListener) i.next()).onMouseOver(this);
-			}
-		}
-	}
+    sinkEvents(Event.MOUSEEVENTS);
+  }
+
+  private List mouseOverListeners = new ArrayList();
+
+  public void addMouseOverListener(EditorMouseOverListener listener) {
+    mouseOverListeners.add(listener);
+  }
+
+  public void removeMouseOverListener(EditorMouseOverListener listener) {
+    mouseOverListeners.remove(listener);
+  }
+
+  public void onBrowserEvent(Event event) {
+    if (DOM.eventGetType(event) == Event.ONMOUSEOVER) {
+      for (Iterator i = mouseOverListeners.iterator(); i.hasNext();) {
+        ((EditorMouseOverListener) i.next()).onMouseOver(this);
+      }
+    }
+  }
 }

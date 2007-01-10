@@ -17,5 +17,5 @@
 package com.jpavel.gwt.wysiwyg.client;
 
 public interface EditorLoadListener {
-	public void onLoad();
+  public void onLoad();
 }

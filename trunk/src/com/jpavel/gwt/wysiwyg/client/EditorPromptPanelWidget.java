@@ -19,25 +19,26 @@ package com.jpavel.gwt.wysiwyg.client;
 import com.google.gwt.user.client.ui.Widget;
 
 public class EditorPromptPanelWidget {
-	private Widget widget;
-	private EditorPromptPanel prompt;
-	
-	public EditorPromptPanelWidget() {
-	}
+  private Widget widget;
 
-	public Widget getWidget() {
-		return widget;
-	}
+  private EditorPromptPanel prompt;
 
-	public void setWidget(Widget widget) {
-		this.widget = widget;
-	}
+  public EditorPromptPanelWidget() {
+  }
 
-	public EditorPromptPanel getPrompt() {
-		return prompt;
-	}
+  public Widget getWidget() {
+    return widget;
+  }
 
-	public void setPrompt(EditorPromptPanel prompt) {
-		this.prompt = prompt;
-	}
+  public void setWidget(Widget widget) {
+    this.widget = widget;
+  }
+
+  public EditorPromptPanel getPrompt() {
+    return prompt;
+  }
+
+  public void setPrompt(EditorPromptPanel prompt) {
+    this.prompt = prompt;
+  }
 }
