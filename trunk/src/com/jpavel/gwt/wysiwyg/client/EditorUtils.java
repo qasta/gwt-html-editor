@@ -166,46 +166,55 @@ public class EditorUtils {
 	}-*/;
 	
 	public static native void saveSelection(Element oIframe) /*-{
-		// Save the selection, works around a problem with IE where the 
-        // selection in the iframe gets lost. We only save if the current 
-        // selection in the document
-
-		if (!@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()()) {
-			return;
-		}
+		// Save the selection, works around a problem with IE/Safari where the 
+        // selection in the iframe gets lost.
 
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
-         
-        var currange = oDoc.selection.createRange();
-        oDoc._previous_range = currange;
+	         
+		if (@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()()) {
+	        var currange = oDoc.selection.createRange();
+	        oDoc._previous_range = currange;
+		}
+		if (@com.jpavel.gwt.wysiwyg.client.EditorUtils::isSafari()()) {
+			var oWin = oIframe.contentWindow;
+			var sel = oWin.getSelection();
+			
+			oDoc._previous_range = new Object();
+			oDoc._previous_range.baseNode = sel.baseNode;
+			oDoc._previous_range.baseOffset = sel.baseOffset;
+			oDoc._previous_range.extentNode = sel.extentNode;
+			oDoc._previous_range.extentOffset = sel.extentOffset;
+		}
 	}-*/;
 	
 	public static native void restoreSelection(Element oIframe) /*-{
-		// re-selects the previous selection in IE. We only restore if the
-        // current selection is not in the document.
+		// re-selects the previous selection.
         
-		if (!@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()()) {
-			return;
-		}
-
 	    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
 	    if (oDoc.document) {
 	        oDoc = oDoc.document;
 	    }
-
 		if (oDoc._previous_range) {
-            try {
-                oDoc._previous_range.select();
-                oDoc.focus();
-            } catch (e) {
-                alert("Error placing back selection");
-            };
-            
+			if (@com.jpavel.gwt.wysiwyg.client.EditorUtils::isIE()()) {
+	            try {
+	                oDoc._previous_range.select();
+	                oDoc.focus();
+	            } catch (e) {
+	                alert("Error placing back selection");
+	            };
+	            
+			}
+			if (@com.jpavel.gwt.wysiwyg.client.EditorUtils::isSafari()()) {
+				var oWin = oIframe.contentWindow;
+				var sel = oWin.getSelection();
+				sel.setBaseAndExtent(oDoc._previous_range.baseNode, oDoc._previous_range.baseOffset,
+									 oDoc._previous_range.extentNode,  oDoc._previous_range.extentOffset);
+			}
             oDoc._previous_range = null;
-        };
+		}
 	}-*/;
 
 	public static native int parseInt(String s) /*-{
