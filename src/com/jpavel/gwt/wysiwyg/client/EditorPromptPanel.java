@@ -20,35 +20,36 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class EditorPromptPanel extends DialogBox {
-	
-	private String value;
-	private VerticalPanel vp;
-	
-	public EditorPromptPanel(String title, EditorPromptPanelWidget pWidget) {
-		
-		vp = new VerticalPanel();
-		
-		pWidget.setPrompt(this);
-		vp.setStyleName("Editor-DialogBox-Content");
-		vp.add(pWidget.getWidget());
-		
-		this.setWidget(vp);
-		this.setText(title);
-		
-		this.setStyleName("Editor-DialogBox");
-	}
-	
-	public void show(Editor editor) {
-		this.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
-		super.show();
-	}
-	
-	public void complete(String value) {
-		this.value = value;
-		this.hide();
-	}
 
-	public String getValue() {
-		return value;
-	}
+  private String value;
+
+  private VerticalPanel vp;
+
+  public EditorPromptPanel(String title, EditorPromptPanelWidget pWidget) {
+
+    vp = new VerticalPanel();
+
+    pWidget.setPrompt(this);
+    vp.setStyleName("Editor-DialogBox-Content");
+    vp.add(pWidget.getWidget());
+
+    this.setWidget(vp);
+    this.setText(title);
+
+    this.setStyleName("Editor-DialogBox");
+  }
+
+  public void show(Editor editor) {
+    this.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
+    super.show();
+  }
+
+  public void complete(String value) {
+    this.value = value;
+    this.hide();
+  }
+
+  public String getValue() {
+    return value;
+  }
 }

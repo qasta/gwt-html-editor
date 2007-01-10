@@ -17,6 +17,6 @@
 package com.jpavel.gwt.wysiwyg.client;
 
 public abstract class EditorPromptPanelCallback {
-	
-	abstract public void onComplete(String value);
+
+  abstract public void onComplete(String value);
 }
