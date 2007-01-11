@@ -17,9 +17,16 @@
 package com.jpavel.gwt.wysiwyg.client;
 
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Widget;
 
-public class EditorToolbarSelect extends ListBox {
+public class EditorToolbarSelect extends ListBox implements EditorToolbarWidget {
+  
   public EditorToolbarSelect() {
     this.setStyleName("Editor-Toolbar-Select");
   }
+  
+  public Widget getWidget() {
+    return this;
+  }
+  
 }

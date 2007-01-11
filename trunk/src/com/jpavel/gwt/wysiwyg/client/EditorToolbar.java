@@ -34,18 +34,128 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class EditorToolbar extends Composite {
 
-  final private Editor editor;
+  /* Nested Classes */
+  
+  private class SimpleCommandButton extends EditorToolbarButton {
+    public SimpleCommandButton(String buttonId, final String command) {
+      this(buttonId, command, false, null);
+    }
 
-  private FlowPanel fullToolbar;
+    public SimpleCommandButton(String buttonId, final String command, final boolean ui, String value) {
+      super(buttonId);
 
-  private FlowPanel shortToolbar;
+      this.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          // EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+          EditorUtils.execCommand(editor.getEditorWYSIWYG().getFrame().getElement(), command, ui, null);
+        }
+      });
+    }
+  }
 
-  private VerticalPanel topContainer;
+/*
+  private class SimplePromptPanel extends EditorToolbarButton {
+    public SimplePromptPanel(String buttonId, final String command, final String question) {
+      super(buttonId);
 
-  private EditorColorPicker fgPicker;
+      this.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          String value = EditorUtils.prompt(question);
+          if (value != null) {
+            EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+            editor.execCommand(command, false, value);
+          }
+        }
+      });
+    }
+  }
+*/
+  
+  private class SimpleOneFieldPromptPanel {
+    public SimpleOneFieldPromptPanel(String command, String title, String fieldLabel, String buttonLabel) {
+      final EditorPromptPanelWidget widget = new EditorPromptPanelWidget();
 
-  private EditorColorPicker bgPicker;
+      VerticalPanel container = new VerticalPanel();
+      container.setWidth("300px");
+      final TextBox urlTextBox = new TextBox();
 
+      HorizontalPanel hz = new HorizontalPanel();
+      hz.setSpacing(5);
+      hz.setWidth("100%");
+      Label linkLabel = new Label(fieldLabel);
+      linkLabel.setWordWrap(false);
+      hz.add(linkLabel);
+      hz.setCellWidth(linkLabel, "70px");
+      hz.setCellVerticalAlignment(linkLabel, HasAlignment.ALIGN_MIDDLE);
+      hz.setCellHorizontalAlignment(linkLabel, HasAlignment.ALIGN_RIGHT);
+      hz.add(urlTextBox);
+      hz.setCellVerticalAlignment(urlTextBox, HasAlignment.ALIGN_MIDDLE);
+      urlTextBox.setWidth("100%");
+      container.add(hz);
+
+      HorizontalPanel hzButtons = new HorizontalPanel();
+      Button b = new Button(buttonLabel);
+      b.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          widget.getPrompt().complete(urlTextBox.getText());
+        }
+      });
+
+      Button c = new Button("Cancel");
+      c.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          widget.getPrompt().complete(null);
+        }
+      });
+
+      hzButtons.add(b);
+      hzButtons.add(c);
+      hzButtons.setSpacing(4);
+
+      container.add(hzButtons);
+      container.setCellHorizontalAlignment(hzButtons, HasAlignment.ALIGN_CENTER);
+
+      widget.setWidget(container);
+
+      new AdvancedPromptPanel(command, title, widget);
+
+      urlTextBox.setFocus(true);
+    }
+  }
+
+  private class AdvancedPromptPanel extends EditorPromptPanel {
+    public AdvancedPromptPanel(final String command, String title, EditorPromptPanelWidget widget) {
+      super(title, widget);
+
+      this.addPopupListener(new PopupListener() {
+        public void onPopupClosed(final PopupPanel sender, boolean autoClosed) {
+          String value = ((EditorPromptPanel) sender).getValue();
+          EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+          if (value != null) {
+            editor.execCommand(command, false, value);
+            EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+          }
+        }
+      });
+
+      EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
+      super.show(editor);
+    }
+  }
+
+  /* Fields */
+  
+  private final Editor editor;
+
+  private final FlowPanel fullToolbar;
+
+  private final FlowPanel sourceToolbar;
+
+  private final VerticalPanel topContainer;
+
+  
+  /* Constructors */
+  
   public EditorToolbar(Editor _editor) {
 
     topContainer = new VerticalPanel();
@@ -56,14 +166,7 @@ public class EditorToolbar extends Composite {
 
     fullToolbar = new FlowPanel();
 
-    shortToolbar = new FlowPanel();
-
-    EditorToolbarButton source = new EditorToolbarButton(EditorToolbarButton.BUTTON_SOURCE);
-    source.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
-        editor.getEditorWYSIWYG().toggleView();
-      }
-    });
+    sourceToolbar = new FlowPanel();
 
     EditorToolbarButton removeFormat = new SimpleCommandButton(EditorToolbarButton.BUTTON_DELETE, "RemoveFormat");
 
@@ -88,7 +191,7 @@ public class EditorToolbar extends Composite {
     EditorToolbarButton link = new EditorToolbarButton(EditorToolbarButton.BUTTON_LINK);
     link.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        new SimpleOneFieldPromptPannel("CreateLink", "Create Link", "Link URL: ", "Create Link");
+        new SimpleOneFieldPromptPanel("CreateLink", "Create Link", "Link URL: ", "Create Link");
       }
     });
 
@@ -96,11 +199,11 @@ public class EditorToolbar extends Composite {
     EditorToolbarButton image = new EditorToolbarButton(EditorToolbarButton.BUTTON_IMAGE);
     image.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        new SimpleOneFieldPromptPannel("InsertImage", "Insert Image", "Image URL: ", "Insert Image");
+        new SimpleOneFieldPromptPanel("InsertImage", "Insert Image", "Image URL: ", "Insert Image");
       }
     });
 
-    fgPicker = new EditorColorPicker("Select Text Color");
+    final EditorColorPicker fgPicker = new EditorColorPicker("Select Text Color");
     fgPicker.addSelectListener(new EditorColorSelectListener() {
       public void colorSelected(String rgb) {
         EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
@@ -118,7 +221,7 @@ public class EditorToolbar extends Composite {
       }
     });
 
-    bgPicker = new EditorColorPicker("Select Background Color");
+    final EditorColorPicker bgPicker = new EditorColorPicker("Select Background Color");
     bgPicker.addSelectListener(new EditorColorSelectListener() {
       public void colorSelected(String rgb) {
         EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
@@ -168,55 +271,62 @@ public class EditorToolbar extends Composite {
       }
     });
 
-    fullToolbar.add(source);
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    EditorToolbarButton source = new EditorToolbarButton(EditorToolbarButton.BUTTON_SOURCE);
+    source.addClickListener(new ClickListener() {
+      public void onClick(Widget sender) {
+        editor.getEditorWYSIWYG().toggleView();
+      }
+    });
+    this.addEditorToolbarWidget(source);
 
-    fullToolbar.add(removeFormat);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    this.addEditorToolbarWidget(removeFormat);
 
-    fullToolbar.add(undo);
-    fullToolbar.add(redo);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    this.addEditorToolbarWidget(undo);
+    this.addEditorToolbarWidget(redo);
 
-    fullToolbar.add(bold);
-    fullToolbar.add(italic);
-    fullToolbar.add(underlined);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    this.addEditorToolbarWidget(bold);
+    this.addEditorToolbarWidget(italic);
+    this.addEditorToolbarWidget(underlined);
 
-    fullToolbar.add(subscript);
-    fullToolbar.add(superscript);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    this.addEditorToolbarWidget(subscript);
+    this.addEditorToolbarWidget(superscript);
 
-    fullToolbar.add(justifyLeft);
-    fullToolbar.add(justifyCenter);
-    fullToolbar.add(justifyRight);
-    fullToolbar.add(justifyJustify);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    this.addEditorToolbarWidget(justifyLeft);
+    this.addEditorToolbarWidget(justifyCenter);
+    this.addEditorToolbarWidget(justifyRight);
+    this.addEditorToolbarWidget(justifyJustify);
 
-    fullToolbar.add(ol);
-    fullToolbar.add(ul);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    this.addEditorToolbarWidget(ol);
+    this.addEditorToolbarWidget(ul);
 
-    fullToolbar.add(link);
-    fullToolbar.add(unlink);
-    fullToolbar.add(image);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    this.addEditorToolbarWidget(link);
+    this.addEditorToolbarWidget(unlink);
+    this.addEditorToolbarWidget(image);
 
-    fullToolbar.add(foreColor);
-    fullToolbar.add(bgColor);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
 
-    fullToolbar.add(EditorToolbarButton.getSpacer());
+    this.addEditorToolbarWidget(foreColor);
+    this.addEditorToolbarWidget(bgColor);
 
-    fullToolbar.add(styles);
-    fullToolbar.add(fontSizes);
+    this.addEditorToolbarWidget(EditorToolbarButton.getSpacer());
+
+    this.addEditorToolbarWidget(styles);
+    this.addEditorToolbarWidget(fontSizes);
 
     EditorToolbarButton source2 = new EditorToolbarButton(EditorToolbarButton.BUTTON_NEW2);
     source2.addClickListener(new ClickListener() {
@@ -225,120 +335,22 @@ public class EditorToolbar extends Composite {
       }
     });
 
-    shortToolbar.add(source2);
+    sourceToolbar.add(source2);
 
     topContainer.add(fullToolbar);
-    topContainer.add(shortToolbar);
+    topContainer.add(sourceToolbar);
 
     fullToolbar.setVisible(true);
-    shortToolbar.setVisible(false);
+    sourceToolbar.setVisible(false);
 
     initWidget(topContainer);
   }
+  
 
-  private class SimpleCommandButton extends EditorToolbarButton {
-    public SimpleCommandButton(String buttonId, final String command) {
-      this(buttonId, command, false, null);
-    }
-
-    public SimpleCommandButton(String buttonId, final String command, final boolean ui, String value) {
-      super(buttonId);
-
-      this.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          // EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-          EditorUtils.execCommand(editor.getEditorWYSIWYG().getFrame().getElement(), command, ui, null);
-        }
-      });
-    }
-  }
-
-  public class SimplePromptPannel extends EditorToolbarButton {
-    public SimplePromptPannel(String buttonId, final String command, final String question) {
-      super(buttonId);
-
-      this.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          String value = EditorUtils.prompt(question);
-          if (value != null) {
-            EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-            editor.execCommand(command, false, value);
-          }
-        }
-      });
-    }
-  }
-
-  private class SimpleOneFieldPromptPannel {
-    public SimpleOneFieldPromptPannel(String command, String title, String fieldLabel, String buttonLabel) {
-      final EditorPromptPanelWidget widget = new EditorPromptPanelWidget();
-
-      VerticalPanel container = new VerticalPanel();
-      container.setWidth("300px");
-      final TextBox urlTextBox = new TextBox();
-
-      HorizontalPanel hz = new HorizontalPanel();
-      hz.setSpacing(5);
-      hz.setWidth("100%");
-      Label linkLabel = new Label(fieldLabel);
-      linkLabel.setWordWrap(false);
-      hz.add(linkLabel);
-      hz.setCellWidth(linkLabel, "70px");
-      hz.setCellVerticalAlignment(linkLabel, HasAlignment.ALIGN_MIDDLE);
-      hz.setCellHorizontalAlignment(linkLabel, HasAlignment.ALIGN_RIGHT);
-      hz.add(urlTextBox);
-      hz.setCellVerticalAlignment(urlTextBox, HasAlignment.ALIGN_MIDDLE);
-      urlTextBox.setWidth("100%");
-      container.add(hz);
-
-      HorizontalPanel hzButtons = new HorizontalPanel();
-      Button b = new Button(buttonLabel);
-      b.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          widget.getPrompt().complete(urlTextBox.getText());
-        }
-      });
-
-      Button c = new Button("Cancel");
-      c.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          widget.getPrompt().complete(null);
-        }
-      });
-
-      hzButtons.add(b);
-      hzButtons.add(c);
-      hzButtons.setSpacing(4);
-
-      container.add(hzButtons);
-      container.setCellHorizontalAlignment(hzButtons, HasAlignment.ALIGN_CENTER);
-
-      widget.setWidget(container);
-
-      new AdvancedPromptPannel(command, title, widget);
-
-      urlTextBox.setFocus(true);
-    }
-  }
-
-  private class AdvancedPromptPannel extends EditorPromptPanel {
-    public AdvancedPromptPannel(final String command, String title, EditorPromptPanelWidget widget) {
-      super(title, widget);
-
-      this.addPopupListener(new PopupListener() {
-        public void onPopupClosed(final PopupPanel sender, boolean autoClosed) {
-          String value = ((EditorPromptPanel) sender).getValue();
-          EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-          if (value != null) {
-            editor.execCommand(command, false, value);
-            EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-          }
-        }
-      });
-
-      EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-      super.show(editor);
-    }
+  /* Methods */
+  
+  public void addEditorToolbarWidget(EditorToolbarWidget editorToolbarWidget) {
+    fullToolbar.add(editorToolbarWidget.getWidget());
   }
 
   public void setWidth(String width) {
@@ -349,13 +361,14 @@ public class EditorToolbar extends Composite {
     return DOM.getStyleAttribute(topContainer.getElement(), "width");
   }
 
-  public void switchToSmall() {
+  public void switchToSource() {
     fullToolbar.setVisible(false);
-    shortToolbar.setVisible(true);
+    sourceToolbar.setVisible(true);
   }
 
   public void switchToFull() {
     fullToolbar.setVisible(true);
-    shortToolbar.setVisible(false);
+    sourceToolbar.setVisible(false);
   }
+  
 }

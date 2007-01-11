@@ -152,7 +152,7 @@ public class EditorWYSIWYG extends Composite {
 
       this.showFrame = false;
 
-      editor.getEditorToolbar().switchToSmall();
+      editor.getEditorToolbar().switchToSource();
     } else {
 
       String newHtml = textArea.getText();

@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.Widget;
 
-public class EditorToolbarButton extends Image {
+public class EditorToolbarButton extends Image implements EditorToolbarWidget {
 
   // Predefined set of buttons
   public static final String BUTTON_SOURCE = "Source";
@@ -173,6 +173,10 @@ public class EditorToolbarButton extends Image {
     this.setStyleName("Editor-Toolbar-Button Editor-Toolbar-Button-" + buttonId);
   }
 
+  public Widget getWidget() {
+    return this;
+  }
+  
   public String getButtonId() {
     return buttonId;
   }
