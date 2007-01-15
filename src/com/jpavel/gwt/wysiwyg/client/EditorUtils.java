@@ -77,16 +77,6 @@ public class EditorUtils {
     }
   }-*/;
 
-//	public static native void _execCommand(Element oIframe, String command, boolean ui, String value)/*-{
-////		$wnd.alert(.apply);
-////		@com.jpavel.gwt.wysiwyg.client.EditorUtils::execCommand(Lcom.google.gwt.user.client.Element;Ljava/lang/String;ZLjava/lang/String;).apply(this);
-// 
-//	    var exec = function(frame1, command1, ui1, value1) {
-//	    	@com.jpavel.gwt.wysiwyg.client.EditorUtils::_execCommand(Lcom.google.gwt.user.client.Element;Ljava/lang/String;ZLjava/lang/String;)(frame1, command1, ui1, value1);
-//	    };
-//	    exec.apply(frame, new Array(frame, command, ui, value));
-//	}-*/;
-
   public static native void execCommand(Element oIframe, String command, boolean ui, String value) /*-{
     oIframe.contentWindow.focus();
     oIframe.contentWindow.document.execCommand(command, ui, value);
@@ -227,11 +217,6 @@ public class EditorUtils {
         {"Heading 6", "<H6>"},
         {"Preformatted", "<PRE>"},
         {"Address", "<ADDRESS>"}};		
-    //if (isIE()) {
-    //  return new String[][]{{"Normal", "Normal"}, {"Heading 1", "Heading 1"}, {"Heading 2", "Heading 2"}, {"Heading 3", "Heading 3"}, {"Heading 4", "Heading 4"}, {"Heading 5", "Heading 5"}, {"Heading 6", "Heading 6"}};		
-    //} else {
-    //  return new String[][]{{"Normal", "P"}, {"Heading 1", "H1"}, {"Heading 2", "H2"}, {"Heading 3", "H3"}, {"Heading 4", "H4"}, {"Heading 5", "H5"}, {"Heading 6", "H6"}};		
-    //}
   }
   
 }

@@ -28,7 +28,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Editor extends Composite implements SourcesLoadEvents {
-
+  
   private EditorToolbar toolbar;
 
   private EditorWYSIWYG wysiwyg;
@@ -42,11 +42,18 @@ public class Editor extends Composite implements SourcesLoadEvents {
   private List loadListeners = new ArrayList();
 
   public Editor() {
+    this(null);
+  }
+  
+  public Editor(EditorToolbar tlBar) {
     container = new VerticalPanel();
-
     container.setStyleName("Editor");
 
-    EditorToolbar toolbar = getEditorToolbar();
+    if (tlBar == null) {
+      toolbar = new DefaultEditorToolbar(this);
+    } else {
+      toolbar = tlBar;
+    }
     toolbar.setWidth("100%");
     container.add(toolbar);
 
@@ -65,8 +72,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
       }
 
       public void onError(Widget sender) {
-        // TODO Auto-generated method stub
-
+        // TODO Implement error handling
       }
     });
 
@@ -123,9 +129,6 @@ public class Editor extends Composite implements SourcesLoadEvents {
   }
 
   public EditorToolbar getEditorToolbar() {
-    if (toolbar == null) {
-      toolbar = new EditorToolbar(this);
-    }
     return toolbar;
   }
 
