@@ -26,6 +26,7 @@ import com.google.gwt.user.client.ui.LoadListener;
 import com.google.gwt.user.client.ui.SourcesLoadEvents;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.jpavel.gwt.wysiwyg.client.defaults.DefaultEditorToolbar;
 
 public class Editor extends Composite implements SourcesLoadEvents {
   
