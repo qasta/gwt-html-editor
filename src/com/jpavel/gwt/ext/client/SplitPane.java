@@ -199,13 +199,9 @@ public class SplitPane extends Composite {
     }
 
     public void onMouseEnter(Widget sender) {
-      // TODO Auto-generated method stub
-
     }
 
     public void onMouseLeave(Widget sender) {
-      // TODO Auto-generated method stub
-
     }
 
     public void onMouseMove(Widget sender, int x, int y) {

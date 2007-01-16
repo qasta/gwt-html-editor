@@ -20,6 +20,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -58,6 +59,10 @@ public class EditorToolbar extends Composite {
   
 
   /* Methods */
+
+  public static Widget getSpacer() {
+    return new Image("spacer.gif");
+  }
   
   public void addEditorToolbarWidget(Widget widget) {
     fullToolbar.add(widget);
