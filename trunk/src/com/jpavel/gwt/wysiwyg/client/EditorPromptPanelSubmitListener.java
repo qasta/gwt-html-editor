@@ -16,30 +16,7 @@
 
 package com.jpavel.gwt.wysiwyg.client;
 
-import com.google.gwt.user.client.ui.Widget;
+public interface EditorPromptPanelSubmitListener {
 
-// TODO: This class seems unnecessary
-public class EditorPromptPanelWidget {
-  private Widget widget;
-
-  private EditorPromptPanel prompt;
-
-  public EditorPromptPanelWidget() {
-  }
-
-  public Widget getWidget() {
-    return widget;
-  }
-
-  public void setWidget(Widget widget) {
-    this.widget = widget;
-  }
-
-  public EditorPromptPanel getPrompt() {
-    return prompt;
-  }
-
-  public void setPrompt(EditorPromptPanel prompt) {
-    this.prompt = prompt;
-  }
+  abstract public void onSubmit(String value);
 }

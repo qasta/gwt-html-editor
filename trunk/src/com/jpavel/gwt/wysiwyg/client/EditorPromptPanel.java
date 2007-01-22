@@ -16,40 +16,60 @@
 
 package com.jpavel.gwt.wysiwyg.client;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
-public class EditorPromptPanel extends DialogBox {
+public abstract class EditorPromptPanel extends DialogBox {
 
-  private String value;
+  private SimplePanel container;
 
-  private VerticalPanel vp;
+  public EditorPromptPanel(String title) {
 
-  public EditorPromptPanel(String title, EditorPromptPanelWidget pWidget) {
+    container = new SimplePanel();
 
-    vp = new VerticalPanel();
+    container.setStyleName("Editor-DialogBox-Content");
 
-    pWidget.setPrompt(this);
-    vp.setStyleName("Editor-DialogBox-Content");
-    vp.add(pWidget.getWidget());
-
-    this.setWidget(vp);
+    this.setWidget(container);
     this.setText(title);
 
     this.setStyleName("Editor-DialogBox");
   }
+  
+  public abstract Widget initWidget();
 
   public void show(Editor editor) {
     this.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
+    show();
+  }
+  
+  public void show() {
+    container.setWidget(initWidget());
     super.show();
   }
 
-  public void complete(String value) {
-    this.value = value;
+  public void submit(String value) {
     this.hide();
+    fireSubmitEvent(value);
   }
-
-  public String getValue() {
-    return value;
+  
+  private List submitListeners = new ArrayList();
+  
+  public void addEditorPromptPanelSubmitListener(EditorPromptPanelSubmitListener listener) {
+    submitListeners.add(listener);
+  }
+  
+  public void removeEditorPromptPanelSubmitListener(EditorPromptPanelSubmitListener listener) {
+    submitListeners.remove(listener);
+  }
+  
+  private void fireSubmitEvent(String value) {
+    for (Iterator iter = submitListeners.iterator(); iter.hasNext(); ) {
+      ((EditorPromptPanelSubmitListener) iter.next()).onSubmit(value);
+    }
   }
 }

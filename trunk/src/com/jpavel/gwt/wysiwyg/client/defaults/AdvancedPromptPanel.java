@@ -16,38 +16,34 @@
 
 package com.jpavel.gwt.wysiwyg.client.defaults;
 
-import com.google.gwt.user.client.ui.PopupListener;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.jpavel.gwt.wysiwyg.client.Editor;
 import com.jpavel.gwt.wysiwyg.client.EditorPromptPanel;
-import com.jpavel.gwt.wysiwyg.client.EditorPromptPanelWidget;
+import com.jpavel.gwt.wysiwyg.client.EditorPromptPanelSubmitListener;
 import com.jpavel.gwt.wysiwyg.client.EditorUtils;
 
-public class AdvancedPromptPanel extends EditorPromptPanel {
+public abstract class AdvancedPromptPanel extends EditorPromptPanel {
   
   protected Editor editor;
   
-  public AdvancedPromptPanel(Editor editor, String command, String title, EditorPromptPanelWidget widget) {
-    super(title, widget);
+  public AdvancedPromptPanel(Editor editor, String command, String title) {
+    super(title);
 
     this.editor = editor;
     
-    this.addPopupListener(new AdvancedPromptPanelPopupListener(command));
+    this.addEditorPromptPanelSubmitListener(new AdvancedPromptPanelPopupListener(command));
 
     EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-    super.show(editor);
   }
   
-  private class AdvancedPromptPanelPopupListener implements PopupListener {
+  private class AdvancedPromptPanelPopupListener implements EditorPromptPanelSubmitListener {
     
     private String command;
     
     public AdvancedPromptPanelPopupListener(String command) {
       this.command = command;
     }
-    
-    public void onPopupClosed(final PopupPanel sender, boolean autoClosed) {
-      String value = ((EditorPromptPanel) sender).getValue();
+
+    public void onSubmit(String value) {
       EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
       if (value != null) {
         editor.execCommand(command, false, value);
