@@ -25,13 +25,19 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.jpavel.gwt.wysiwyg.client.Editor;
-import com.jpavel.gwt.wysiwyg.client.EditorPromptPanelWidget;
 
-public class SimpleOneFieldPromptPanel {
+public class SimpleOneFieldPromptPanel extends AdvancedPromptPanel {
+  
+  private String fieldLabel;
+  private String buttonLabel;
   
   public SimpleOneFieldPromptPanel(Editor editor, String command, String title, String fieldLabel, String buttonLabel) {
-    final EditorPromptPanelWidget widget = new EditorPromptPanelWidget();
+    super(editor, command, title);
+    this.fieldLabel = fieldLabel;
+    this.buttonLabel = buttonLabel;
+  }
 
+  public Widget initWidget() {
     VerticalPanel container = new VerticalPanel();
     container.setWidth("300px");
     final TextBox urlTextBox = new TextBox();
@@ -54,14 +60,14 @@ public class SimpleOneFieldPromptPanel {
     Button b = new Button(buttonLabel);
     b.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        widget.getPrompt().complete(urlTextBox.getText());
+        submit(urlTextBox.getText());
       }
     });
 
     Button c = new Button("Cancel");
     c.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        widget.getPrompt().complete(null);
+        submit(null);
       }
     });
 
@@ -71,16 +77,8 @@ public class SimpleOneFieldPromptPanel {
 
     container.add(hzButtons);
     container.setCellHorizontalAlignment(hzButtons, HasAlignment.ALIGN_CENTER);
-
-    widget.setWidget(container);
-
-    // TODO What's the purpose of the next statement?
-    // It is the only statement that uses editor. If it's not
-    // necessary, we could get rid of it and the 'editor' parameter
-    // in the constructor
-    new AdvancedPromptPanel(editor, command, title, widget);
-
-    urlTextBox.setFocus(true);
+    
+    return container;
   }
   
 }

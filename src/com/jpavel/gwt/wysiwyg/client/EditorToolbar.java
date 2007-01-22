@@ -39,7 +39,6 @@ public class EditorToolbar extends Composite {
   /* Constructors */
   
   public EditorToolbar() {
-
     topContainer = new VerticalPanel();
     topContainer.setStyleName("Editor-Toolbar");
     topContainer.setWidth("100%");
@@ -55,6 +54,7 @@ public class EditorToolbar extends Composite {
     sourceToolbar.setVisible(false);
 
     initWidget(topContainer);
+    setWidth("100%");
   }
   
 

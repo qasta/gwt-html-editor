@@ -47,20 +47,14 @@ public class Editor extends Composite implements SourcesLoadEvents {
   }
   
   public Editor(EditorToolbar tlBar) {
-    container = new VerticalPanel();
-    container.setStyleName("Editor");
-
     if (tlBar == null) {
       toolbar = new DefaultEditorToolbar(this);
     } else {
       toolbar = tlBar;
     }
-    toolbar.setWidth("100%");
-    container.add(toolbar);
 
-    final EditorWYSIWYG wysiwyg = getEditorWYSIWYG();
+    wysiwyg = new EditorWYSIWYG(this);
     wysiwyg.setWidth("100%");
-    container.add(wysiwyg);
 
     addLoadListener(new LoadListener() {
       public void onLoad(Widget sender) {
@@ -77,6 +71,10 @@ public class Editor extends Composite implements SourcesLoadEvents {
       }
     });
 
+    container = new VerticalPanel();
+    container.setStyleName("Editor");
+    container.add(toolbar);
+    container.add(wysiwyg);
     initWidget(container);
   }
 
@@ -134,9 +132,6 @@ public class Editor extends Composite implements SourcesLoadEvents {
   }
 
   public EditorWYSIWYG getEditorWYSIWYG() {
-    if (wysiwyg == null) {
-      wysiwyg = new EditorWYSIWYG(this);
-    }
     return wysiwyg;
   }
 
