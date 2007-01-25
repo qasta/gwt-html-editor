@@ -23,7 +23,7 @@
 		<java classpathref="gwt.compile.class.path" classname="com.google.gwt.dev.GWTCompiler" fork="true" >
 			<arg value="-out"/>
 			<arg value="${gwt.output}"/>
-			<arg value="com.jpavel.gwt.wysiwyg.test.Test"/>
+			<arg value="com.gc.gwt.wysiwyg.test.Test"/>
 		</java>
     </target>
 
@@ -31,7 +31,7 @@
 		<java classpathref="gwt.compile.class.path" classname="com.google.gwt.dev.GWTShell" fork="true" >
 			<arg value="-out"/>
 			<arg value="${gwt.output}"/>
-			<arg value="com.jpavel.gwt.wysiwyg.test.Test/Test.html"/>
+			<arg value="com.gc.gwt.wysiwyg.test.Test/Test.html"/>
 		</java>
     </target>
 
