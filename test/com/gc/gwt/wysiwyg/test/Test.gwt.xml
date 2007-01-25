@@ -1,0 +1,9 @@
+<module>
+	<inherits name='com.google.gwt.user.User'/>
+	<inherits name='com.gc.gwt.wysiwyg.Editor'/>
+	<inherits name='com.gc.gwt.ext.UI'/>
+	
+	<entry-point class='com.gc.gwt.wysiwyg.test.client.Test'/>
+	
+	<source path="client"/>
+</module>
