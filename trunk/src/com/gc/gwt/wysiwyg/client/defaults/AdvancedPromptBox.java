@@ -17,8 +17,8 @@
 package com.gc.gwt.wysiwyg.client.defaults;
 
 import com.gc.gwt.wysiwyg.client.Editor;
-import com.gc.gwt.wysiwyg.client.EditorPromptPanel;
-import com.gc.gwt.wysiwyg.client.EditorPromptPanelSubmitListener;
+import com.gc.gwt.wysiwyg.client.EditorPromptBox;
+import com.gc.gwt.wysiwyg.client.EditorPromptBoxSubmitListener;
 import com.gc.gwt.wysiwyg.client.EditorUtils;
 
 /**
@@ -26,7 +26,7 @@ import com.gc.gwt.wysiwyg.client.EditorUtils;
  *
  * @author pavel.jbanov
  */
-public abstract class AdvancedPromptPanel extends EditorPromptPanel {
+public abstract class AdvancedPromptBox extends EditorPromptBox {
   
   protected Editor editor;
   
@@ -37,7 +37,7 @@ public abstract class AdvancedPromptPanel extends EditorPromptPanel {
    * @param command Midas command
    * @param title dialog caption
    */
-  public AdvancedPromptPanel(Editor editor, String command, String title) {
+  public AdvancedPromptBox(Editor editor, String command, String title) {
     super(title);
 
     this.editor = editor;
@@ -52,7 +52,7 @@ public abstract class AdvancedPromptPanel extends EditorPromptPanel {
    *
    * @author pavel.jbanov
    */
-  private class AdvancedPromptPanelPopupListener implements EditorPromptPanelSubmitListener {
+  private class AdvancedPromptPanelPopupListener implements EditorPromptBoxSubmitListener {
 
     private String command;
 
