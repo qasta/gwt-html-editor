@@ -67,7 +67,7 @@ public class DefaultEditorToolbar extends EditorToolbar {
     EditorToolbarButton link = new EditorToolbarButton(editor, DefaultConstants.BUTTON_LINK);
     link.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        new SimpleOneFieldPromptPanel(DefaultEditorToolbar.this.editor, "CreateLink", "Create Link", "Link URL: ", "Create Link").show(editor);
+        new SimpleOneFieldPromptBox(DefaultEditorToolbar.this.editor, "CreateLink", "Create Link", "Link URL: ", "Create Link").show(editor);
       }
     });
 
@@ -75,7 +75,7 @@ public class DefaultEditorToolbar extends EditorToolbar {
     EditorToolbarButton image = new EditorToolbarButton(editor, DefaultConstants.BUTTON_IMAGE);
     image.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        new SimpleOneFieldPromptPanel(DefaultEditorToolbar.this.editor, "InsertImage", "Insert Image", "Image URL: ", "Insert Image").show(editor);
+        new SimpleOneFieldPromptBox(DefaultEditorToolbar.this.editor, "InsertImage", "Insert Image", "Image URL: ", "Insert Image").show(editor);
       }
     });
 

@@ -23,5 +23,4 @@ public class EditorToolbarSelect extends ListBox {
   public EditorToolbarSelect() {
     this.setStyleName("Editor-Toolbar-Select");
   }
-  
 }

@@ -38,5 +38,4 @@ public class SimpleCommandButton extends EditorToolbarButton {
       }
     });
   }
-  
 }

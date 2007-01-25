@@ -29,7 +29,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @author pavel.jbanov
  */
-public abstract class EditorPromptPanel extends DialogBox {
+public abstract class EditorPromptBox extends DialogBox {
 
   private SimplePanel container;
 
@@ -38,7 +38,7 @@ public abstract class EditorPromptPanel extends DialogBox {
    *
    * @param title
    */
-  public EditorPromptPanel(String title) {
+  public EditorPromptBox(String title) {
 
     container = new SimplePanel();
 
@@ -92,7 +92,7 @@ public abstract class EditorPromptPanel extends DialogBox {
    *
    * @param listener
    */
-  public void addEditorPromptPanelSubmitListener(EditorPromptPanelSubmitListener listener) {
+  public void addEditorPromptPanelSubmitListener(EditorPromptBoxSubmitListener listener) {
     submitListeners.add(listener);
   }
 
@@ -101,7 +101,7 @@ public abstract class EditorPromptPanel extends DialogBox {
    *
    * @param listener
    */
-  public void removeEditorPromptPanelSubmitListener(EditorPromptPanelSubmitListener listener) {
+  public void removeEditorPromptPanelSubmitListener(EditorPromptBoxSubmitListener listener) {
     submitListeners.remove(listener);
   }
 
@@ -112,7 +112,7 @@ public abstract class EditorPromptPanel extends DialogBox {
    */
   private void fireSubmitEvent(String value) {
     for (Iterator iter = submitListeners.iterator(); iter.hasNext();) {
-      ((EditorPromptPanelSubmitListener) iter.next()).onSubmit(value);
+      ((EditorPromptBoxSubmitListener) iter.next()).onSubmit(value);
     }
   }
 }

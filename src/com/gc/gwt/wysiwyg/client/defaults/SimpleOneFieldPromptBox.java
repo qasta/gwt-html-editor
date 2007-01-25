@@ -26,12 +26,12 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SimpleOneFieldPromptPanel extends AdvancedPromptBox {
+public class SimpleOneFieldPromptBox extends AdvancedPromptBox {
   
   private String fieldLabel;
   private String buttonLabel;
   
-  public SimpleOneFieldPromptPanel(Editor editor, String command, String title, String fieldLabel, String buttonLabel) {
+  public SimpleOneFieldPromptBox(Editor editor, String command, String title, String fieldLabel, String buttonLabel) {
     super(editor, command, title);
     this.fieldLabel = fieldLabel;
     this.buttonLabel = buttonLabel;
@@ -80,5 +80,4 @@ public class SimpleOneFieldPromptPanel extends AdvancedPromptBox {
     
     return container;
   }
-  
 }
