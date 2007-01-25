@@ -51,7 +51,7 @@ cd gwt-html-editor
 ant gwt-test-compile
 
 This will compile the test/sample app into:
-  gwt-html-editor/build/web/com.jpavel.gwt.wysiwyg.test.Test
+  gwt-html-editor/build/web/com.gc.gwt.wysiwyg.test.Test
 Just open Test.html in a browser.
 
 Run "ant gwt-test-shell" to run the test/sample app in GWT Shell (hosted mode).
