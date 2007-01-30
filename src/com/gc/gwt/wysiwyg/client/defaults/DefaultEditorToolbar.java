@@ -156,50 +156,50 @@ public class DefaultEditorToolbar extends EditorToolbar {
     });
     this.addEditorToolbarWidget(source);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(removeFormat);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(undo);
     this.addEditorToolbarWidget(redo);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(bold);
     this.addEditorToolbarWidget(italic);
     this.addEditorToolbarWidget(underlined);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(subscript);
     this.addEditorToolbarWidget(superscript);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(justifyLeft);
     this.addEditorToolbarWidget(justifyCenter);
     this.addEditorToolbarWidget(justifyRight);
     this.addEditorToolbarWidget(justifyJustify);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(ol);
     this.addEditorToolbarWidget(ul);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(link);
     this.addEditorToolbarWidget(unlink);
     this.addEditorToolbarWidget(image);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(foreColor);
     this.addEditorToolbarWidget(bgColor);
 
-    this.addEditorToolbarWidget(EditorToolbar.getSpacer());
+    this.addSpacer();
 
     this.addEditorToolbarWidget(styles);
     this.addEditorToolbarWidget(fontSizes);
