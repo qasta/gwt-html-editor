@@ -16,6 +16,7 @@
 
 package com.gc.gwt.wysiwyg.client;
 
+import com.gc.gwt.wysiwyg.client.defaults.DefaultConstants;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.Composite;
@@ -63,7 +64,7 @@ public class EditorToolbar extends Composite {
   /* Methods */
 
   public void addSpacer() {
-    this.addEditorToolbarWidget(SPACER_IMAGE);
+    this.addEditorToolbarWidget(new EditorToolbarButton(null, DefaultConstants.SPACER));
   }
   
   public void addEditorToolbarWidget(Widget widget) {
