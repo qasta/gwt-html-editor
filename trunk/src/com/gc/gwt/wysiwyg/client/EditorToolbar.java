@@ -29,6 +29,8 @@ public class EditorToolbar extends Composite {
 
   /* Fields */
   
+  private static final Image SPACER_IMAGE = new Image("spacer.gif");
+
   private final Panel fullToolbar;
 
   private final Panel sourceToolbar;
@@ -60,8 +62,8 @@ public class EditorToolbar extends Composite {
 
   /* Methods */
 
-  public static Widget getSpacer() {
-    return new Image("spacer.gif");
+  public void addSpacer() {
+    this.addEditorToolbarWidget(SPACER_IMAGE);
   }
   
   public void addEditorToolbarWidget(Widget widget) {
