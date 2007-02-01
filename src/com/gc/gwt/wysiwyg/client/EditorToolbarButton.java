@@ -24,14 +24,13 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class EditorToolbarButton extends Image {
   
-  protected Editor editor;
-  
+  private static final String SPACER_IMAGE_URL = "spacer.gif";
+
   private String buttonId;
 
-  public EditorToolbarButton(Editor editor, String buttonId) {
-    super("spacer.gif");
+  public EditorToolbarButton(String buttonId) {
+    super(SPACER_IMAGE_URL);
 
-    this.editor = editor;
     this.setTitle(buttonId);
     this.buttonId = buttonId;
 
