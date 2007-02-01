@@ -21,7 +21,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,18 +28,15 @@ import com.google.gwt.user.client.ui.Widget;
 public class EditorToolbar extends Composite {
 
   /* Fields */
-  
-  private static final Image SPACER_IMAGE = new Image("spacer.gif");
-
   private final Panel fullToolbar;
 
   private final Panel sourceToolbar;
 
   private final CellPanel topContainer;
-
+  
+  private EditorToolbarWidgetsFactory toolbarWidgetsFactory;
   
   /* Constructors */
-  
   public EditorToolbar() {
     topContainer = new VerticalPanel();
     topContainer.setStyleName("Editor-Toolbar");
@@ -55,7 +51,7 @@ public class EditorToolbar extends Composite {
 
     fullToolbar.setVisible(true);
     sourceToolbar.setVisible(false);
-
+    
     initWidget(topContainer);
     setWidth("100%");
   }
@@ -92,5 +88,14 @@ public class EditorToolbar extends Composite {
     fullToolbar.setVisible(true);
     sourceToolbar.setVisible(false);
   }
-  
+
+
+  public EditorToolbarWidgetsFactory getToolbarWidgetsFactory() {
+    return toolbarWidgetsFactory;
+  }
+
+
+  public void setToolbarWidgetsFactory(EditorToolbarWidgetsFactory toolbarWidgetsFactory) {
+    this.toolbarWidgetsFactory = toolbarWidgetsFactory;
+  }
 }

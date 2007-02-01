@@ -40,7 +40,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
   private EditorWYSIWYG wysiwyg;
 
   private VerticalPanel container;
-
+  
   // internal status
   private boolean initialized = false;
 
