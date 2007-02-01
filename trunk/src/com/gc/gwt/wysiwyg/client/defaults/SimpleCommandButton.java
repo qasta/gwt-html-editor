@@ -24,17 +24,21 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SimpleCommandButton extends EditorToolbarButton {
   
+  protected Editor editor;
+  
   public SimpleCommandButton(Editor editor, String buttonId, final String command) {
     this(editor, buttonId, command, false, null);
   }
 
   public SimpleCommandButton(Editor editor, String buttonId, final String command, final boolean ui, String value) {
-    super(editor, buttonId);
+    super(buttonId);
 
+    this.editor = editor;
+    
     this.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         EditorUtils.execCommand(
-            SimpleCommandButton.super.editor.getEditorWYSIWYG().getFrame().getElement(), command, ui, null);
+            SimpleCommandButton.this.editor.getEditorWYSIWYG().getFrame().getElement(), command, ui, null);
       }
     });
   }

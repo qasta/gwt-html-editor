@@ -77,7 +77,7 @@ public class DefaultEditorToolbarWidgetsFactory implements EditorToolbarWidgetsF
   }
 
   public Widget getLinkWidget() {
-    EditorToolbarButton link = new EditorToolbarButton(editor, DefaultConstants.BUTTON_LINK);
+    EditorToolbarButton link = new EditorToolbarButton(DefaultConstants.BUTTON_LINK);
     link.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         new SimpleOneFieldPromptBox(editor, "CreateLink", "Create Link", "Link URL: ", "Create Link").show(editor);
@@ -91,7 +91,7 @@ public class DefaultEditorToolbarWidgetsFactory implements EditorToolbarWidgetsF
   }
 
   public Widget getInsertImageWidget() {
-    EditorToolbarButton image = new EditorToolbarButton(editor, DefaultConstants.BUTTON_IMAGE);
+    EditorToolbarButton image = new EditorToolbarButton(DefaultConstants.BUTTON_IMAGE);
     image.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         new SimpleOneFieldPromptBox(editor, "InsertImage", "Insert Image", "Image URL: ", "Insert Image").show(editor);
@@ -110,7 +110,7 @@ public class DefaultEditorToolbarWidgetsFactory implements EditorToolbarWidgetsF
       }
     });
 
-    EditorToolbarButton foreColor = new EditorToolbarButton(editor, DefaultConstants.BUTTON_TEXTCOLOR);
+    EditorToolbarButton foreColor = new EditorToolbarButton(DefaultConstants.BUTTON_TEXTCOLOR);
     foreColor.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
@@ -131,7 +131,7 @@ public class DefaultEditorToolbarWidgetsFactory implements EditorToolbarWidgetsF
       }
     });
     
-    EditorToolbarButton bgColor = new EditorToolbarButton(editor, DefaultConstants.BUTTON_TEXTBACKGROUNDCOLOR);
+    EditorToolbarButton bgColor = new EditorToolbarButton(DefaultConstants.BUTTON_TEXTBACKGROUNDCOLOR);
     bgColor.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
@@ -185,7 +185,7 @@ public class DefaultEditorToolbarWidgetsFactory implements EditorToolbarWidgetsF
   }
 
   public Widget getShowSourceWidget() {
-    EditorToolbarButton source = new EditorToolbarButton(editor, DefaultConstants.BUTTON_SOURCE);
+    EditorToolbarButton source = new EditorToolbarButton(DefaultConstants.BUTTON_SOURCE);
     source.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         editor.getEditorWYSIWYG().toggleView();
@@ -196,7 +196,7 @@ public class DefaultEditorToolbarWidgetsFactory implements EditorToolbarWidgetsF
   }
 
   public Widget getBackToRichTextWidget() {
-    EditorToolbarButton source = new EditorToolbarButton(editor, DefaultConstants.BUTTON_BACK_TO_FULL_TOOLBAR);
+    EditorToolbarButton source = new EditorToolbarButton(DefaultConstants.BUTTON_BACK_TO_FULL_TOOLBAR);
     source.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         editor.getEditorWYSIWYG().toggleView();

@@ -28,6 +28,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class EditorToolbar extends Composite {
 
   /* Fields */
+  
   private final Panel fullToolbar;
 
   private final Panel sourceToolbar;
@@ -60,7 +61,7 @@ public class EditorToolbar extends Composite {
   /* Methods */
 
   public void addSpacer() {
-    this.addEditorToolbarWidget(new EditorToolbarButton(null, DefaultConstants.SPACER));
+    this.addEditorToolbarWidget(new EditorToolbarButton(DefaultConstants.SPACER));
   }
   
   public void addEditorToolbarWidget(Widget widget) {
