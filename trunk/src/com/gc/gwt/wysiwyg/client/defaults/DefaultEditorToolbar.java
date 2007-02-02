@@ -18,6 +18,7 @@ package com.gc.gwt.wysiwyg.client.defaults;
 
 import com.gc.gwt.wysiwyg.client.Editor;
 import com.gc.gwt.wysiwyg.client.EditorToolbar;
+import com.gc.gwt.wysiwyg.client.EditorToolbarWidgetsFactory;
 
 /**
  * Default editor toolbar implementation. 
@@ -27,17 +28,16 @@ import com.gc.gwt.wysiwyg.client.EditorToolbar;
  */
 public class DefaultEditorToolbar extends EditorToolbar {
 
+  /* Fields */
+  
+  private EditorToolbarWidgetsFactory toolbarWidgetsFactory;
+  
   /* Constructors */
   public DefaultEditorToolbar(Editor edt) {
     super();
 
     this.setToolbarWidgetsFactory(new DefaultEditorToolbarWidgetsFactory(edt));
-  }
-  
-  /**
-   * make it little lazy... and give user a chance to override the widget factory.
-   */
-  protected void onLoad() {
+    
     this.addEditorToolbarWidget(getToolbarWidgetsFactory().getShowSourceWidget());
 
     this.addSpacer();
@@ -89,6 +89,15 @@ public class DefaultEditorToolbar extends EditorToolbar {
     this.addEditorToolbarWidget(getToolbarWidgetsFactory().getFontSizeWidget());
 
     this.addSourceEditorToolbarWidget(getToolbarWidgetsFactory().getBackToRichTextWidget());
-    super.onLoad();
   }
+
+  protected EditorToolbarWidgetsFactory getToolbarWidgetsFactory() {
+    return toolbarWidgetsFactory;
+  }
+
+
+  protected void setToolbarWidgetsFactory(EditorToolbarWidgetsFactory toolbarWidgetsFactory) {
+    this.toolbarWidgetsFactory = toolbarWidgetsFactory;
+  }
+
 }
