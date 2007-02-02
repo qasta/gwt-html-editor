@@ -35,8 +35,6 @@ public class EditorToolbar extends Composite {
 
   private final CellPanel topContainer;
   
-  private EditorToolbarWidgetsFactory toolbarWidgetsFactory;
-  
   /* Constructors */
   public EditorToolbar() {
     topContainer = new VerticalPanel();
@@ -89,14 +87,5 @@ public class EditorToolbar extends Composite {
     fullToolbar.setVisible(true);
     sourceToolbar.setVisible(false);
   }
-
-
-  public EditorToolbarWidgetsFactory getToolbarWidgetsFactory() {
-    return toolbarWidgetsFactory;
-  }
-
-
-  public void setToolbarWidgetsFactory(EditorToolbarWidgetsFactory toolbarWidgetsFactory) {
-    this.toolbarWidgetsFactory = toolbarWidgetsFactory;
-  }
+  
 }
