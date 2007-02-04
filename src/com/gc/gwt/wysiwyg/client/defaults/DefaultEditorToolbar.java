@@ -18,7 +18,6 @@ package com.gc.gwt.wysiwyg.client.defaults;
 
 import com.gc.gwt.wysiwyg.client.Editor;
 import com.gc.gwt.wysiwyg.client.EditorToolbar;
-import com.gc.gwt.wysiwyg.client.EditorToolbarWidgetsFactory;
 
 /**
  * Default editor toolbar implementation. 
@@ -30,7 +29,7 @@ public class DefaultEditorToolbar extends EditorToolbar {
 
   /* Fields */
   
-  private EditorToolbarWidgetsFactory toolbarWidgetsFactory;
+  private DefaultEditorToolbarWidgetsFactory toolbarWidgetsFactory;
   
   /* Constructors */
   public DefaultEditorToolbar(Editor edt) {
@@ -91,12 +90,12 @@ public class DefaultEditorToolbar extends EditorToolbar {
     this.addSourceEditorToolbarWidget(getToolbarWidgetsFactory().getBackToRichTextWidget());
   }
 
-  protected EditorToolbarWidgetsFactory getToolbarWidgetsFactory() {
+  protected DefaultEditorToolbarWidgetsFactory getToolbarWidgetsFactory() {
     return toolbarWidgetsFactory;
   }
 
 
-  protected void setToolbarWidgetsFactory(EditorToolbarWidgetsFactory toolbarWidgetsFactory) {
+  protected void setToolbarWidgetsFactory(DefaultEditorToolbarWidgetsFactory toolbarWidgetsFactory) {
     this.toolbarWidgetsFactory = toolbarWidgetsFactory;
   }
 
