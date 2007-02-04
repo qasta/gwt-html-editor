@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.gc.gwt.wysiwyg.client;
+package com.gc.gwt.wysiwyg.client.defaults;
 
 public interface EditorColorSelectListener {
   public void colorSelected(String rgb);

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.gc.gwt.wysiwyg.client;
+package com.gc.gwt.wysiwyg.client.defaults;
 
 import java.util.ArrayList;
 import java.util.Iterator;
