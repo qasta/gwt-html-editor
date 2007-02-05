@@ -33,10 +33,8 @@ public class EditorToolbar extends Composite {
   
   private static class EditorToolbarFlowPanel extends FlowPanel {
     public void insert(Widget w, int beforeIndex) {
-      // TODO: This will always place the widget last, no matter
-      // what index is supplied. This method needs to be rewritten
-      // to allow actual inserting of the elements.
-      super.insert(w, getElement(), beforeIndex);
+      super.insert(w, null, beforeIndex);
+      DOM.insertChild(getElement(), w.getElement(), beforeIndex);
     }
   }
   
@@ -115,7 +113,11 @@ public class EditorToolbar extends Composite {
     putWidget(widget, 0, widgetID);
   }
   
-  public void replaceWidget(Widget original, Widget widget, int index, String widgetID) {
+  public void replaceWidget(Widget original, Widget widget) {
+    replaceWidget(original, widget, getWidgetID(original));
+  }
+  
+  public void replaceWidget(Widget original, Widget widget, String widgetID) {
     Widget idOwner = getWidget(widgetID);
     if (idOwner != null && idOwner != original) {
       throw new RuntimeException("Provided widgetID is owned by a widget" +
