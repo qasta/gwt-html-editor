@@ -27,76 +27,63 @@ import com.gc.gwt.wysiwyg.client.EditorToolbar;
  */
 public class DefaultEditorToolbar extends EditorToolbar {
 
-  /* Fields */
-  
-  private DefaultEditorToolbarWidgetsFactory toolbarWidgetsFactory;
-  
   /* Constructors */
   public DefaultEditorToolbar(Editor edt) {
     super();
 
-    this.setToolbarWidgetsFactory(new DefaultEditorToolbarWidgetsFactory(edt));
+    DefaultEditorToolbarWidgetsFactory toolbarWidgetsFactory = new DefaultEditorToolbarWidgetsFactory(edt);
     
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getShowSourceWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getShowSourceWidget(), DefaultConstants.BUTTON_SOURCE);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getRemoveFormattingWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getRemoveFormattingWidget(), DefaultConstants.BUTTON_DELETE);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getUndoWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getRedoWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getUndoWidget(), DefaultConstants.BUTTON_UNDO);
+    this.putWidgetLast(toolbarWidgetsFactory.getRedoWidget(), DefaultConstants.BUTTON_REDO);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getBoldWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getItalicWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getUnderlineWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getBoldWidget(), DefaultConstants.BUTTON_BOLD);
+    this.putWidgetLast(toolbarWidgetsFactory.getItalicWidget(), DefaultConstants.BUTTON_ITALIC);
+    this.putWidgetLast(toolbarWidgetsFactory.getUnderlineWidget(), DefaultConstants.BUTTON_UNDERLINE);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getSubscriptWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getSuperscriptWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getSubscriptWidget(), DefaultConstants.BUTTON_SUBSCRIPT);
+    this.putWidgetLast(toolbarWidgetsFactory.getSuperscriptWidget(), DefaultConstants.BUTTON_SUPERSCRIPT);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getJustifyLeftWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getJustifyCenterWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getJustifyRightWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getJustifyFullWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getJustifyLeftWidget(), DefaultConstants.BUTTON_ALIGNLEFT);
+    this.putWidgetLast(toolbarWidgetsFactory.getJustifyCenterWidget(), DefaultConstants.BUTTON_ALIGNCENTER);
+    this.putWidgetLast(toolbarWidgetsFactory.getJustifyRightWidget(), DefaultConstants.BUTTON_ALIGNRIGHT);
+    this.putWidgetLast(toolbarWidgetsFactory.getJustifyFullWidget(), DefaultConstants.BUTTON_ALIGNJUSTIFY);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getOrderedListWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getUnorderedListWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getOrderedListWidget(), DefaultConstants.BUTTON_OL);
+    this.putWidgetLast(toolbarWidgetsFactory.getUnorderedListWidget(), DefaultConstants.BUTTON_UL);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getLinkWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getUnlinkWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getInsertImageWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getLinkWidget(), DefaultConstants.BUTTON_LINK);
+    this.putWidgetLast(toolbarWidgetsFactory.getUnlinkWidget(), DefaultConstants.BUTTON_UNLINK);
+    this.putWidgetLast(toolbarWidgetsFactory.getInsertImageWidget(), DefaultConstants.BUTTON_IMAGE);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getForegroundColorWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getBackgroundColorWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getForegroundColorWidget(), DefaultConstants.BUTTON_TEXTCOLOR);
+    this.putWidgetLast(toolbarWidgetsFactory.getBackgroundColorWidget(), DefaultConstants.BUTTON_TEXTBACKGROUNDCOLOR);
 
     this.addSpacer();
 
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getFontStyleWidget());
-    this.addEditorToolbarWidget(getToolbarWidgetsFactory().getFontSizeWidget());
+    this.putWidgetLast(toolbarWidgetsFactory.getFontStyleWidget(), DefaultConstants.BUTTON_FONT_STYLE);
+    this.putWidgetLast(toolbarWidgetsFactory.getFontSizeWidget(), DefaultConstants.BUTTON_FONT_SIZE);
 
-    this.addSourceEditorToolbarWidget(getToolbarWidgetsFactory().getBackToRichTextWidget());
-  }
-
-  protected DefaultEditorToolbarWidgetsFactory getToolbarWidgetsFactory() {
-    return toolbarWidgetsFactory;
-  }
-
-
-  protected void setToolbarWidgetsFactory(DefaultEditorToolbarWidgetsFactory toolbarWidgetsFactory) {
-    this.toolbarWidgetsFactory = toolbarWidgetsFactory;
+    this.addSourceToolbarWidget(toolbarWidgetsFactory.getBackToRichTextWidget());
   }
 
 }

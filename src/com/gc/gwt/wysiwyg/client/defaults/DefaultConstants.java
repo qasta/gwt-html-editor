@@ -152,4 +152,8 @@ public class DefaultConstants {
   public static final String BUTTON_FULLSCREEN = "FullScreen";
 
   public static final String SPACER = "spacer";
+
+  public static final String BUTTON_FONT_STYLE = "ButtonFontStyle";
+
+  public static final String BUTTON_FONT_SIZE = "ButtonFontSize";
 }
