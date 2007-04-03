@@ -85,5 +85,4 @@ public class DefaultEditorToolbar extends EditorToolbar {
 
     this.addSourceToolbarWidget(toolbarWidgetsFactory.getBackToRichTextWidget());
   }
-
 }
