@@ -17,10 +17,10 @@
 package com.gc.gwt.wysiwyg.client;
 
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 public class EditorWYSIWYG extends Composite {
 
@@ -43,15 +43,6 @@ public class EditorWYSIWYG extends Composite {
 
     frame = new EditorIframe();
     frame.setWidth("100%");
-
-    // this is done on purpose...
-    if (EditorUtils.isGecko()) {
-      frame.addMouseOverListener(new EditorMouseOverListener() {
-        public void onMouseOver(Widget widget) {
-          enableDesignMode();
-        }
-      });
-    }
 
     textArea = new TextArea();
     textArea.setWidth("100%");
@@ -77,25 +68,13 @@ public class EditorWYSIWYG extends Composite {
 
   private boolean editModeOn = false;
 
-  public void enableDesignMode() {
+  public void enableDesignMode(EditorLoadListener loadListener) {
+    System.out.println("EditorWYSIWYG.enableDesignMode");
     if (!editModeOn) {
-      // String _html = getHTML();
-      _enableDesignMode(frame.getElement());
-      // setHTML(_html);
+      EditorUtils.enableDesignMode(frame.getElement(), loadListener);
       editModeOn = true;
     }
   }
-
-  private native void _enableDesignMode(Element oIframe) /*-{
-    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
-    if (!oDoc) {
-      $wnd.alert("bug _enableDesignMode");
-    }
-    if (oDoc.document) {
-      oDoc = oDoc.document;
-    }
-    oDoc.designMode = 'On';
-  }-*/;
 
   public void setHTML(String _html) {
     textArea.setText(_html);

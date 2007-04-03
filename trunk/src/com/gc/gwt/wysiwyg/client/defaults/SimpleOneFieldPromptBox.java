@@ -31,7 +31,9 @@ public class SimpleOneFieldPromptBox extends AdvancedPromptBox {
   private String fieldLabel;
   private String buttonLabel;
   
-  public SimpleOneFieldPromptBox(Editor editor, String command, String title, String fieldLabel, String buttonLabel) {
+  private TextBox urlTextBox;
+  
+  public SimpleOneFieldPromptBox(Editor editor, EditorCommand command, String title, String fieldLabel, String buttonLabel) {
     super(editor, command, title);
     this.fieldLabel = fieldLabel;
     this.buttonLabel = buttonLabel;
@@ -40,7 +42,7 @@ public class SimpleOneFieldPromptBox extends AdvancedPromptBox {
   public Widget initWidget() {
     VerticalPanel container = new VerticalPanel();
     container.setWidth("300px");
-    final TextBox urlTextBox = new TextBox();
+    urlTextBox = new TextBox();
 
     HorizontalPanel hz = new HorizontalPanel();
     hz.setSpacing(5);
@@ -79,5 +81,10 @@ public class SimpleOneFieldPromptBox extends AdvancedPromptBox {
     container.setCellHorizontalAlignment(hzButtons, HasAlignment.ALIGN_CENTER);
     
     return container;
+  }
+  
+  protected void onLoad() {
+    super.onLoad();
+    urlTextBox.setFocus(true);
   }
 }

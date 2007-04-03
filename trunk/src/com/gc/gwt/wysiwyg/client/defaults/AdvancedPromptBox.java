@@ -37,7 +37,7 @@ public abstract class AdvancedPromptBox extends EditorPromptBox {
    * @param command Midas command
    * @param title dialog caption
    */
-  public AdvancedPromptBox(Editor editor, String command, String title) {
+  public AdvancedPromptBox(Editor editor, EditorCommand command, String title) {
     super(title);
 
     this.editor = editor;
@@ -54,22 +54,21 @@ public abstract class AdvancedPromptBox extends EditorPromptBox {
    */
   private class AdvancedPromptPanelPopupListener implements EditorPromptBoxSubmitListener {
 
-    private String command;
+    private EditorCommand command;
 
     /**
      * TODO: javadocs.
      *
      * @param command
      */
-    public AdvancedPromptPanelPopupListener(String command) {
+    public AdvancedPromptPanelPopupListener(EditorCommand command) {
       this.command = command;
     }
 
     public void onSubmit(String value) {
       EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
       if (value != null) {
-        editor.execCommand(command, false, value);
-        EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+        command.exec(new String[]{value});
       }
     }
   }

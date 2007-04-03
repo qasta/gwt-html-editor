@@ -16,29 +16,22 @@
 
 package com.gc.gwt.wysiwyg.client.defaults;
 
-import com.gc.gwt.wysiwyg.client.Editor;
 import com.gc.gwt.wysiwyg.client.EditorToolbarButton;
-import com.gc.gwt.wysiwyg.client.EditorUtils;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SimpleCommandButton extends EditorToolbarButton {
   
-  protected Editor editor;
-  
-  public SimpleCommandButton(Editor editor, String buttonId, final String command) {
-    this(editor, buttonId, command, false, null);
+  public SimpleCommandButton(String buttonId, final EditorCommand command) {
+    this(buttonId, command, false, null);
   }
 
-  public SimpleCommandButton(Editor editor, String buttonId, final String command, final boolean ui, String value) {
+  public SimpleCommandButton(String buttonId, final EditorCommand command, final boolean ui, String value) {
     super(buttonId);
-
-    this.editor = editor;
     
     this.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        EditorUtils.execCommand(
-            SimpleCommandButton.this.editor.getEditorWYSIWYG().getFrame().getElement(), command, ui, null);
+        command.exec(null);
       }
     });
   }

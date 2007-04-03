@@ -22,7 +22,7 @@ public class FontStyleButton extends EditorToolbarSelect implements ChangeListen
     String value = subj.getValue(subj.getSelectedIndex());
     subj.setSelectedIndex(0);
     EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-    editor.execCommand("FormatBlock", false, value);
+    EditorUtils.doFontStyle(editor.getEditorWYSIWYG().getFrame().getElement(), value);
   }
   
   private void init() {

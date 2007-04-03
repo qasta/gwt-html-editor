@@ -24,7 +24,7 @@ public class ForegroundColorButton
 
   public void colorSelected(String rgb) {
     EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-    editor.execCommand("ForeColor", false, rgb);
+    EditorUtils.doForeColor(editor.getEditorWYSIWYG().getFrame().getElement(), rgb);
     EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
   }
 
