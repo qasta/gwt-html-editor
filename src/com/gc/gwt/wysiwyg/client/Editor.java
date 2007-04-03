@@ -93,36 +93,24 @@ public class Editor extends Composite implements SourcesLoadEvents {
    */
   protected void onLoad() {
     super.onLoad();
-
+    
     if (!initialized) {
-      load();
+      wysiwyg.initFrame(wysiwyg.getFrame().getElement());
+
+      new Timer() {
+        public void run() {
+          wysiwyg.enableDesignMode(new EditorLoadListener() {
+            public void onLoad() {
+              notifyLoadListeners();
+            }
+          });
+        }
+      }.schedule(50);
+      
     } else if (tmpHTMLStorage != null) {
       getEditorWYSIWYG().setHTML(tmpHTMLStorage);
       tmpHTMLStorage = null;
     }
-  }
-
-  /**
-   * TODO: javadocs. 
-   */
-  private void load() {
-    wysiwyg.initFrame(wysiwyg.getFrame().getElement());
-
-    new Timer() {
-      public void run() {
-        if (!EditorUtils.isGecko()) {
-          wysiwyg.enableDesignMode();
-        }
-
-        new Timer() {
-          public void run() {
-            notifyLoadListeners();
-          }
-        }
-        .schedule(50);
-      }
-    }
-    .schedule(50);
   }
 
   /**
@@ -222,17 +210,5 @@ public class Editor extends Composite implements SourcesLoadEvents {
     } else {
       tmpHTMLStorage = _html;
     }
-  }
-
-  /**
-   * Exec Midas command on this editor.
-   *
-   * @param command Midas command
-   * @param ui Show browser native UI
-   * @param value command value
-   */
-  public final void execCommand(String command, boolean ui, String value) {
-    EditorUtils.execCommand(this.getEditorWYSIWYG().getFrame().getElement(),
-        command, ui, value);
   }
 }

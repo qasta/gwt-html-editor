@@ -20,7 +20,7 @@ public class FontSizesCombo extends EditorToolbarSelect implements ChangeListene
     ListBox subj = ((ListBox) sender);
     String value = subj.getValue(subj.getSelectedIndex());
     subj.setSelectedIndex(0);
-    editor.execCommand("FontSize", false, value);
+    EditorUtils.doFontSize(editor.getEditorWYSIWYG().getFrame().getElement(), value);
     EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
   }
 

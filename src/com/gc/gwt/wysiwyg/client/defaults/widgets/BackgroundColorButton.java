@@ -24,7 +24,7 @@ public class BackgroundColorButton
   
   public void colorSelected(String rgb) {
     EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-    editor.execCommand(EditorUtils.isIE() ? "backcolor" : "hilitecolor", false, rgb);
+    EditorUtils.doBackgroundColor(editor.getEditorWYSIWYG().getFrame().getElement(), rgb);
     EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
   }
   

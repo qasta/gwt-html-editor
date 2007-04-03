@@ -16,6 +16,8 @@
 
 package com.gc.gwt.wysiwyg.client;
 
+import com.gc.gwt.wysiwyg.client.impl.EditorUtilsImpl;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -36,6 +38,101 @@ public final class EditorUtils {
   private EditorUtils() {
 
   }
+  
+  private static EditorUtilsImpl impl;
+  
+  static {
+    impl = (EditorUtilsImpl) GWT.create(EditorUtilsImpl.class);
+  }
+  
+  public static void doRemoveFormat(Element oIframe) {
+    impl.doRemoveFormat(oIframe);
+  }
+
+  public static void doUndo(Element oIframe) {
+    impl.doUndo(oIframe);
+  }
+
+  public static void doRedo(Element oIframe) {
+    impl.doRedo(oIframe); 
+  }
+
+  public static void doBold(Element oIframe) {
+    impl.doBold(oIframe); 
+  }
+
+  public static void doItalic(Element oIframe) {
+    impl.doItalic(oIframe);
+  }
+
+  public static void doUnderline(Element oIframe) {
+    impl.doUnderline(oIframe); 
+  }
+
+  public static void doSubscript(Element oIframe) {
+    impl.doSubscript(oIframe);    
+  }
+
+  public static void doSuperscript(Element oIframe) {
+    impl.doSuperscript(oIframe);
+  }
+
+  public static void doJustifyLeft(Element oIframe) {
+    impl.doJustifyLeft(oIframe);
+  }
+
+  public static void doJustifyCenter(Element oIframe) {
+    impl.doJustifyCenter(oIframe);
+  }
+
+  public static void doJustifyRight(Element oIframe) {
+    impl.doJustifyRight(oIframe);
+  }
+
+  public static void doJustifyFull(Element oIframe) {
+    impl.doJustifyFull(oIframe);
+  }
+
+  public static void doInsertOrderedList(Element oIframe) {
+    impl.doInsertOrderedList(oIframe);
+  }
+
+  public static void doInsertUnorderedList(Element oIframe) {
+    impl.doInsertUnorderedList(oIframe);
+  }
+
+  public static void doUnLink(Element oIframe) {
+    impl.doUnLink(oIframe);    
+  }
+
+  public static void doCreateLink(Element oIframe, String url) {
+    impl.doCreateLink(oIframe, url); 
+  }
+
+  public static void doInsertImage(Element oIframe, String url) {
+    impl.doInsertImage(oIframe, url); 
+  }
+
+  public static void doForeColor(Element oIframe, String color) {
+    impl.doForeColor(oIframe, color);
+  }
+
+  public static void doBackgroundColor(Element oIframe, String color) {
+    impl.doBackgroundColor(oIframe, color);
+  }
+  
+  public static void doFontStyle(Element oIframe, String style) {
+    impl.doFontStyle(oIframe, style);
+  }
+  
+  public static void doFontSize(Element oIframe, String size) {
+    impl.doFontSize(oIframe, size);
+  }
+
+  public static void enableDesignMode(Element oIframe, EditorLoadListener loadListener) {
+    impl.enableDesignMode(oIframe, loadListener);
+  }
+  
   /**
    * Exec Midas command.
    *
@@ -46,7 +143,6 @@ public final class EditorUtils {
    */
   public static native void execCommand(Element oIframe, String command,
       boolean ui, String value) /*-{
-    oIframe.contentWindow.focus();
     oIframe.contentWindow.document.execCommand(command, ui, value);
   }-*/;
 
@@ -181,63 +277,18 @@ public final class EditorUtils {
    *
    * @param oIframe target IFrame
    */
-  public static native void saveSelection(Element oIframe) /*-{
-    // Save the selection, works around a problem with IE/Safari where the
-    // selection in the iframe gets lost.
-
-    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
-    if (oDoc.document) {
-      oDoc = oDoc.document;
-    }
-
-    if (@com.gc.gwt.wysiwyg.client.EditorUtils::isIE()()) {
-      var currange = oDoc.selection.createRange();
-      oDoc._previous_range = currange;
-    }
-
-    if (@com.gc.gwt.wysiwyg.client.EditorUtils::isSafari()()) {
-      var oWin = oIframe.contentWindow;
-      var sel = oWin.getSelection();
-
-      oDoc._previous_range = new Object();
-      oDoc._previous_range.baseNode = sel.baseNode;
-      oDoc._previous_range.baseOffset = sel.baseOffset;
-      oDoc._previous_range.extentNode = sel.extentNode;
-      oDoc._previous_range.extentOffset = sel.extentOffset;
-    }
-  }-*/;
+  public static void saveSelection(Element oIframe) {
+    impl.saveSelection(oIframe);
+  }
 
   /**
    * Restore selection in oIframe.
    *
    * @param oIframe target IFrame
    */
-  public static native void restoreSelection(Element oIframe) /*-{
-    // re-selects the previous selection.
-    var oDoc = oIframe.contentWindow || oIframe.contentDocument;
-    if (oDoc.document) {
-      oDoc = oDoc.document;
-    }
-    if (oDoc._previous_range) {
-      if (@com.gc.gwt.wysiwyg.client.EditorUtils::isIE()()) {
-        try {
-          oDoc._previous_range.select();
-          oDoc.focus();
-        } catch (e) {
-          alert("Error placing back selection");
-        };
-      }
-      if (@com.gc.gwt.wysiwyg.client.EditorUtils::isSafari()()) {
-        var oWin = oIframe.contentWindow;
-        var sel = oWin.getSelection();
-        sel.setBaseAndExtent(oDoc._previous_range.baseNode,
-                             oDoc._previous_range.baseOffset,
-                             oDoc._previous_range.extentNode,
-                             oDoc._previous_range.extentOffset);
-      }
-      oDoc._previous_range = null;
-    }
-  }-*/;
+  public static void restoreSelection(Element oIframe) {
+    impl.restoreSelection(oIframe);
+  }
 
   /**
    * JavaScript parseInt style Integer parser.

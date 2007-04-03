@@ -50,11 +50,12 @@ public class AlwaysVisiblePanel extends SimplePanel {
   public AlwaysVisiblePanel() {
     DOM.addEventPreview(new EventPreview() {
       public boolean onEventPreview(Event event) {
-        adjustPosition();
+        if (DOM.eventGetType(event) == Event.ONSCROLL) {
+          adjustPosition();
+        }
         return true;
       }
     });
-    sinkEvents(Event.ONSCROLL);
   }
   /**
    * Create new AlwaysVisiblePanel. Ex:
@@ -67,12 +68,6 @@ public class AlwaysVisiblePanel extends SimplePanel {
     setDocking(docking);
   }
   
-  public void onBrowserEvent(Event event) {
-    if (DOM.eventGetType(event) == Event.ONSCROLL) {
-      adjustPosition();
-    }
-  }
-  
   protected void onLoad() {
     super.onLoad();
     
@@ -83,7 +78,13 @@ public class AlwaysVisiblePanel extends SimplePanel {
         adjustPosition();
       }
     });
+    
+    attachOnScrollListener();
   }
+  
+  private native void attachOnScrollListener()/*-{
+    $wnd.addEventListener('scroll', $wnd.__dispatchCapturedEvent, true);
+  }-*/;
   
   /**
    * Set panel docking.
@@ -109,25 +110,25 @@ public class AlwaysVisiblePanel extends SimplePanel {
     }
 
     if (docking == DOCK_TOP_LEFT) {
-      setOffsetLeft(0);
-      setOffsetTop(0);
+      setOffsetLeft(getScrollXOffset());
+      setOffsetTop(getScrollYOffset());
     } else if (docking == DOCK_TOP_CENTER) {
       setOffsetLeft(Window.getClientWidth()/2 + getScrollXOffset() - getOffsetWidth()/2);
-      setOffsetTop(0);
+      setOffsetTop(getScrollYOffset());
     } else if (docking == DOCK_TOP_RIGHT) {
       setOffsetLeft(Window.getClientWidth() + getScrollXOffset() - getOffsetWidth());
-      setOffsetTop(0);
+      setOffsetTop(getScrollYOffset());
     } else if (docking == DOCK_MIDDLE_LEFT) {
-      setOffsetLeft(0);
+      setOffsetLeft(getScrollXOffset());
       setOffsetTop(Window.getClientHeight()/2 + getScrollYOffset() - getOffsetHeight());
     } else if (docking == DOCK_MIDDLE_CENTER) {
       setOffsetLeft(Window.getClientWidth()/2 + getScrollXOffset() - getOffsetWidth()/2);
       setOffsetTop(Window.getClientHeight()/2 + getScrollYOffset() - getOffsetHeight());
     } else if (docking == DOCK_MIDDLE_RIGHT) {
-      setOffsetLeft(Window.getClientWidth() + getScrollXOffset() - getOffsetWidth());
+      setOffsetLeft(Window.getClientWidth() - getOffsetWidth());
       setOffsetTop(Window.getClientHeight()/2 + getScrollYOffset() - getOffsetHeight());
     } else if (docking == DOCK_BOTTOM_LEFT) {
-      setOffsetLeft(0);
+      setOffsetLeft(getScrollXOffset());
       setOffsetTop(Window.getClientHeight() + getScrollYOffset() - getOffsetHeight());
     } else if (docking == DOCK_BOTTOM_CENTER) {
       setOffsetLeft(Window.getClientWidth()/2 + getScrollXOffset() - getOffsetWidth()/2);

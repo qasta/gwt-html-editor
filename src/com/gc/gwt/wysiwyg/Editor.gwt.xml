@@ -1,6 +1,39 @@
 <module>
+	<inherits name="com.google.gwt.user.UserAgent"/>
 	<inherits name='com.google.gwt.user.User'/>
+	
 	<stylesheet src="editor.css"/>
+	
 	<source path="client"/>
 	<public path="public"/>
+	
+	
+	<!-- Fall through to this rule for all other browsers 
+	<replace-with class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImplStandard">
+		<when-type-is class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImpl"/>
+	</replace-with>
+	-->
+		
+	<replace-with class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImplOpera">
+		<when-type-is class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImpl"/>
+		<when-property-is name="user.agent" value="opera"/>
+	</replace-with>
+
+	<replace-with class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImplSafari">
+		<when-type-is class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImpl"/>
+		<when-property-is name="user.agent" value="safari"/>
+	</replace-with>
+
+	<replace-with class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImplIE6">
+		<when-type-is class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImpl"/>
+		<when-property-is name="user.agent" value="ie6"/>
+	</replace-with>
+
+	<replace-with class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImplMozilla">
+		<when-type-is class="com.gc.gwt.wysiwyg.client.impl.EditorUtilsImpl"/>
+		<any>
+			<when-property-is name="user.agent" value="gecko1_8"/>
+			<when-property-is name="user.agent" value="gecko"/>
+		</any>
+	</replace-with>
 </module>

@@ -29,6 +29,8 @@
 
 	<target name="gwt-test-shell">
 		<java classpathref="gwt.compile.class.path" classname="com.google.gwt.dev.GWTShell" fork="true" >
+			<arg value="-port"/>
+			<arg value="8881"/>
 			<arg value="-out"/>
 			<arg value="${gwt.output}"/>
 			<arg value="com.gc.gwt.wysiwyg.test.Test/Test.html"/>
