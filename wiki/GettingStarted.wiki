@@ -6,11 +6,10 @@
 Installation steps:
   * Download (or compile) the latest JAR file
   * add the downloaded JAR file to classpath of the GWT Compiler/Shell
-
-if you are using latest stable jar bundle (0.1.2)
-  * add: <inherits name='com.jpavel.gwt.wysiwyg.Editor'/> to your module descriptor XML file
-if you are using latest version from svn
   * add: <inherits name='com.gc.gwt.wysiwyg.Editor'/> to your module descriptor XML file
+
+*Note: * for older versions (<= 0.1.2)
+  * add: <inherits name='com.jpavel.gwt.wysiwyg.Editor'/> to your module descriptor XML file
 
 = Sample Code =
 
@@ -37,6 +36,23 @@ if you are using latest version from svn
 
 *NOTE:* editor.load() method has been removed.
 
-[KnownIssues Known Issues]
+= Upgrading from 0.1.2 to 0.1.3 =
+
+Update you GWT module descriptor file to include
+  <inherits name='com.gc.gwt.wysiwyg.Editor'/>
+
+instead of
+
+  ~~<inherits name='com.jpavel.gwt.wysiwyg.Editor'/>~~
+
+= Known Issues =
+
+[KnownIssues see the Known Issues page]
+
+
+
+
+
+
 
 
