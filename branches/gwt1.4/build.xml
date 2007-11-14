@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GWTRichTextEditor" default="all">
+    <property file="project.properties"/>
+
+	<path id="gwt.compile.class.path">
+		<pathelement location="${source.dir}"/>
+		<pathelement location="${test.dir}"/>
+		
+		<pathelement path="${gwt.jar.user}"/>
+		<pathelement path="${gwt.jar.dev}"/>
+		<pathelement path="${gwt.html.editor.jar}"/>
+	</path>
+
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="build">
+			    <include name="**/*"/>
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="gwt-test-compile">
+		<java classpathref="gwt.compile.class.path" classname="com.google.gwt.dev.GWTCompiler" fork="true" >
+			<arg value="-out"/>
+			<arg value="${gwt.output}"/>
+			<arg value="com.gc.gwt.wysiwyg.test.Test"/>
+		</java>
+    </target>
+
+	<target name="gwt-test-shell">
+		<java classpathref="gwt.compile.class.path" classname="com.google.gwt.dev.GWTShell" fork="true" >
+			<arg value="-port"/>
+			<arg value="8881"/>
+			<arg value="-out"/>
+			<arg value="${gwt.output}"/>
+			<arg value="com.gc.gwt.wysiwyg.test.Test/Test.html"/>
+		</java>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <javac destdir="${classes.dir}" debug= "on" failonerror="true" nowarn="on" memoryMaximumSize="128m" fork="true" source="1.4" target="1.4">
+            <classpath refid="gwt.compile.class.path"/>
+            <src path="${source.dir}"/>
+        	<exclude name="**/.svn/**"/>
+        </javac>
+        <mkdir dir="${jar.dir}"/>
+		<copy todir="${jar.dir}">
+			<fileset dir="${classes.dir}"/>
+			<fileset dir="${source.dir}">
+				<exclude name="**/.svn/**"/>
+			</fileset>
+		</copy>
+    </target>
+	
+	<target name="jar" depends="compile">
+		<jar destfile="${jar.file}">
+			<fileset dir="${jar.dir}"/>
+		</jar>
+	</target>
+
+	<target name="all" depends="jar"/>
+</project>
