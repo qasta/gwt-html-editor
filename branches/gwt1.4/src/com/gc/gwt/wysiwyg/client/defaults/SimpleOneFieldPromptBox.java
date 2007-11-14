@@ -85,6 +85,6 @@ public class SimpleOneFieldPromptBox extends AdvancedPromptBox {
   
   protected void onLoad() {
     super.onLoad();
-    urlTextBox.setFocus(true);
+//    urlTextBox.setFocus(true);
   }
 }

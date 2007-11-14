@@ -39,10 +39,10 @@ public class DefaultEditorToolbar extends EditorToolbar {
 
     this.putWidgetLast(toolbarWidgetsFactory.getRemoveFormattingWidget(), DefaultConstants.BUTTON_DELETE);
 
-    this.addSpacer();
-
-    this.putWidgetLast(toolbarWidgetsFactory.getUndoWidget(), DefaultConstants.BUTTON_UNDO);
-    this.putWidgetLast(toolbarWidgetsFactory.getRedoWidget(), DefaultConstants.BUTTON_REDO);
+//    this.addSpacer();
+//
+//    this.putWidgetLast(toolbarWidgetsFactory.getUndoWidget(), DefaultConstants.BUTTON_UNDO);
+//    this.putWidgetLast(toolbarWidgetsFactory.getRedoWidget(), DefaultConstants.BUTTON_REDO);
 
     this.addSpacer();
 
@@ -60,7 +60,7 @@ public class DefaultEditorToolbar extends EditorToolbar {
     this.putWidgetLast(toolbarWidgetsFactory.getJustifyLeftWidget(), DefaultConstants.BUTTON_ALIGNLEFT);
     this.putWidgetLast(toolbarWidgetsFactory.getJustifyCenterWidget(), DefaultConstants.BUTTON_ALIGNCENTER);
     this.putWidgetLast(toolbarWidgetsFactory.getJustifyRightWidget(), DefaultConstants.BUTTON_ALIGNRIGHT);
-    this.putWidgetLast(toolbarWidgetsFactory.getJustifyFullWidget(), DefaultConstants.BUTTON_ALIGNJUSTIFY);
+//    this.putWidgetLast(toolbarWidgetsFactory.getJustifyFullWidget(), DefaultConstants.BUTTON_ALIGNJUSTIFY);
 
     this.addSpacer();
 

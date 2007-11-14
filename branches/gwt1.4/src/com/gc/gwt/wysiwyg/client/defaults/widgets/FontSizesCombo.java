@@ -18,14 +18,25 @@ package com.gc.gwt.wysiwyg.client.defaults.widgets;
 
 import com.gc.gwt.wysiwyg.client.Editor;
 import com.gc.gwt.wysiwyg.client.EditorToolbarSelect;
-import com.gc.gwt.wysiwyg.client.EditorUtils;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.RichTextArea.FontSize;
 
-public class FontSizesCombo extends EditorToolbarSelect implements ChangeListener {
+public class FontSizesCombo extends EditorToolbarSelect implements
+    ChangeListener {
 
   Editor editor;
+  
+  public static FontSize[] FONT_SIZES = new FontSize[]{
+    FontSize.XX_SMALL,
+    FontSize.X_SMALL,
+    FontSize.SMALL,
+    FontSize.MEDIUM,
+    FontSize.LARGE,
+    FontSize.X_LARGE,
+    FontSize.XX_LARGE
+  };
 
   public FontSizesCombo(Editor editor) {
     this.editor = editor;
@@ -34,16 +45,16 @@ public class FontSizesCombo extends EditorToolbarSelect implements ChangeListene
 
   public void onChange(Widget sender) {
     ListBox subj = ((ListBox) sender);
-    String value = subj.getValue(subj.getSelectedIndex());
+    FontSize value = FONT_SIZES[subj.getSelectedIndex() - 1];
     subj.setSelectedIndex(0);
-    EditorUtils.doFontSize(editor.getEditorWYSIWYG().getFrame().getElement(), value);
-    EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+    editor.getRichTextArea().getBasicFormatter().setFontSize(value);
+    editor.getRichTextArea().setFocus(true);
   }
 
   private void init() {
     this.addItem("Size", "");
-    for (int i = 1; i < 8; i++) {
-      this.addItem("Size " + i, "" + i);
+    for (int i = 0; i < FONT_SIZES.length; i++) {
+      this.addItem("Size " + FONT_SIZES[i].getNumber(), "" + i);
     }
     this.addChangeListener(this);
   }

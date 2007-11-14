@@ -19,7 +19,6 @@ package com.gc.gwt.wysiwyg.client.defaults;
 import com.gc.gwt.wysiwyg.client.Editor;
 import com.gc.gwt.wysiwyg.client.EditorPromptBox;
 import com.gc.gwt.wysiwyg.client.EditorPromptBoxSubmitListener;
-import com.gc.gwt.wysiwyg.client.EditorUtils;
 
 /**
  * TODO: javadocs.
@@ -43,8 +42,6 @@ public abstract class AdvancedPromptBox extends EditorPromptBox {
     this.editor = editor;
 
     this.addEditorPromptPanelSubmitListener(new AdvancedPromptPanelPopupListener(command));
-
-    EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
   }
 
   /**
@@ -66,7 +63,6 @@ public abstract class AdvancedPromptBox extends EditorPromptBox {
     }
 
     public void onSubmit(String value) {
-      EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
       if (value != null) {
         command.exec(new String[]{value});
       }

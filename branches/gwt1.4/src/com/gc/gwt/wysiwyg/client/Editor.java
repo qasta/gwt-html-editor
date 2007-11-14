@@ -21,12 +21,13 @@ import java.util.List;
 
 import com.gc.gwt.wysiwyg.client.defaults.DefaultEditorToolbar;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LoadListener;
+import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.SourcesLoadEvents;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Rich Text Editor Widget.
@@ -37,13 +38,14 @@ public class Editor extends Composite implements SourcesLoadEvents {
 
   private EditorToolbar toolbar;
 
-  private EditorWYSIWYG wysiwyg;
+  private RichTextArea wysiwyg;
+  private TextArea source;
+  private SimplePanel editorContainer;
+  
+  private boolean showingSource = false; 
 
   private VerticalPanel container;
   
-  // internal status
-  private boolean initialized = false;
-
   // listeners
   private List loadListeners = new ArrayList();
 
@@ -63,28 +65,19 @@ public class Editor extends Composite implements SourcesLoadEvents {
       toolbar = tlBar;
     }
 
-    wysiwyg = new EditorWYSIWYG(this);
+    wysiwyg = new RichTextArea();
     wysiwyg.setWidth("100%");
+    
+    source = new TextArea();
+    source.setWidth("100%");
 
-    addLoadListener(new LoadListener() {
-      public void onLoad(Widget sender) {
-        initialized = true;
-
-        if (tmpHTMLStorage != null) {
-          getEditorWYSIWYG().setHTML(tmpHTMLStorage);
-          tmpHTMLStorage = null;
-        }
-      }
-
-      public void onError(Widget sender) {
-        // TODO Implement error handling
-      }
-    });
-
+    editorContainer = new SimplePanel();
+    editorContainer.setWidget(wysiwyg);
+    
     container = new VerticalPanel();
     container.setStyleName("Editor");
     container.add(toolbar);
-    container.add(wysiwyg);
+    container.add(editorContainer);
     initWidget(container);
   }
 
@@ -92,25 +85,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
    * do not override it!
    */
   protected void onLoad() {
-    super.onLoad();
-    
-    if (!initialized) {
-      wysiwyg.initFrame(wysiwyg.getFrame().getElement());
-
-      new Timer() {
-        public void run() {
-          wysiwyg.enableDesignMode(new EditorLoadListener() {
-            public void onLoad() {
-              notifyLoadListeners();
-            }
-          });
-        }
-      }.schedule(50);
-      
-    } else if (tmpHTMLStorage != null) {
-      getEditorWYSIWYG().setHTML(tmpHTMLStorage);
-      tmpHTMLStorage = null;
-    }
+    notifyLoadListeners();
   }
 
   /**
@@ -136,8 +111,8 @@ public class Editor extends Composite implements SourcesLoadEvents {
    */
   public void setHeight(String height) {
     container.setHeight(height);
-    wysiwyg.setHeight("" + (EditorUtils.parseInt(height)
-        - toolbar.getOffsetHeight()) + "px");
+    wysiwyg.setHeight("" + (EditorUtils.parseInt(height) - toolbar.getOffsetHeight()) + "px");
+    source.setHeight("" + (EditorUtils.parseInt(height) - toolbar.getOffsetHeight()) + "px");
   }
 
   /**
@@ -159,7 +134,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
   /**
    * @return editor WYSIWYG widget
    */
-  public EditorWYSIWYG getEditorWYSIWYG() {
+  public RichTextArea getRichTextArea() {
     return wysiwyg;
   }
 
@@ -194,7 +169,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
    * @return HTML
    */
   public String getHTML() {
-    return getEditorWYSIWYG().getHTML();
+    return getRichTextArea().getHTML();
   }
 
   private String tmpHTMLStorage = null;
@@ -205,10 +180,17 @@ public class Editor extends Composite implements SourcesLoadEvents {
    * @param _html HTML
    */
   public void setHTML(String _html) {
-    if (isAttached()) {
-      getEditorWYSIWYG().setHTML(_html);
+    getRichTextArea().setHTML(_html);
+  }
+  
+  public void toggleView() {
+    if (showingSource) {
+      editorContainer.setWidget(wysiwyg);
+      showingSource = false;
     } else {
-      tmpHTMLStorage = _html;
+      source.setText(wysiwyg.getHTML());
+      editorContainer.setWidget(source);
+      showingSource = true;
     }
   }
 }
