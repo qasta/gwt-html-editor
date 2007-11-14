@@ -18,7 +18,6 @@ package com.gc.gwt.wysiwyg.client.defaults.widgets;
 
 import com.gc.gwt.wysiwyg.client.Editor;
 import com.gc.gwt.wysiwyg.client.EditorToolbarButton;
-import com.gc.gwt.wysiwyg.client.EditorUtils;
 import com.gc.gwt.wysiwyg.client.defaults.DefaultConstants;
 import com.gc.gwt.wysiwyg.client.defaults.EditorColorPicker;
 import com.gc.gwt.wysiwyg.client.defaults.EditorColorSelectListener;
@@ -39,13 +38,11 @@ public class BackgroundColorButton
   }
   
   public void colorSelected(String rgb) {
-    EditorUtils.restoreSelection(editor.getEditorWYSIWYG().getFrame().getElement());
-    EditorUtils.doBackgroundColor(editor.getEditorWYSIWYG().getFrame().getElement(), rgb);
-    EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+    editor.getRichTextArea().getBasicFormatter().setBackColor(rgb);
+    editor.getRichTextArea().setFocus(true);
   }
   
   public void onClick(Widget sender) {
-    EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
     bgPicker.show();
     bgPicker.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
   }

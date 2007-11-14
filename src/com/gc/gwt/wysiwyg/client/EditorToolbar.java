@@ -32,8 +32,9 @@ public class EditorToolbar extends Composite {
   /* Inner Classes */
   
   private static class EditorToolbarFlowPanel extends FlowPanel {
+    
     public void insert(Widget w, int beforeIndex) {
-      super.insert(w, null, beforeIndex);
+      super.insert(w, this.getElement(), beforeIndex, true);
       DOM.insertChild(getElement(), w.getElement(), beforeIndex);
     }
   }

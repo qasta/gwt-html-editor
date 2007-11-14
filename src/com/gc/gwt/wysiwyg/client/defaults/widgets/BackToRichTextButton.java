@@ -33,6 +33,6 @@ public class BackToRichTextButton extends EditorToolbarButton implements ClickLi
   }
   
   public void onClick(Widget sender) {
-    editor.getEditorWYSIWYG().toggleView();
+    editor.toggleView();
   }
 }

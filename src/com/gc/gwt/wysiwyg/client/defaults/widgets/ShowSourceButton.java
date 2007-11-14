@@ -33,7 +33,6 @@ public class ShowSourceButton extends EditorToolbarButton implements ClickListen
   }
   
   public void onClick(Widget sender) {
-    editor.getEditorWYSIWYG().toggleView();
+    editor.toggleView();
   }
-
 }

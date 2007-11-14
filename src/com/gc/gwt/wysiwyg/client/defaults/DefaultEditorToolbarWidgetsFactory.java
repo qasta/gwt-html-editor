@@ -17,9 +17,16 @@
 package com.gc.gwt.wysiwyg.client.defaults;
 
 import com.gc.gwt.wysiwyg.client.Editor;
-import com.gc.gwt.wysiwyg.client.EditorUtils;
-import com.gc.gwt.wysiwyg.client.defaults.widgets.*;
+import com.gc.gwt.wysiwyg.client.defaults.widgets.BackToRichTextButton;
+import com.gc.gwt.wysiwyg.client.defaults.widgets.BackgroundColorButton;
+import com.gc.gwt.wysiwyg.client.defaults.widgets.FontSizesCombo;
+import com.gc.gwt.wysiwyg.client.defaults.widgets.FontStyleButton;
+import com.gc.gwt.wysiwyg.client.defaults.widgets.ForegroundColorButton;
+import com.gc.gwt.wysiwyg.client.defaults.widgets.InsertImageButton;
+import com.gc.gwt.wysiwyg.client.defaults.widgets.LinkButton;
+import com.gc.gwt.wysiwyg.client.defaults.widgets.ShowSourceButton;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.RichTextArea.Justification;
 
 public class DefaultEditorToolbarWidgetsFactory {
   
@@ -32,31 +39,32 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getRemoveFormattingWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_DELETE, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doRemoveFormat(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getExtendedFormatter().removeFormat();
       }
     });
   }
-  
-  public Widget getUndoWidget() {
-    return new SimpleCommandButton(DefaultConstants.BUTTON_UNDO, new EditorCommand() {
-      public void exec(String[] params) {
-        EditorUtils.doUndo(editor.getEditorWYSIWYG().getFrame().getElement());
-      }
-    });
-  }
-  
-  public Widget getRedoWidget() {
-    return new SimpleCommandButton(DefaultConstants.BUTTON_REDO, new EditorCommand() {
-      public void exec(String[] params) {
-        EditorUtils.doRedo(editor.getEditorWYSIWYG().getFrame().getElement());
-      }
-    });
-  }
+//  
+//  public Widget getUndoWidget() {
+//    return new SimpleCommandButton(DefaultConstants.BUTTON_UNDO, new EditorCommand() {
+//      public void exec(String[] params) {
+//        editor.getRichTextArea().getExtendedFormatter().
+//        EditorUtils.doUndo(editor.getEditorWYSIWYG().getFrame().getElement());
+//      }
+//    });
+//  }
+//  
+//  public Widget getRedoWidget() {
+//    return new SimpleCommandButton(DefaultConstants.BUTTON_REDO, new EditorCommand() {
+//      public void exec(String[] params) {
+//        EditorUtils.doRedo(editor.getEditorWYSIWYG().getFrame().getElement());
+//      }
+//    });
+//  }
   
   public Widget getBoldWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_BOLD, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doBold(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getBasicFormatter().toggleBold();
       }
     });
   }
@@ -64,7 +72,7 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getItalicWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_ITALIC, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doItalic(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getBasicFormatter().toggleItalic();
       }
     });
   }
@@ -72,7 +80,7 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getUnderlineWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_UNDERLINE, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doUnderline(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getBasicFormatter().toggleUnderline();
       }
     });
   }
@@ -80,7 +88,7 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getSubscriptWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_SUBSCRIPT, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doSubscript(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getBasicFormatter().toggleSubscript();
       }
     });
   }
@@ -88,7 +96,7 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getSuperscriptWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_SUPERSCRIPT, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doSuperscript(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getBasicFormatter().toggleSuperscript();
       }
     });
   }
@@ -96,7 +104,7 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getJustifyLeftWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_ALIGNLEFT, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doJustifyLeft(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getBasicFormatter().setJustification(Justification.LEFT);
       }
     });
   }
@@ -104,7 +112,7 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getJustifyCenterWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_ALIGNCENTER, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doJustifyCenter(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getBasicFormatter().setJustification(Justification.CENTER);
       }
     });
   }
@@ -112,23 +120,24 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getJustifyRightWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_ALIGNRIGHT, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doJustifyRight(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getBasicFormatter().setJustification(Justification.RIGHT);
       }
     });
   }
-  
-  public Widget getJustifyFullWidget() {
-    return new SimpleCommandButton(DefaultConstants.BUTTON_ALIGNJUSTIFY, new EditorCommand() {
-      public void exec(String[] params) {
-        EditorUtils.doJustifyFull(editor.getEditorWYSIWYG().getFrame().getElement());
-      }
-    });
-  }
+//  
+//  public Widget getJustifyFullWidget() {
+//    return new SimpleCommandButton(DefaultConstants.BUTTON_ALIGNJUSTIFY, new EditorCommand() {
+//      public void exec(String[] params) {
+//        editor.getRichTextArea().getExtendedFormatter().
+//        EditorUtils.doJustifyFull(editor.getEditorWYSIWYG().getFrame().getElement());
+//      }
+//    });
+//  }
 
   public Widget getOrderedListWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_OL, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doInsertOrderedList(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getExtendedFormatter().insertOrderedList();
       }
     });
   }
@@ -136,7 +145,7 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getUnorderedListWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_UL, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doInsertUnorderedList(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getExtendedFormatter().insertUnorderedList();
       }
     });
   }
@@ -148,7 +157,7 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getUnlinkWidget() {
     return new SimpleCommandButton(DefaultConstants.BUTTON_UNLINK, new EditorCommand() {
       public void exec(String[] params) {
-        EditorUtils.doUnLink(editor.getEditorWYSIWYG().getFrame().getElement());
+        editor.getRichTextArea().getExtendedFormatter().removeLink();
       }
     });
   }

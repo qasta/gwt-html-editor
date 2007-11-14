@@ -37,12 +37,12 @@ public class FontStyleButton extends EditorToolbarSelect implements ChangeListen
     ListBox subj = ((ListBox) sender);
     String value = subj.getValue(subj.getSelectedIndex());
     subj.setSelectedIndex(0);
-    EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-    EditorUtils.doFontStyle(editor.getEditorWYSIWYG().getFrame().getElement(), value);
+    editor.getRichTextArea().getBasicFormatter().setFontName(value);
+    editor.getRichTextArea().setFocus(true);
   }
   
   private void init() {
-    this.addItem("Style", "");
+    this.addItem("Font", "");
     String[][] formats = EditorUtils.getSupportedFormats();
     for (int i = 0; i < formats.length; i++) {
       this.addItem(formats[i][0], formats[i][1]);
