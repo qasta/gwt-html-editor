@@ -3,6 +3,7 @@
 	
 	<stylesheet src="editor.css"/>
 	
+	<script src="fckhelper.js"/>
 	<script src="fckeditor/fckeditor.js"/>
 	<source path="client"/>
 	<public path="public"/>

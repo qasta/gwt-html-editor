@@ -19,7 +19,12 @@ package com.gc.gwt.wysiwyg.test.client;
 import com.gc.gwt.wysiwyg.client.fck.FCKEditor;
 import com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class Test implements EntryPoint {
 
@@ -28,12 +33,27 @@ public class Test implements EntryPoint {
   }
 
   public void onModuleLoad() {
-    FCKEditor editor = new FCKEditor(new FCKEditorConfig() {
+    final FCKEditor editor = new FCKEditor(new FCKEditorConfig() {
       {
-        setHeight("100%");
       }
     });
     
-    getRootPanel().add(editor);
+    editor.setHTML("<h1>Hello World</h1>");
+    
+    VerticalPanel vp = new VerticalPanel();
+    vp.setWidth("100%");
+    vp.add(editor);
+    vp.add(new Button("set some other html", new ClickListener() {
+      public void onClick(Widget sender) {
+        editor.setHTML("<h1>Some other html.</h1>");
+      }
+    }));
+    vp.add(new Button("get text", new ClickListener() {
+      public void onClick(Widget sender) {
+        Window.alert(editor.getHTML());
+      }
+    }));
+    
+    getRootPanel().add(vp);
   }
 }
