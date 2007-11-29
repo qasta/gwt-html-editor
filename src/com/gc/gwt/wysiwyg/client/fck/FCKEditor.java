@@ -13,6 +13,7 @@ public class FCKEditor extends Composite {
   private TextArea textarea;
   private JavaScriptObject editorInstance;
   private FCKEditorConfig config;
+  private boolean isLoaded;
   
   public FCKEditor(FCKEditorConfig config) {
     this.config = config;
@@ -28,7 +29,34 @@ public class FCKEditor extends Composite {
         editorInstance = initEditor();
       }
     });
+    addLoadListener(new FCKEditorLoadListener() {
+      public void onLoad() {
+        isLoaded = true;
+      }
+    });
   }
+  
+  public void setHTML(final String html) {
+    if (!isLoaded) {
+      addLoadListener(new FCKEditorLoadListener() {
+        public void onLoad() {
+          _setHTML(html);
+        }
+      });
+    } else {
+      _setHTML(html);
+    }
+  }
+  
+  private native void _setHTML(String html)/*-{
+    var oEditor = $wnd.FCKeditorAPI.GetInstance(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId) ;
+    oEditor.SetHTML(html);
+  }-*/;
+  
+  public native String getHTML()/*-{
+    var oEditor = $wnd.FCKeditorAPI.GetInstance(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId) ;
+    return oEditor.GetHTML();
+  }-*/;
   
   private native JavaScriptObject initEditor()/*-{
     var oFCKeditor = new $wnd.FCKeditor(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId);
@@ -38,6 +66,13 @@ public class FCKEditor extends Composite {
     oFCKeditor.ToolbarSet = 'Default';
     oFCKeditor.BasePath = "fckeditor/";
     oFCKeditor.ReplaceTextarea();
-    return oFCKeditor;  
+    return oFCKeditor;
   }-*/;
+
+  public native void addLoadListener(FCKEditorLoadListener listener)/*-{
+    $wnd.__FCK_addLoadListener(function() {
+      listener.@com.gc.gwt.wysiwyg.client.fck.FCKEditorLoadListener::onLoad()();
+    });
+  }-*/;;
 }
+
