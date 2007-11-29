@@ -16,9 +16,9 @@
 
 package com.gc.gwt.wysiwyg.test.client;
 
-import com.gc.gwt.wysiwyg.client.Editor;
+import com.gc.gwt.wysiwyg.client.fck.FCKEditor;
+import com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class Test implements EntryPoint {
@@ -28,12 +28,12 @@ public class Test implements EntryPoint {
   }
 
   public void onModuleLoad() {
-    HorizontalPanel hzContainer = new HorizontalPanel();
-    Editor editor = new Editor();
-    editor.setWidth("100%");
-    editor.setHeight("300px");editor.setHTML("<h1>Hello World!</h1>");
-    hzContainer.add(editor);
+    FCKEditor editor = new FCKEditor(new FCKEditorConfig() {
+      {
+        setHeight("100%");
+      }
+    });
     
-    getRootPanel().add(hzContainer);
+    getRootPanel().add(editor);
   }
 }
