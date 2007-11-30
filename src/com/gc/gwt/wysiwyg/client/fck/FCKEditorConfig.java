@@ -4,9 +4,7 @@ public class FCKEditorConfig {
 
   private String width = "100%";
   private String height = "300px";
-
-  public FCKEditorConfig() {
-  }
+  private String toolbarSet = "Default";
 
   public String getWidth() {
     return width;
@@ -22,5 +20,13 @@ public class FCKEditorConfig {
 
   public void setHeight(String height) {
     this.height = height;
+  }
+
+  public String getToolbarSet() {
+    return toolbarSet;
+  }
+
+  public void setToolbarSet(String toolbarSet) {
+    this.toolbarSet = toolbarSet;
   }
 }

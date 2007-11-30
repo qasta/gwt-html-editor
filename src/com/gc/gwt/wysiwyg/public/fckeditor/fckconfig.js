@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
  *
@@ -106,6 +106,18 @@ FCKConfig.ToolbarSets["Default"] = [
 	['Style','FontFormat','FontName','FontSize'],
 	['TextColor','BGColor'],
 	['FitWindow','-','About']
+] ;
+
+FCKConfig.ToolbarSets["Simple"] = [
+	['Source'],
+	['Cut','Copy','Paste','PasteText','PasteWord'],
+	['Bold','Italic','-','OrderedList','UnorderedList'],
+	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+	['Link','Unlink','Anchor'],
+	['TextColor','BGColor'],
+	'/',
+	['Style','FontFormat','FontName','FontSize'],
+	['FitWindow']
 ] ;
 
 FCKConfig.ToolbarSets["Basic"] = [

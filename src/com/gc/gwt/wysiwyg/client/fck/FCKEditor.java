@@ -61,9 +61,10 @@ public class FCKEditor extends Composite {
   private native JavaScriptObject initEditor()/*-{
     var oFCKeditor = new $wnd.FCKeditor(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId);
     var config = this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::config;
+    
     oFCKeditor.Width = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getWidth()();
     oFCKeditor.Height = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getHeight()();
-    oFCKeditor.ToolbarSet = 'Default';
+    oFCKeditor.ToolbarSet = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getToolbarSet()();
     oFCKeditor.BasePath = "fckeditor/";
     oFCKeditor.ReplaceTextarea();
     return oFCKeditor;
