@@ -16,7 +16,6 @@
 
 package com.gc.gwt.ext.client;
 
-import com.gc.gwt.wysiwyg.client.EditorUtils;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
@@ -226,7 +225,7 @@ public class SplitPane extends Composite {
 
         int newFirstWidth;
         if (splitOrientation == VERTICAL_SPLIT) {
-          newFirstWidth = EditorUtils.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "width")) + x;
+          newFirstWidth = Integer.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "width")) + x;
 
           if (newFirstWidth >= originalWidth) {
             newFirstWidth = originalWidth;
@@ -237,7 +236,7 @@ public class SplitPane extends Composite {
               - divider.getOffsetWidth())
               + "px");
         } else {
-          newFirstWidth = EditorUtils.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "height")) + y;
+          newFirstWidth = Integer.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "height")) + y;
 
           if (newFirstWidth >= originalHeight) {
             newFirstWidth = originalHeight;
