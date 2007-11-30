@@ -15,25 +15,42 @@ public class FCKEditor extends Composite {
   private FCKEditorConfig config;
   private boolean isLoaded;
   
+  public FCKEditor() {
+    this(new FCKEditorConfig());
+  }
+  
   public FCKEditor(FCKEditorConfig config) {
     this.config = config;
     
     textarea = new TextArea();
-    textarea.setWidth(config.getWidth());
-    textarea.setHeight(config.getHeight());
+    if (config != null) {
+      textarea.setWidth(config.getWidth());
+      textarea.setHeight(config.getHeight());
+    }
+    
     instanceId = "FCKEditor" + System.currentTimeMillis();
     DOM.setElementAttribute(textarea.getElement(), "id", instanceId);
     initWidget(textarea);
+    
     DeferredCommand.addCommand(new Command() {
       public void execute() {
         editorInstance = initEditor();
       }
     });
+    
     addLoadListener(new FCKEditorLoadListener() {
       public void onLoad() {
         isLoaded = true;
       }
     });
+  }
+
+  public void setWidth(String width) {
+    textarea.setWidth(width);
+  }
+  
+  public void setHeight(String height) {
+    textarea.setHeight(height);
   }
   
   public void setHTML(final String html) {
@@ -49,7 +66,14 @@ public class FCKEditor extends Composite {
   }
   
   private native void _setHTML(String html)/*-{
-    var oEditor = $wnd.FCKeditorAPI.GetInstance(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId) ;
+    var oEditor = $wnd.FCKeditorAPI.GetInstance(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId);
+    
+//    var debug = "";
+//    for (i in oEditor.Config) {
+//      debug += i + ", "; 
+//    }
+    alert(debug);
+    
     oEditor.SetHTML(html);
   }-*/;
   
@@ -61,10 +85,12 @@ public class FCKEditor extends Composite {
   private native JavaScriptObject initEditor()/*-{
     var oFCKeditor = new $wnd.FCKeditor(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId);
     var config = this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::config;
+    if (config != null) {
+      oFCKeditor.Width = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getWidth()();
+      oFCKeditor.Height = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getHeight()();
+      oFCKeditor.ToolbarSet = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getToolbarSet()();
+    }
     
-    oFCKeditor.Width = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getWidth()();
-    oFCKeditor.Height = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getHeight()();
-    oFCKeditor.ToolbarSet = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getToolbarSet()();
     oFCKeditor.BasePath = "fckeditor/";
     oFCKeditor.ReplaceTextarea();
     return oFCKeditor;
