@@ -35,6 +35,7 @@ public class Test implements EntryPoint {
   public void onModuleLoad() {
     final FCKEditor editor = new FCKEditor(new FCKEditorConfig() {
       {
+        setToolbarSet("Simple");
       }
     });
     
@@ -43,11 +44,13 @@ public class Test implements EntryPoint {
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%");
     vp.add(editor);
+    
     vp.add(new Button("set some other html", new ClickListener() {
       public void onClick(Widget sender) {
         editor.setHTML("<h1>Some other html.</h1>");
       }
     }));
+    
     vp.add(new Button("get text", new ClickListener() {
       public void onClick(Widget sender) {
         Window.alert(editor.getHTML());
