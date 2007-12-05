@@ -68,12 +68,6 @@ public class FCKEditor extends Composite {
   private native void _setHTML(String html)/*-{
     var oEditor = $wnd.FCKeditorAPI.GetInstance(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId);
     
-//    var debug = "";
-//    for (i in oEditor.Config) {
-//      debug += i + ", "; 
-//    }
-    alert(debug);
-    
     oEditor.SetHTML(html);
   }-*/;
   
