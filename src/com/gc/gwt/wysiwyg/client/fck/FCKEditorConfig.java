@@ -5,6 +5,7 @@ public class FCKEditorConfig {
   private String width = "100%";
   private String height = "300px";
   private String toolbarSet = "Default";
+  private String basePath = "fckeditor/";
 
   public String getWidth() {
     return width;
@@ -28,5 +29,13 @@ public class FCKEditorConfig {
 
   public void setToolbarSet(String toolbarSet) {
     this.toolbarSet = toolbarSet;
+  }
+  
+  public String getBasePath() {
+    return basePath;
+  }
+  
+  public void setBasePath(String basePath) {
+    this.basePath = basePath;
   }
 }
