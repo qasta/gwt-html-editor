@@ -21,6 +21,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.LoadListener;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -34,12 +35,23 @@ public class Test implements EntryPoint {
 
   public void onModuleLoad() {
     final Editor editor = new Editor("100%", "400px", "Simple");
+    
     editor.addLoadListener(new LoadListener() {
       public void onLoad(Widget sender) {
         Window.alert("Editor loaded.");
       }
       
       public void onError(Widget sender) { }
+    });
+    
+    editor.addFocusListener(new FocusListener() {
+      public void onFocus(Widget sender) {
+        editor.setHTML(editor.getHTML() + " Focus ");
+      }
+      
+      public void onLostFocus(Widget sender) {
+        editor.setHTML(editor.getHTML() + " Blur ");
+      }
     });
     
     editor.setHTML("<h1>Hello World</h1>");

@@ -18,86 +18,30 @@ package com.gc.gwt.wysiwyg.client;
 
 import com.gc.gwt.wysiwyg.client.fck.FCKEditor;
 import com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig;
-import com.gc.gwt.wysiwyg.client.fck.FCKEditorLoadListener;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.LoadListener;
 
 /**
  * Rich Text Editor Widget.
  *
  * @author pavel.jbanov
  */
-public class Editor extends Composite {
+public class Editor extends FCKEditor {
 
-  private FCKEditor editor;
-  
   public Editor(final String width, final String height) {
-    editor = new FCKEditor(new FCKEditorConfig() {
+    super(new FCKEditorConfig() {
       {
         setWidth(width);
         setHeight(height);
       }
     });
-    initWidget(editor);
   }
   
   public Editor(final String width, final String height, final String toolbarSet) {
-    editor = new FCKEditor(new FCKEditorConfig() {
+    super(new FCKEditorConfig() {
       {
         setWidth(width);
         setHeight(height);
         setToolbarSet(toolbarSet);
       }
     });
-    initWidget(editor);
-  }
-
-  /**
-   * Set editor height.
-   *
-   * @param height new height
-   */
-  public void setHeight(String height) {
-    editor.setHeight(height);
-  }
-
-  /**
-   * Get editor height.
-   *
-   * @return editor height
-   */
-  public String getHeight() {
-    return DOM.getStyleAttribute(editor.getElement(), "height");
-  }
-
-  /**
-   * Attach a LoadListener.
-   *
-   * @param listener Load Listener to attach
-   */
-  public void addLoadListener(final LoadListener listener) {
-    editor.addLoadListener(new FCKEditorLoadListener() {
-      public void onLoad() {
-        listener.onLoad(editor);
-      }
-    });
-  }
-
-
-  /**
-   * @return HTML
-   */
-  public String getHTML() {
-    return editor.getHTML();
-  }
-
-  /**
-   * set editor HTML.
-   *
-   * @param _html HTML
-   */
-  public void setHTML(String _html) {
-    editor.setHTML(_html);
   }
 }
