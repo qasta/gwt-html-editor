@@ -7,6 +7,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.DeferredCommand;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.LoadListener;
@@ -94,6 +95,21 @@ public class FCKEditor extends Composite implements SourcesLoadEvents, SourcesFo
   public native String getHTML()/*-{
     var oEditor = $wnd.FCKeditorAPI.GetInstance(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId) ;
     return oEditor.GetHTML();
+  }-*/;
+  
+  public void setFocus(boolean focus) {
+    if (focus) {
+      new Timer() {
+        public void run() {
+          Focus();
+        }
+      }.schedule(100);
+    }
+  }
+  
+  private native void Focus()/*-{
+    var oEditor = $wnd.FCKeditorAPI.GetInstance(this.@com.gc.gwt.wysiwyg.client.fck.FCKEditor::instanceId) ;
+    oEditor.Focus();
   }-*/;
   
   private native JavaScriptObject initEditor()/*-{
