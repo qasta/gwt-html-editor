@@ -72,6 +72,12 @@ public class Test implements EntryPoint {
       }
     }));
     
+    vp.add(new Button("focus", new ClickListener() {
+      public void onClick(Widget sender) {
+        editor.setFocus(true);
+      }
+    }));
+    
     getRootPanel().add(vp);
   }
 }
