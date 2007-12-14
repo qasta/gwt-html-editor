@@ -44,7 +44,7 @@ public class TinyMCE extends Composite implements SourcesLoadEvents, SourcesChan
   }
 
   private native void initEditor()/*-{
-      var editor = new $wnd.tinymce.Editor(this.@com.bellamy.sc.gwt.client.ui.tinymce.TinyMCE::editorId, {
+      var editor = new $wnd.tinymce.Editor(this.@com.gc.gwt.wysiwyg.client.tinymce.TinyMCE::editorId, {
           theme : "advanced",
           skin : "o2k7",
 //          width : "90%",
@@ -61,22 +61,22 @@ public class TinyMCE extends Composite implements SourcesLoadEvents, SourcesChan
                                 
       });
     
-      this.@com.bellamy.sc.gwt.client.ui.tinymce.TinyMCE::editorInstance = editor;
+      this.@com.gc.gwt.wysiwyg.client.tinymce.TinyMCE::editorInstance = editor;
     
       var self = this;
       editor.onInit.add(function(ed) {
-          self.@com.bellamy.sc.gwt.client.ui.tinymce.TinyMCE::isLoaded = true;
-          self.@com.bellamy.sc.gwt.client.ui.tinymce.TinyMCE::fireLoadEvent()();
+          self.@com.gc.gwt.wysiwyg.client.tinymce.TinyMCE::isLoaded = true;
+          self.@com.gc.gwt.wysiwyg.client.tinymce.TinyMCE::fireLoadEvent()();
       });
       editor.onKeyUp.add(function(ed, l) {
-          self.@com.bellamy.sc.gwt.client.ui.tinymce.TinyMCE::fireChangeEvent()();
+          self.@com.gc.gwt.wysiwyg.client.tinymce.TinyMCE::fireChangeEvent()();
       });
     
       editor.render();
   }-*/;
 
   public native void focus()/*-{
-      this.@com.bellamy.sc.gwt.client.ui.tinymce.TinyMCE::editorInstance.focus(false);
+      this.@com.gc.gwt.wysiwyg.client.tinymce.TinyMCE::editorInstance.focus(false);
   }-*/;
 
   private void fireLoadEvent() {
@@ -112,11 +112,11 @@ public class TinyMCE extends Composite implements SourcesLoadEvents, SourcesChan
   }
 
   private native void _setHTML(String html)/*-{
-      this.@com.bellamy.sc.gwt.client.ui.tinymce.TinyMCE::editorInstance.setContent(html);
+      this.@com.gc.gwt.wysiwyg.client.tinymce.TinyMCE::editorInstance.setContent(html);
   }-*/;
 
   public native String getHTML()/*-{
-      return this.@com.bellamy.sc.gwt.client.ui.tinymce.TinyMCE::editorInstance.getContent();
+      return this.@com.gc.gwt.wysiwyg.client.tinymce.TinyMCE::editorInstance.getContent();
   }-*/;
 
   public void addLoadListener(LoadListener listener) {
