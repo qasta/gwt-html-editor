@@ -5,6 +5,8 @@
 	<path id="gwt.compile.class.path">
 		<pathelement location="${source.dir}"/>
 		<pathelement location="${test.dir}"/>
+		<pathelement location="${public.dir}"/>
+		
 		
 		<pathelement path="${gwt.jar.user}"/>
 		<pathelement path="${gwt.jar.dev}"/>

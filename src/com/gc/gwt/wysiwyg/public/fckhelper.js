@@ -34,5 +34,4 @@ function FCKeditor_OnComplete(editorInstance) {
 			}
 		}
     });
-	
 }

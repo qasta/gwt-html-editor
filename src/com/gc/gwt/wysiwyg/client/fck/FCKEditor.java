@@ -18,6 +18,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class FCKEditor extends Composite implements SourcesLoadEvents, SourcesFocusEvents {
 
+  private static int instanceCounter = 0;
+  
   private String instanceId;
   private TextArea textarea;
   private JavaScriptObject editorInstance;
@@ -39,8 +41,9 @@ public class FCKEditor extends Composite implements SourcesLoadEvents, SourcesFo
       textarea.setWidth(config.getWidth());
       textarea.setHeight(config.getHeight());
     }
-
-    instanceId = "FCKEditor" + System.currentTimeMillis();
+    
+    instanceCounter++;
+    instanceId = "FCKEditor" + System.currentTimeMillis() + "-" + instanceCounter;
     
     initLoadListener(this);
     initFocusListener(this);
@@ -48,11 +51,11 @@ public class FCKEditor extends Composite implements SourcesLoadEvents, SourcesFo
     DOM.setElementAttribute(textarea.getElement(), "id", instanceId);
     initWidget(textarea);
     
-    DeferredCommand.addCommand(new Command() {
-      public void execute() {
+    new Timer() {
+      public void run() {
         editorInstance = initEditor();
       }
-    });
+    }.schedule(500);
     
     addLoadListener(new LoadListener() {
       public void onLoad(Widget sender) {
@@ -76,7 +79,11 @@ public class FCKEditor extends Composite implements SourcesLoadEvents, SourcesFo
       addLoadListener(new LoadListener() {
         
         public void onLoad(Widget sender) {
-          _setHTML(html);
+          new Timer() {
+            public void run() {
+              _setHTML(html);
+            }
+          }.schedule(100);
         }
         
         public void onError(Widget sender) {}
@@ -121,6 +128,8 @@ public class FCKEditor extends Composite implements SourcesLoadEvents, SourcesFo
     oFCKeditor.Height = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getHeight()();
     oFCKeditor.ToolbarSet = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getToolbarSet()();
     oFCKeditor.BasePath = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getBasePath()();
+    
+    oFCKeditor.Config['CustomConfigurationsPath'] = config.@com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig::getCustomConfigurationsPath()();
     
     oFCKeditor.ReplaceTextarea();
     return oFCKeditor;
