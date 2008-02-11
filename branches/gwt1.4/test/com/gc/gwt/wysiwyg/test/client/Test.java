@@ -17,6 +17,9 @@
 package com.gc.gwt.wysiwyg.test.client;
 
 import com.gc.gwt.wysiwyg.client.Editor;
+import com.gc.gwt.wysiwyg.client.fck.FCKEditor;
+import com.gc.gwt.wysiwyg.client.fck.FCKEditorConfig;
+import com.gc.gwt.wysiwyg.client.tinymce.TinyMCE;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
@@ -30,10 +33,27 @@ import com.google.gwt.user.client.ui.Widget;
 public class Test implements EntryPoint {
 
   private RootPanel getRootPanel() {
-    return RootPanel.get("gwtAppContainer");
+    return RootPanel.get("gwtAppContainer");    
   }
 
   public void onModuleLoad() {
+    Window.alert("loading..");
+    FCKEditor editor = new FCKEditor(new FCKEditorConfig() {
+      {
+        setBasePath("fckeditor/");
+        setCustomConfigurationsPath("../../testconfig.js");
+      }
+    });
+    getRootPanel().add(editor);
+  }
+  
+  public void __onModuleLoad() {
+    TinyMCE editor = new TinyMCE();
+    editor.setHTML("<h1>Hello World</h1>");
+    getRootPanel().add(editor);
+  }
+  
+  public void _onModuleLoad() {
     final Editor editor = new Editor("100%", "400px", "Simple");
     
     editor.addLoadListener(new LoadListener() {
