@@ -19,11 +19,11 @@ package com.gc.gwt.wysiwyg.client.defaults.widgets;
 import com.gc.gwt.wysiwyg.client.Editor;
 import com.gc.gwt.wysiwyg.client.EditorToolbarSelect;
 import com.gc.gwt.wysiwyg.client.EditorUtils;
-import com.google.gwt.user.client.ui.ChangeListener;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.Widget;
 
-public class FontSizesCombo extends EditorToolbarSelect implements ChangeListener {
+public class FontSizesCombo extends EditorToolbarSelect implements ChangeHandler {
 
   Editor editor;
 
@@ -32,8 +32,8 @@ public class FontSizesCombo extends EditorToolbarSelect implements ChangeListene
     init();
   }
 
-  public void onChange(Widget sender) {
-    ListBox subj = ((ListBox) sender);
+  public void onChange(ChangeEvent event) {
+    ListBox subj = ((ListBox) event.getSource());
     String value = subj.getValue(subj.getSelectedIndex());
     subj.setSelectedIndex(0);
     EditorUtils.doFontSize(editor.getEditorWYSIWYG().getFrame().getElement(), value);
@@ -45,6 +45,6 @@ public class FontSizesCombo extends EditorToolbarSelect implements ChangeListene
     for (int i = 1; i < 8; i++) {
       this.addItem("Size " + i, "" + i);
     }
-    this.addChangeListener(this);
+    this.addChangeHandler(this);
   }
 }

@@ -128,6 +128,10 @@ public final class EditorUtils {
   public static void doFontSize(Element oIframe, String size) {
     impl.doFontSize(oIframe, size);
   }
+  
+  public static void doFontName(Element oIframe, String size) {
+    impl.doFontName(oIframe, size);
+  }
 
   public static void enableDesignMode(Element oIframe, EditorLoadListener loadListener) {
     impl.enableDesignMode(oIframe, loadListener);

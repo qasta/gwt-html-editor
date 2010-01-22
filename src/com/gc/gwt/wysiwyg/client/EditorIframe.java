@@ -17,7 +17,6 @@
 package com.gc.gwt.wysiwyg.client;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.user.client.DOM;
@@ -32,7 +31,7 @@ public class EditorIframe extends Frame {
     sinkEvents(Event.MOUSEEVENTS);
   }
 
-  private List mouseOverListeners = new ArrayList();
+  private List<EditorMouseOverListener> mouseOverListeners = new ArrayList<EditorMouseOverListener>();
 
   public void addMouseOverListener(EditorMouseOverListener listener) {
     mouseOverListeners.add(listener);
@@ -44,8 +43,8 @@ public class EditorIframe extends Frame {
 
   public void onBrowserEvent(Event event) {
     if (DOM.eventGetType(event) == Event.ONMOUSEOVER) {
-      for (Iterator i = mouseOverListeners.iterator(); i.hasNext();) {
-        ((EditorMouseOverListener) i.next()).onMouseOver(this);
+      for (EditorMouseOverListener listener : mouseOverListeners) {
+        listener.onMouseOver(this);
       }
     }
   }

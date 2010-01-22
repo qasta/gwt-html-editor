@@ -180,4 +180,8 @@ public class DefaultEditorToolbarWidgetsFactory {
   public Widget getBackToRichTextWidget() {
     return new BackToRichTextButton(editor);
   }
+
+  public Widget getFontNameWidget() {
+	return new FontNameCombo(editor);
+  }
 }

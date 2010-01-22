@@ -22,12 +22,12 @@ import com.gc.gwt.wysiwyg.client.EditorUtils;
 import com.gc.gwt.wysiwyg.client.defaults.DefaultConstants;
 import com.gc.gwt.wysiwyg.client.defaults.EditorColorPicker;
 import com.gc.gwt.wysiwyg.client.defaults.EditorColorSelectListener;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 
 public class BackgroundColorButton
     extends EditorToolbarButton
-    implements EditorColorSelectListener, ClickListener {
+    implements EditorColorSelectListener, ClickHandler {
 
   private Editor editor;
   private EditorColorPicker bgPicker;
@@ -44,7 +44,7 @@ public class BackgroundColorButton
     EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
   }
   
-  public void onClick(Widget sender) {
+  public void onClick(ClickEvent event) {
     EditorUtils.saveSelection(editor.getEditorWYSIWYG().getFrame().getElement());
     bgPicker.show();
     bgPicker.setPopupPosition(editor.getAbsoluteLeft() + 50, editor.getAbsoluteTop() + 50);
@@ -53,6 +53,6 @@ public class BackgroundColorButton
   private void init() {
     this.bgPicker = new EditorColorPicker("Select Background Color");
     this.bgPicker.addSelectListener(this);
-    this.addClickListener(this);
+    this.addClickHandler(this);
   }
 }

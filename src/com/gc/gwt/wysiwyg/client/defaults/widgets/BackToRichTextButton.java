@@ -19,20 +19,20 @@ package com.gc.gwt.wysiwyg.client.defaults.widgets;
 import com.gc.gwt.wysiwyg.client.Editor;
 import com.gc.gwt.wysiwyg.client.EditorToolbarButton;
 import com.gc.gwt.wysiwyg.client.defaults.DefaultConstants;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 
-public class BackToRichTextButton extends EditorToolbarButton implements ClickListener {
+public class BackToRichTextButton extends EditorToolbarButton implements ClickHandler {
 
   Editor editor;
   
   public BackToRichTextButton(Editor editor) {
     super(DefaultConstants.BUTTON_BACK_TO_FULL_TOOLBAR);
     this.editor = editor;
-    this.addClickListener(this);
+    this.addClickHandler(this);
   }
   
-  public void onClick(Widget sender) {
+  public void onClick(ClickEvent event) {
     editor.getEditorWYSIWYG().toggleView();
   }
 }

@@ -16,11 +16,13 @@
 
 package com.gc.gwt.wysiwyg.client;
 
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.MouseListener;
-import com.google.gwt.user.client.ui.Widget;
 
 public class EditorToolbarButton extends Image {
   
@@ -34,7 +36,9 @@ public class EditorToolbarButton extends Image {
     this.setTitle(buttonId);
     this.buttonId = buttonId;
 
-    this.addMouseListener(new OnMouseOverDecorateButtonListener(this));
+    OnMouseOverDecorateButtonListener listener = new OnMouseOverDecorateButtonListener(this);
+    this.addMouseOverHandler(listener);
+    this.addMouseOutHandler(listener);
     this.setStyleName("Editor-Toolbar-Button Editor-Toolbar-Button-" + buttonId);
   }
 
@@ -46,7 +50,7 @@ public class EditorToolbarButton extends Image {
     this.buttonId = buttonId;
   }
 
-  private class OnMouseOverDecorateButtonListener implements MouseListener {
+  private class OnMouseOverDecorateButtonListener implements MouseOverHandler, MouseOutHandler {
 
     private EditorToolbarButton button;
 
@@ -54,24 +58,14 @@ public class EditorToolbarButton extends Image {
       this.button = button;
     }
 
-    public void onMouseEnter(Widget sender) {
+    public void onMouseOver(MouseOverEvent event) {
       button.setStyleName("Editor-Toolbar-Button Editor-Toolbar-Button-hover Editor-Toolbar-Button-"
           + button.getButtonId());
     }
 
-    public void onMouseLeave(Widget sender) {
+    public void onMouseOut(MouseOutEvent event) {
       button.setStyleName("Editor-Toolbar-Button Editor-Toolbar-Button-" + button.getButtonId());
     }
-
-    public void onMouseDown(Widget sender, int x, int y) {
-    }
-
-    public void onMouseMove(Widget sender, int x, int y) {
-    }
-
-    public void onMouseUp(Widget sender, int x, int y) {
-    }
-    
   }
 
   /**

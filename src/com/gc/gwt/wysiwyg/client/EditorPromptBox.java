@@ -17,7 +17,6 @@
 package com.gc.gwt.wysiwyg.client;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.DialogBox;
@@ -85,7 +84,7 @@ public abstract class EditorPromptBox extends DialogBox {
     fireSubmitEvent(value);
   }
 
-  private List submitListeners = new ArrayList();
+  private List<EditorPromptBoxSubmitListener> submitListeners = new ArrayList<EditorPromptBoxSubmitListener>();
 
   /**
    * TODO: javadocs.
@@ -111,8 +110,8 @@ public abstract class EditorPromptBox extends DialogBox {
    * @param value
    */
   private void fireSubmitEvent(String value) {
-    for (Iterator iter = submitListeners.iterator(); iter.hasNext();) {
-      ((EditorPromptBoxSubmitListener) iter.next()).onSubmit(value);
+    for (EditorPromptBoxSubmitListener listener : submitListeners) {
+      listener.onSubmit(value);
     }
   }
 }

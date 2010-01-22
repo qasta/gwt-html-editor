@@ -17,6 +17,12 @@
 package com.gc.gwt.ext.client;
 
 import com.gc.gwt.wysiwyg.client.EditorUtils;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
@@ -24,7 +30,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
@@ -147,7 +152,7 @@ public class SplitPane extends Composite {
     this.originalHeight = this.getOffsetHeight();
   }
 
-  private class Divider extends Image implements MouseListener {
+  private class Divider extends Image implements MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 
     private boolean dragging = false;
 
@@ -160,7 +165,9 @@ public class SplitPane extends Composite {
         setStyleName("SplitPaneDivider-Vertical");
       }
 
-      addMouseListener(this);
+      addMouseDownHandler(this);
+      addMouseUpHandler(this);
+      addMouseMoveHandler(this);
     }
 
     protected void onLoad() {
@@ -204,29 +211,23 @@ public class SplitPane extends Composite {
       }
     }
 
-    public void onMouseDown(Widget sender, int x, int y) {
+	public void onMouseDown(MouseDownEvent event) {
       dragging = true;
       DOM.setCapture(this.getElement());
     }
 
-    public void onMouseUp(Widget sender, int x, int y) {
+	public void onMouseUp(MouseUpEvent event) {
       dragging = false;
       DOM.releaseCapture(this.getElement());
     }
 
-    public void onMouseEnter(Widget sender) {
-    }
-
-    public void onMouseLeave(Widget sender) {
-    }
-
-    public void onMouseMove(Widget sender, int x, int y) {
+    public void onMouseMove(MouseMoveEvent event) {
       if (dragging) {
         CellFormatter cellFormatter = mainContainer.getCellFormatter();
 
         int newFirstWidth;
         if (splitOrientation == VERTICAL_SPLIT) {
-          newFirstWidth = EditorUtils.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "width")) + x;
+          newFirstWidth = EditorUtils.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "width")) + event.getX();
 
           if (newFirstWidth >= originalWidth) {
             newFirstWidth = originalWidth;
@@ -237,7 +238,7 @@ public class SplitPane extends Composite {
               - divider.getOffsetWidth())
               + "px");
         } else {
-          newFirstWidth = EditorUtils.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "height")) + y;
+          newFirstWidth = EditorUtils.parseInt(DOM.getStyleAttribute(cellFormatter.getElement(0, 0), "height")) + event.getY();
 
           if (newFirstWidth >= originalHeight) {
             newFirstWidth = originalHeight;

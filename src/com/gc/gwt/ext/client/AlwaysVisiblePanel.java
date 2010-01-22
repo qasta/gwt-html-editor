@@ -16,11 +16,12 @@
 
 package com.gc.gwt.ext.client;
 
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventPreview;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.WindowResizeListener;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
@@ -48,12 +49,12 @@ public class AlwaysVisiblePanel extends SimplePanel {
    *   awp = new AlwaysVisiblePanel();
    */
   public AlwaysVisiblePanel() {
-    DOM.addEventPreview(new EventPreview() {
-      public boolean onEventPreview(Event event) {
-        if (DOM.eventGetType(event) == Event.ONSCROLL) {
+    Event.addNativePreviewHandler(new Event.NativePreviewHandler() {
+      public void onPreviewNativeEvent(Event.NativePreviewEvent event) {
+    	NativeEvent e = event.getNativeEvent();
+        if (Event.getTypeInt(e.getType()) == Event.ONSCROLL) {
           adjustPosition();
         }
-        return true;
       }
     });
   }
@@ -73,8 +74,8 @@ public class AlwaysVisiblePanel extends SimplePanel {
     
     adjustPosition();
     
-    Window.addWindowResizeListener(new WindowResizeListener() {
-      public void onWindowResized(int width, int height) {
+    Window.addResizeHandler(new ResizeHandler() {
+      public void onResize(ResizeEvent event) {
         adjustPosition();
       }
     });
