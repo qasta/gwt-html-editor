@@ -17,19 +17,17 @@
 package com.gc.gwt.wysiwyg.client.defaults;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasAlignment;
-import com.google.gwt.user.client.ui.SourcesTableEvents;
-import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
 public class EditorColorPicker extends DialogBox {
   // 18x12
@@ -54,7 +52,7 @@ public class EditorColorPicker extends DialogBox {
       "66FF66", "66FF99", "66FFCC", "66FFFF", "99FF00", "99FF33", "99FF66", "99FF99", "99FFCC", "99FFFF", "CCFF00",
       "CCFF33", "CCFF66", "CCFF99", "CCFFCC", "CCFFFF", "FFFF00", "FFFF33", "FFFF66", "FFFF99", "FFFFCC", "FFFFFF" };
 
-  private List selectListeners = new ArrayList();
+  private List<EditorColorSelectListener> selectListeners = new ArrayList<EditorColorSelectListener>();
 
   public EditorColorPicker(String title) {
     this.setStyleName("Editor-DialogBox");
@@ -62,7 +60,7 @@ public class EditorColorPicker extends DialogBox {
 
     VerticalPanel vp = new VerticalPanel();
 
-    Grid grid = new Grid(12, 18);
+    final Grid grid = new Grid(12, 18);
     grid.setCellPadding(0);
     grid.setCellSpacing(1);
 
@@ -73,9 +71,10 @@ public class EditorColorPicker extends DialogBox {
       }
     }
 
-    grid.addTableListener(new TableListener() {
-      public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
-        fireColorSelected(colors[row * 12 + cell]);
+    grid.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
+    	Cell cell = grid.getCellForEvent(event);
+        fireColorSelected(colors[cell.getRowIndex() * 12 + cell.getCellIndex()]);
         hide();
       }
     });
@@ -84,8 +83,8 @@ public class EditorColorPicker extends DialogBox {
     vp.add(grid);
 
     Button cancelButton = new Button("Cancel");
-    cancelButton.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+    cancelButton.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
         hide();
       }
     });
@@ -105,8 +104,8 @@ public class EditorColorPicker extends DialogBox {
   }
 
   private void fireColorSelected(String rgb) {
-    for (Iterator i = selectListeners.iterator(); i.hasNext();) {
-      ((EditorColorSelectListener) i.next()).colorSelected(rgb);
+    for (EditorColorSelectListener listener : selectListeners) {
+      listener.colorSelected(rgb);
     }
   }
 }

@@ -23,30 +23,35 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.ListBox;
 
-public class FontStyleButton extends EditorToolbarSelect implements ChangeHandler {
+public class FontNameCombo extends EditorToolbarSelect implements
+		ChangeHandler {
 
-  private Editor editor;
-  
-  public FontStyleButton(Editor editor) {
-    super();
-    this.editor = editor;
-    init();
-  }
-  
-  public void onChange(ChangeEvent event) {
-    ListBox subj = ((ListBox) event.getSource());
-    String value = subj.getValue(subj.getSelectedIndex());
-    subj.setSelectedIndex(0);
-    EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
-    EditorUtils.doFontStyle(editor.getEditorWYSIWYG().getFrame().getElement(), value);
-  }
-  
-  private void init() {
-    this.addItem("Style", "");
-    String[][] formats = EditorUtils.getSupportedFormats();
-    for (int i = 0; i < formats.length; i++) {
-      this.addItem(formats[i][0], formats[i][1]);
-    }
-    this.addChangeHandler(this);
-  }
+	Editor editor;
+
+	public FontNameCombo(Editor editor) {
+		this.editor = editor;
+		init();
+	}
+
+	public void onChange(ChangeEvent event) {
+		ListBox subj = ((ListBox) event.getSource());
+		String value = subj.getValue(subj.getSelectedIndex());
+		subj.setSelectedIndex(0);
+		EditorUtils.doFontName(editor.getEditorWYSIWYG().getFrame()
+				.getElement(), value);
+		EditorUtils.doFocus(editor.getEditorWYSIWYG().getFrame().getElement());
+	}
+
+	private void init() {
+		this.addItem("Font name", "");
+		this.addItem("Arial", "Arial");
+		this.addItem("Comic Sans MS", "Comic Sans MS");
+		this.addItem("Courier", "Courier");
+		this.addItem("Georgia", "Georgia");
+		this.addItem("Impact", "Impact");
+		this.addItem("Tahoma", "Tahoma");
+		this.addItem("Times", "Times");
+		this.addItem("Verdana", "Verdana");
+		this.addChangeHandler(this);
+	}
 }

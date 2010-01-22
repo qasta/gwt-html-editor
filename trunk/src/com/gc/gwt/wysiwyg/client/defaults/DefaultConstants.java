@@ -156,4 +156,6 @@ public class DefaultConstants {
   public static final String BUTTON_FONT_STYLE = "ButtonFontStyle";
 
   public static final String BUTTON_FONT_SIZE = "ButtonFontSize";
+
+  public static final String BUTTON_FONT_NAME = "ButtonFontName";
 }

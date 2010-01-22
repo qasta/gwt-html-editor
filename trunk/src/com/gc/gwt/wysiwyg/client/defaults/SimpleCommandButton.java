@@ -17,8 +17,8 @@
 package com.gc.gwt.wysiwyg.client.defaults;
 
 import com.gc.gwt.wysiwyg.client.EditorToolbarButton;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 
 public class SimpleCommandButton extends EditorToolbarButton {
   
@@ -29,8 +29,8 @@ public class SimpleCommandButton extends EditorToolbarButton {
   public SimpleCommandButton(String buttonId, final EditorCommand command, final boolean ui, String value) {
     super(buttonId);
     
-    this.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+    this.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
         command.exec(null);
       }
     });

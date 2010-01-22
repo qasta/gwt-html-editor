@@ -20,8 +20,8 @@
 	</target>
 	
 	<target name="gwt-test-compile">
-		<java classpathref="gwt.compile.class.path" classname="com.google.gwt.dev.GWTCompiler" fork="true" >
-			<arg value="-out"/>
+		<java classpathref="gwt.compile.class.path" classname="com.google.gwt.dev.Compiler" fork="true" >
+			<arg value="-war"/>
 			<arg value="${gwt.output}"/>
 			<arg value="com.gc.gwt.wysiwyg.test.Test"/>
 		</java>
@@ -40,7 +40,7 @@
     <target name="compile">
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${classes.dir}"/>
-        <javac destdir="${classes.dir}" debug= "on" failonerror="true" nowarn="on" memoryMaximumSize="128m" fork="true" source="1.4" target="1.4">
+        <javac destdir="${classes.dir}" debug= "on" failonerror="true" nowarn="on" memoryMaximumSize="128m" fork="true" source="1.6" target="1.6">
             <classpath refid="gwt.compile.class.path"/>
             <src path="${source.dir}"/>
         	<exclude name="**/.svn/**"/>

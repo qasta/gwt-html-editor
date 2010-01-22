@@ -19,13 +19,13 @@ package com.gc.gwt.wysiwyg.test.client;
 import com.gc.gwt.ext.client.SplitPane;
 import com.gc.gwt.wysiwyg.client.Editor;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 public class Test implements EntryPoint {
 
@@ -64,8 +64,8 @@ public class Test implements EntryPoint {
 
     // tab 3
     final Button button = new Button("Show Editor");
-    button.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+    button.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
         DialogBox db = new DialogBox(true);
         Editor editor3 = new Editor();
         editor3.setWidth("660px");

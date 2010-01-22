@@ -33,7 +33,7 @@ public class EditorToolbar extends Composite {
   
   private static class EditorToolbarFlowPanel extends FlowPanel {
     public void insert(Widget w, int beforeIndex) {
-      super.insert(w, null, beforeIndex);
+      super.insert(w, beforeIndex);
       DOM.insertChild(getElement(), w.getElement(), beforeIndex);
     }
   }
@@ -41,8 +41,8 @@ public class EditorToolbar extends Composite {
   /* Fields */
   
   private final EditorToolbarFlowPanel fullToolbar;
-  private final Map widgetMap = new HashMap();
-  private final Map widgetIDMap = new HashMap();
+  private final Map<String, Widget> widgetMap = new HashMap<String, Widget>();
+  private final Map<Widget, String> widgetIDMap = new HashMap<Widget, String>();
   private final FlowPanel sourceToolbar;
   private final CellPanel topContainer;
   private int spacerCounter = 0;

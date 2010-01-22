@@ -82,6 +82,7 @@ public class DefaultEditorToolbar extends EditorToolbar {
 
     this.putWidgetLast(toolbarWidgetsFactory.getFontStyleWidget(), DefaultConstants.BUTTON_FONT_STYLE);
     this.putWidgetLast(toolbarWidgetsFactory.getFontSizeWidget(), DefaultConstants.BUTTON_FONT_SIZE);
+    this.putWidgetLast(toolbarWidgetsFactory.getFontNameWidget(), DefaultConstants.BUTTON_FONT_NAME);
 
     this.addSourceToolbarWidget(toolbarWidgetsFactory.getBackToRichTextWidget());
   }

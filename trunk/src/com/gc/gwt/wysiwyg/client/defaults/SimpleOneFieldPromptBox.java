@@ -17,8 +17,9 @@
 package com.gc.gwt.wysiwyg.client.defaults;
 
 import com.gc.gwt.wysiwyg.client.Editor;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -60,15 +61,15 @@ public class SimpleOneFieldPromptBox extends AdvancedPromptBox {
 
     HorizontalPanel hzButtons = new HorizontalPanel();
     Button b = new Button(buttonLabel);
-    b.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+    b.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
         submit(urlTextBox.getText());
       }
     });
 
     Button c = new Button("Cancel");
-    c.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+    c.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
         submit(null);
       }
     });

@@ -20,20 +20,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gc.gwt.wysiwyg.client.defaults.DefaultEditorToolbar;
+import com.google.gwt.event.dom.client.HasLoadHandlers;
+import com.google.gwt.event.dom.client.LoadEvent;
+import com.google.gwt.event.dom.client.LoadHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.LoadListener;
-import com.google.gwt.user.client.ui.SourcesLoadEvents;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Rich Text Editor Widget.
  *
  * @author pavel.jbanov
  */
-public class Editor extends Composite implements SourcesLoadEvents {
+public class Editor extends Composite implements HasLoadHandlers {
 
   private EditorToolbar toolbar;
 
@@ -45,7 +46,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
   private boolean initialized = false;
 
   // listeners
-  private List loadListeners = new ArrayList();
+  private List<LoadHandler> loadListeners = new ArrayList<LoadHandler>();
 
   public Editor() {
     this(null);
@@ -66,18 +67,14 @@ public class Editor extends Composite implements SourcesLoadEvents {
     wysiwyg = new EditorWYSIWYG(this);
     wysiwyg.setWidth("100%");
 
-    addLoadListener(new LoadListener() {
-      public void onLoad(Widget sender) {
+    addLoadHandler(new LoadHandler() {
+      public void onLoad(LoadEvent sender) {
         initialized = true;
 
         if (tmpHTMLStorage != null) {
           getEditorWYSIWYG().setHTML(tmpHTMLStorage);
           tmpHTMLStorage = null;
         }
-      }
-
-      public void onError(Widget sender) {
-        // TODO Implement error handling
       }
     });
 
@@ -168,17 +165,9 @@ public class Editor extends Composite implements SourcesLoadEvents {
    *
    * @param listener Load Listener to attach
    */
-  public void addLoadListener(LoadListener listener) {
+  public HandlerRegistration addLoadHandler(LoadHandler listener) {
     loadListeners.add(listener);
-  }
-
-  /**
-   * Remove load listener.
-   *
-   * @parame listener Load Listener to remove
-   */
-  public void removeLoadListener(LoadListener listener) {
-    loadListeners.remove(listener);
+    return null;
   }
 
   /**
@@ -186,7 +175,7 @@ public class Editor extends Composite implements SourcesLoadEvents {
    */
   private void notifyLoadListeners() {
     for (int i = 0; i < loadListeners.size(); i++) {
-      ((LoadListener) loadListeners.get(i)).onLoad(this);
+      loadListeners.get(i).onLoad(null);
     }
   }
 

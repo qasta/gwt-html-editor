@@ -140,4 +140,9 @@ public abstract class EditorUtilsImplCommon extends EditorUtilsImpl {
     EditorUtils.restoreSelection(oIframe);
     EditorUtils.execCommand(oIframe, "FormatBlock", false, style);
   }
+  
+  public void doFontName(Element oIframe, String name) {
+    EditorUtils.restoreSelection(oIframe);
+    EditorUtils.execCommand(oIframe, "FontName", false, name);
+  }
 }
